@@ -37,9 +37,9 @@
                 $jsonObject.psobject.properties.add([PSNoteProperty]::new('Path', $inFile.Fullname))
                 $jsonObject
             } }
-            $Script:CachedStreamDeckPlugins = @(                
+            $Script:CachedStreamDeckPlugins = @(
                 if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
-                    Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\Plugins\" -Directory | 
+                    Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\Plugins\" -Directory |
                         Get-ChildItem -Filter manifest.json |
                         & $importManifest
 
@@ -51,12 +51,12 @@
                         Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/Plugins" |
                             Get-ChildItem -Filter manifest.json |
                             & $importManifest
-                    
+
                         Get-ChildItem -Path "/Applications/Stream Deck.app/Contents/Plugins" -Directory |
                             Get-ChildItem -Filter manifest.json |
                             & $importManifest
                     }
-                } 
+                }
             )
         }
 

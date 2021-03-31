@@ -7,7 +7,7 @@
         Creates a StreamDeck profile object
     .Example
         New-StreamDeckProfile -Name Clippy -Action @{
-            '0,0' = 
+            '0,0' =
                 New-StreamDeckAction -Name "Switch Profile" -Setting @{
                     DeviceUUID  = ''
                     ProfileUUID = 'A0C89D39-F47D-4CE0-8262-4EE22E22CEFC'
@@ -17,19 +17,19 @@
 
             '1,1' = New-StreamDeckAction -HotKey "CTRL+C" -Title "Copy" -Image $home\Downloads\copy.svg      # downloaded from FeatherIcons
 
-            '2,1' = New-StreamDeckAction -HotKey "CTRL+V" -Title "Paste" -Image $home\Downloads\code.svg     # downloaded from FeatherIcons        
+            '2,1' = New-StreamDeckAction -HotKey "CTRL+V" -Title "Paste" -Image $home\Downloads\code.svg     # downloaded from FeatherIcons
         }
     .Example
         $gitUser = 'StartAutomating'
         $rows, $columns = 2,3
         $repoList =  (Invoke-RestMethod -Uri https://api.github.com/users/$gitUser/repos?sort=pushed | ForEach-Object { $_ })
         $n =0
-        $actions = [Ordered]@{} 
+        $actions = [Ordered]@{}
         for ($r = 0 ;$r -lt $rows; $r++) {
             for ($c = 0 ; $c -lt $columns; $C++) {
                 $actions["$c,$r"] = New-StreamDeckAction -Uri $repoList[$n].html_url -Title $repoList[$n].name
                 $n++
-            }    
+            }
         }
 
         New-StreamDeckProfile -Name GitRepos -Action $actions |
@@ -48,7 +48,7 @@
     $Name,
 
     # A collection of actions.
-    [Parameter(Mandatory,ValueFromPipelineByPropertyName)]    
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
     [Collections.IDictionary]
     [ValidateScript({
         foreach ($k in $_.Keys) {
@@ -60,13 +60,13 @@
     })]
     $Action = @{},
 
-    # The application identifier.  
+    # The application identifier.
     # If provided, this profile will be activated whenever this application is given focus.
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $AppIdentifier,
 
-    # The device model.  
+    # The device model.
     # If not provided, the most commonly used device model from your other profiles will be used.
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
@@ -81,27 +81,27 @@
     # The version of the profile.  By default, 1.0
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
-    $Version = '1.0'    
+    $Version = '1.0'
     )
 
 
     process {
-        if (-not $DeviceModel -or -not $DeviceUUID) {            
+        if (-not $DeviceModel -or -not $DeviceUUID) {
             $profiles = Get-StreamDeckProfile
             if (-not $DeviceModel) {
-                $DeviceModel = $profiles | 
-                    Group-Object DeviceModel -NoElement | 
-                    Sort-Object Count -Descending | 
+                $DeviceModel = $profiles |
+                    Group-Object DeviceModel -NoElement |
+                    Sort-Object Count -Descending |
                     Select-Object -First 1 -ExpandProperty Name
             }
             if (-not $DeviceUUID) {
-                $DeviceUUID = $profiles | 
-                    Group-Object DeviceUUID -NoElement | 
-                    Sort-Object Count -Descending | 
+                $DeviceUUID = $profiles |
+                    Group-Object DeviceUUID -NoElement |
+                    Sort-Object Count -Descending |
                     Select-Object -First 1 -ExpandProperty Name
             }
         }
-        
+
 
         $streamDeckProfileObject = [Ordered]@{
             Name=$Name;
@@ -112,12 +112,12 @@
             PSTypeName = 'StreamDeck.Profile'
         }
 
-        
-        $profileRoot= 
+
+        $profileRoot=
             if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
                 "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
             } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
-                "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"            
+                "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
             }
 
         $profileDirectory = Join-Path $profileRoot -ChildPath "$($streamDeckProfileObject.Guid).sdProfile"
@@ -129,7 +129,7 @@
 
         $streamDeckProfileObject.Path = "$manifestPath"
         foreach ($act in $Action.GetEnumerator()) {
-            $streamDeckProfileObject.Actions[$act.Name] = $act.value       
+            $streamDeckProfileObject.Actions[$act.Name] = $act.value
         }
         if ($streamDeckProfileObject.Actions.Count) {
             $streamDeckProfileObject.Actions = [PSCustomobject]$streamDeckProfileObject.Actions

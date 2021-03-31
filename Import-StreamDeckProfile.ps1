@@ -2,13 +2,13 @@
 {
     <#
     .Synopsis
-        Imports StreamDeck Profiles 
+        Imports StreamDeck Profiles
     .Description
         Imports StreamDeck Profile files (*.StreamDeckProfile).
 
         Profiles are extracted to the ProfilesV2 directory of the local StreamDeck program.
     .Example
-        Import-StreamDeckProfile -InputPath .\My.StreamDeckProfile  
+        Import-StreamDeckProfile -InputPath .\My.StreamDeckProfile
     .Link
         Export-StreamDeckProfile
     #>
@@ -20,7 +20,7 @@
     [string]
     $InputPath,
 
-    # The output directory.  
+    # The output directory.
     # If not provided, will output to the StreamDeck profiles directory.
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
@@ -37,14 +37,14 @@
         $resolvedInputPath = $ExecutionContext.SessionState.Path.GetResolvedPSPathFromPSPath($InputPath)
         if (-not $resolvedInputPath) { return }
         if (-not $OutputDirectory) {
-            $OutputDirectory = 
+            $OutputDirectory =
                 if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
                     "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
-                } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {                
+                } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
                     "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
                 }
         }
-            
+
         if (-not $OutputDirectory) { Write-Error "Could not determine -OutputDirectory."; return }
         $unresolvedOutputDirectory = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputDirectory)
 

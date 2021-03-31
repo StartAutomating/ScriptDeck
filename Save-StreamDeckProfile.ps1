@@ -6,7 +6,7 @@
     .Description
         Saves StreamDeck Profiles and restarts any running StreamDeck instances.
     .Example
-        
+
     .Link
         Get-StreamDeckProfile
     .Link
@@ -14,7 +14,7 @@
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
-    # The StreamDeckProfile.  
+    # The StreamDeckProfile.
     # Returned from Get-StreamDeckProfile or New-StreamDeckProfile.
     [Parameter(Mandatory,ValueFromPipeline)]
     [PSTypeName('StreamDeck.Profile')]

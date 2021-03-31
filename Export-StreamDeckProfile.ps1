@@ -15,10 +15,10 @@
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $Name,
-    
+
     # The output path for the profile.
     # If the output path is not provided, profiles will be backed up to $home
-    [Parameter(ValueFromPipelineByPropertyName)]    
+    [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $OutputPath
     )
@@ -43,12 +43,12 @@
                 $null = New-Item -ItemType Directory -Path $sdpOutputDirectory
                 if (-not $?) { continue }
             }
-            
+
             Copy-Item -Recurse -Path "$($sdp.Path | Split-Path)$([IO.Path]::DirectorySeparatorChar)*" -Destination $sdpOutputDirectory
 
             $manifestPath = Join-Path $sdpOutputDirectory "manifest.json"
-            Get-Content $manifestPath -Raw | 
-                ConvertFrom-Json | 
+            Get-Content $manifestPath -Raw |
+                ConvertFrom-Json |
                 ForEach-Object {
                     $_.psobject.properties.Remove('DeviceUUID')
                     $_

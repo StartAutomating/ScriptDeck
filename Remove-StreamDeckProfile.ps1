@@ -4,11 +4,11 @@
     .Synopsis
         Removes StreamDeck Profiles
     .Description
-        Removes StreamDeck Profiles and their directory contents.  
-        
+        Removes StreamDeck Profiles and their directory contents.
+
         This cannot be undone.
     .Example
-        Get-StreamDeckProfile -Name GoodbyeProfile | Remove-StreamDeckProfile    
+        Get-StreamDeckProfile -Name GoodbyeProfile | Remove-StreamDeckProfile
     .Link
         Get-StreamDeckProfile
     #>
@@ -27,6 +27,6 @@
         if ($PSCmdlet.ShouldProcess("Remove '$ProfilePath'")) {
             $ProfilePath | Split-Path | Remove-Item -Recurse -Force
         }
-        
+
     }
 }

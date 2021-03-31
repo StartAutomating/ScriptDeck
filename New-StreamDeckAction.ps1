@@ -7,7 +7,7 @@
         Creates a StreamDeck action, to be used as part of a profile.
     .Example
         New-StreamDeckAction -Name Hotkey -Setting @{
- 
+
         }
     .Link
         Get-StreamDeckAction
@@ -39,7 +39,7 @@
     [Parameter(Mandatory,ParameterSetName='ScriptBlock',ValueFromPipelineByPropertyName)]
     [ScriptBlock]
     $ScriptBlock,
-    
+
     # If set, will run the ScriptBlock in Windows PowerShell.
     # By default, will run the Scriptblock in PowerShell core.
     # This option is obviously not supported on MacOS.
@@ -62,7 +62,7 @@
     [Alias('Enter','Return', 'SendReturn')]
     [switch]
     $SendEnter,
-    
+
     # The settings passed to the plugin.
     [Parameter(ValueFromPipelineByPropertyName)]
     [Alias('Settings')]
@@ -110,12 +110,12 @@
     # If set, will not show a title.
     [Parameter(ValueFromPipelineByPropertyName)]
     [switch]
-    $HideTitle    
+    $HideTitle
     )
 
     begin {
         $streamDeckActions = Get-StreamDeckAction
-        
+
     }
 
     process {
@@ -129,10 +129,10 @@
                         }
                     }
 
-                    
-                    $matchingPlugin = 
+
+                    $matchingPlugin =
                         $streamDeckActions | Where-Object UUID -EQ $UUID
-                    $uuid = $matchingPlugin.uuid                
+                    $uuid = $matchingPlugin.uuid
                 }
                 OpenURI {
                     $name = 'Website'
@@ -175,18 +175,18 @@
 \+){0,3}
 (?<Key>.+$)
 '@, 'IgnoreCase,IgnorePatternWhitespace')
-                    $Setting = 
+                    $Setting =
                         [Ordered]@{
                             Hotkeys = @(
                                 foreach ($hot in $HotKey) {
                                     $matched =  $HotKeyRegex.Match($Hot)
-                                
+
                                     $keyCmd = $matched.Groups["Command"].Success
                                     $keyControl = $matched.Groups["Control"].Success
                                     $keyOption = $matched.Groups["Alt"].Success
                                     $keyShift = $matched.Groups["Shift"].Success
                                     $modifiers = 0
-                                
+
                                     if ($keyShift) { $modifiers = $modifiers -bor 1 }
                                     if ($keyControl) { $modifiers = $modifiers -bor 2 }
                                     if ($keyOption ) { $modifiers = $modifiers -bor 4 }
@@ -221,7 +221,7 @@
                                                 Execute { 0x2b}
                                                 'Insert|Ins' { 0x2d}
                                                 'Delete|Del' { 0x2e}
-                                                Help { 0x2f}                                                
+                                                Help { 0x2f}
                                                 'Space|Spacebar|\s' { 0x20}
                                                 'Prior|PageUp' {0x21}
                                                 'Next|PageDown' {0x22}
@@ -256,7 +256,7 @@
                                                 ',|Comma|OEMComma' {0xbc}
                                                 '\-|Minus|OEMMinus' {0xbd}
                                                 '\.|Period|OEMPeriod' {0xbe}
-                                            }                                            
+                                            }
                                         }
 
                                     if (-not $nativeCode) { Write-Error "Could not map key code for HotKey '$hot'"; return}
@@ -285,15 +285,15 @@
                             )
                         }
                 }
-                
+
                 ScriptBlock {
                     $name = 'Open'
                     $uuid = 'com.elgato.streamdeck.system.open'
 
-                    $cmdSequence = 
+                    $cmdSequence =
                         @(
                         if ($WindowsPowerShell) {
-                            'powershell'       
+                            'powershell'
                         }
                         else {
                             'pwsh'
@@ -304,7 +304,7 @@
                         [Convert]::ToBase64String($OutputEncoding.GetBytes("$ScriptBlock"))
                         ) -join ' '
 
-                    if (-not $cmdPath) { 
+                    if (-not $cmdPath) {
                         Write-Error "Could not find PowerShell/pwsh in the path"
                         return
                     }
@@ -312,15 +312,15 @@
                     $Setting = [Ordered]@{
                         openInBrowser = $true
                         path = $cmdSequence
-                    }                    
+                    }
 
-                    
-                }  
+
+                }
             }
-        
+
 
         if (-not $States) {
-            $States = 
+            $States =
                 @(if ($matchingPlugin.states) {
                     foreach ($s in $matchingPlugin.states) {
                         $sc = [Ordered]@{}
@@ -346,13 +346,13 @@
             if ($Image) { $s | Add-Member NoteProperty Image $Image -Force }
             if ($Title) { $s | Add-Member NoteProperty Title $Title -Force }
             if ($FontSize) { $s | Add-Member NotePropety FSize $FontSize -Force}
-            if ($Underline) { $s | Add-Member NotePropety FUnderline ($Underline -as [bool]) -Force } 
+            if ($Underline) { $s | Add-Member NotePropety FUnderline ($Underline -as [bool]) -Force }
             if ($FontFamily) { $s | Add-Member NoteProperty FFamily $FontFamily -Force}
             if ($titleColor) { $s | Add-Member NoteProperty TitleColor $titleColor -Force }
             if ($titleAlignment) { $s | Add-Member NoteProperty TitleAlignment $titleAlignment -Force }
             if ($HideTitle) { $s | Add-Member TitleShow (-not $HideTitle) -Force  }
-        }            
-        
+        }
+
 
         [PSCustomobject]([Ordered]@{
             Name = $Name
