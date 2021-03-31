@@ -13,6 +13,7 @@
         Remove-StreamDeckProfile
     #>
     [OutputType('StreamDeck.Profile')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "", Justification="Parameter is being used")]
     param(
     # The name of the profile
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -28,15 +29,17 @@
     begin {
         $importProfile = { process {
             $inFile = $_
-            $jsonObject = ConvertFrom-Json ([IO.File]::ReadAllText($inFile.Fullname))
+            $jsonObject = ConvertFrom-Json ([IO.File]::ReadAllText($inFile.Fullname)) # Read in the file content
             $jsonObject.pstypenames.clear()
-            $jsonObject.pstypenames.add('StreamDeck.Profile')
-            $jsonObject.psobject.properties.add([PSNoteProperty]::new('GUID', $inFile.Directory.Name -replace '\.sdprofile$'))
-            $jsonObject.psobject.properties.add([PSNoteProperty]::new('Path', $inFile.Fullname))
+            $jsonObject.pstypenames.add('StreamDeck.Profile') # decorate the type
+            $jsonObject.psobject.properties.add([PSNoteProperty]::new('GUID',  # add .Guid
+                $inFile.Directory.Name -replace '\.sdprofile$'))
+            $jsonObject.psobject.properties.add([PSNoteProperty]::new('Path',  # add .Path
+                $inFile.Fullname))
             $maxX = 0
             $maxY = 0
 
-            foreach ($act in $jsonObject.Actions.psobject.properties) {
+            foreach ($act in $jsonObject.Actions.psobject.properties) { # Decorate each action
                 $x,$y = $act.Name -split ','
                 if ($maxX -lt $x ) {$maxX = [int]$x}
                 if ($maxY -lt $y) {$maxY = [int]$y}
@@ -44,9 +47,9 @@
                 $act.value.pstypenames.add('StreamDeck.Action')
             }
             $jsonObject.Actions.pstypenames.clear()
-            $jsonObject.Actions.pstypenames.add('StreamDeck.ProfileAction')
-            if ($Name -and $jsonObject.Name -notlike $Name) { return }
-            $jsonObject
+            $jsonObject.Actions.pstypenames.add('StreamDeck.ProfileAction') # Decorate the actions.
+            if ($Name -and $jsonObject.Name -notlike $Name) { return } # filter
+            $jsonObject # output.
         } }
     }
 
