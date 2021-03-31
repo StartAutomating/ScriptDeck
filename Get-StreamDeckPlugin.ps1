@@ -40,21 +40,22 @@
                 $jsonObject
             } }
             $Script:CachedStreamDeckPlugins = @(
+                # On Windows, plugins can be in
                 if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
-                    Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\Plugins\" -Directory |
+                    Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\Plugins\" -Directory | # appdata
                         Get-ChildItem -Filter manifest.json |
                         & $importManifest
 
-                    Get-ChildItem -Path "$env:ProgramFiles\Elgato\StreamDeck\plugins" -Directory |
+                    Get-ChildItem -Path "$env:ProgramFiles\Elgato\StreamDeck\plugins" -Directory | # or programfiles
                         Get-ChildItem -Filter manifest.json |
                         & $importManifest
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
-                    if ($PSVersionTable.OS -like '*darwin*') {
-                        Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/Plugins" |
+                    if ($PSVersionTable.OS -like '*darwin*') { # On Mac, plugins can be in
+                        Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/Plugins" | # the library
                             Get-ChildItem -Filter manifest.json |
                             & $importManifest
 
-                        Get-ChildItem -Path "/Applications/Stream Deck.app/Contents/Plugins" -Directory |
+                        Get-ChildItem -Path "/Applications/Stream Deck.app/Contents/Plugins" -Directory | # or applications.
                             Get-ChildItem -Filter manifest.json |
                             & $importManifest
                     }
