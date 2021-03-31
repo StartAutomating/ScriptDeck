@@ -59,7 +59,7 @@
         }
         return $true
     })]
-    $Action = @{},
+    $Action,
 
     # The application identifier.
     # If provided, this profile will be activated whenever this application is given focus.
@@ -113,8 +113,13 @@
             Guid = [Guid]::NewGuid().ToString()
             Actions=[Ordered]@{}
             PSTypeName = 'StreamDeck.Profile'
+            Version = $Version
         }
         #endregion Create Profile Object
+
+        if ($AppIdentifier) {
+            $streamDeckProfileObject.AppIdentifier = $AppIdentifier
+        }
 
         #region Determine Profile Root
         $profileRoot=
