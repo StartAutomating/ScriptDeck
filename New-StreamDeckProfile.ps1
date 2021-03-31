@@ -42,6 +42,7 @@
         Save-StreamDeckProfile
     #>
     [OutputType('StreamDeck.Profile')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "", Justification="Does not change state")]
     param(
     # The name of the profile
     [Parameter(Mandatory,ValueFromPipelineByPropertyName)]

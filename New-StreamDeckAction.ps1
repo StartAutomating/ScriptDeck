@@ -14,6 +14,7 @@
     #>
     [OutputType('StreamDeck.Action')]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("Test-ForParameterSetAmbiguity", "", Justification="Ambiguity Desired")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "", Justification="Does not change state")]
     param(
     # The name of the plugin.
     [Parameter(Mandatory,ParameterSetName='PluginName',ValueFromPipelineByPropertyName)]
