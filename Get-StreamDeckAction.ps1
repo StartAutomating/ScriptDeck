@@ -49,12 +49,11 @@
         if (-not ($Name -or $UUID)) {
             $Script:CachedStreamDeckActions
         } else {
-            $Script:CachedStreamDeckActions |
-                Where-Object {
-                    if ($UUID -and ($_.UUID -notlike $UUID)) { return}
-                    if ($Name -and ($_.Name -notlike $Name)) { return}
-                    return $true
-                }
+            foreach ($_ in $Script:CachedStreamDeckActions) {
+                if ($UUID -and ($_.UUID -notlike $UUID)) { continue }
+                if ($Name -and ($_.Name -notlike $Name)) { continue}
+                $_
+            }
         }
         #region Return Matching Plugins
     }
