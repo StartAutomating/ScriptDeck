@@ -55,6 +55,16 @@
     [string]
     $ApplicationPath,
 
+    # The name of a StreamDeck profile.
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='ProfileName')]
+    [string]
+    $ProfileName,
+
+    # The device UUID, when switching profiles.
+    [Parameter(ValueFromPipelineByPropertyName,ParameterSetName='ProfileName')]
+    [string]
+    $DeviceUUID,
+
     # The text that should be automatically typed
     [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='Text')]
     [string]
@@ -123,12 +133,12 @@
     process {
             switch ($PSCmdlet.ParameterSetName) {
                 PluginName {
-                    
+
                     if (-not $UUID) { # If UUID has not been provided
-                        $uuid = 
+                        $uuid =
                             $streamDeckActions |
                                 Where-Object Name -EQ $name |
-                                Select-Object -ExpandProperty UUID # Attempt to find the plugin by name 
+                                Select-Object -ExpandProperty UUID # Attempt to find the plugin by name
                         if (-not $uuid) {
                             # If we could not, assume a base name
                             Write-Warning "Could not find UUID for Name '$name', assuming com.elgato.streamdeck.system.$name"
@@ -141,13 +151,27 @@
                         $streamDeckActions | Where-Object UUID -EQ $UUID
                     $uuid = $matchingPlugin.uuid
                 }
+                ProfileName {
+                    #region Switch Profile
+                    # If switching profiles, find the profile
+                    $streamDeckProfile = Get-StreamDeckProfile -Name $ProfileName
+                    # If we could not, error out.
+                    if (-not $streamDeckProfile) { Write-Error "Could not find profile named '$ProfileName'"; return}
+                    $name = 'Switch Profile'
+                    $UUID = 'com.elgato.streamdeck.profile.rotate'
+                    $Setting = @{
+                        DeviceUUID= $DeviceUUID
+                        ProfileUUID = $streamDeckProfile.Guid
+                    }
+                    #endregion Switch Profile
+                }
                 OpenURI {
                     #region Website
                     $name = 'Website'
                     $uuid = 'com.elgato.streamdeck.system.website'
                     $Setting = [Ordered]@{
                         openInBrowser = $true
-                        path = $Uri
+                        path = "$Uri"
                     }
                     #endregion Website
                 }
@@ -320,16 +344,12 @@
                         else {
                             'pwsh'
                         }
+                        '-noexit'
                         '-noprofile'
                         '-nologo'
                         '-encodedCommand'
-                        [Convert]::ToBase64String($OutputEncoding.GetBytes("$ScriptBlock"))
+                        [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($ScriptBlock.ToString()))
                         ) -join ' '
-
-                    if (-not $cmdPath) {
-                        Write-Error "Could not find PowerShell/pwsh in the path"
-                        return
-                    }
 
                     $Setting = [Ordered]@{
                         openInBrowser = $true
