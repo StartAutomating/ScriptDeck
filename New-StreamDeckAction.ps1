@@ -160,7 +160,7 @@
                     $name ='text'
                     $uuid = 'com.elgato.streamdeck.system.text'
                     $setting = @{
-                        isSendingEnter = ($Newline -as [bool])
+                        isSendingEnter = ($SendEnter -as [bool])
                         pastedText = $Text
                     }
                     #region Text
