@@ -10,6 +10,7 @@
     .Example
         Export-StreamDeckProfile
     #>
+    [OutputType([IO.FileInfo])]
     param(
     # The name of the profile
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -36,6 +37,7 @@
             $OutputPath = $home
         }
 
+        #region Export Profiles
         foreach ($sdp in $sdprofiles) {
             $sdpOutputDirectory = Join-Path $outputPath "$($sdp.Name)_Profile" | Join-Path -ChildPath "$($sdp.Guid).sdProfile"
             $sdpOutputPath      = Join-Path $OutputPath "$($sdp.Name).streamDeckProfile"
@@ -58,7 +60,9 @@
             [IO.Compression.ZipFile]::CreateFromDirectory("$($sdpOutputDirectory | Split-path)", "$sdpOutputPath")
 
             Remove-Item -Recurse -Force $sdpOutputDirectory
-        }
 
+            Get-Item -LiteralPath $sdpOutputPath
+        }
+        #endregion Export Profiles
     }
 }

@@ -6,12 +6,13 @@
     .Description
         Creates a StreamDeck action, to be used as part of a profile.
     .Example
-        New-StreamDeckAction -Name Hotkey -Setting @{
-
-        }
+        New-StreamDeckAction -HotKey "CTRL+F4" -Title "Close"
+    .Example
+        New-StreamDeckAction -Uri https://github.com/ -Title "GitHub" 
     .Link
         Get-StreamDeckAction
     #>
+    [OutputType('StreamDeck.Action')]
     param(
     # The name of the plugin.
     [Parameter(Mandatory,ParameterSetName='PluginName',ValueFromPipelineByPropertyName)]
