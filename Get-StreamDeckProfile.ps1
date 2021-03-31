@@ -27,6 +27,7 @@
     )
 
     begin {
+        #region [ScriptBlock]$importProfile
         $importProfile = { process {
             $inFile = $_
             $jsonObject = ConvertFrom-Json ([IO.File]::ReadAllText($inFile.Fullname)) # Read in the file content
@@ -51,6 +52,7 @@
             if ($Name -and $jsonObject.Name -notlike $Name) { return } # filter
             $jsonObject # output.
         } }
+        #endregion [ScriptBlock]$importProfile
     }
 
     process {
