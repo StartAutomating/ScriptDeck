@@ -63,6 +63,17 @@
         }
         #endregion Cache StreamDeck Plugins
 
-        $Script:CachedStreamDeckPlugins
+        if ($Name -or $UUID) {
+            :nextPlugin foreach ($plugin in $Script:CachedStreamDeckPlugins) {
+                if ($plugin.Name -like $name) { $plugin; continue }
+                foreach ($act in $plugin.actions) {
+                    if ($Name -and $act.Name -like $name) { $plugin; continue nextPlugin}
+                    if ($UUID -and $act.uuid -like $UUID) { $plugin; continue nextPlugin}
+                }
+            }
+        }
+        else {
+            $Script:CachedStreamDeckPlugins
+        }
     }
 }
