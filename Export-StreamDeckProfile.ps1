@@ -49,7 +49,7 @@
             Copy-Item -Recurse -Path "$($sdp.Path | Split-Path)$([IO.Path]::DirectorySeparatorChar)*" -Destination $sdpOutputDirectory
 
             $manifestPath = Join-Path $sdpOutputDirectory "manifest.json"
-            Get-Content $manifestPath -Raw |
+            [IO.File]::ReadAllText("$manifestPath") |
                 ConvertFrom-Json |
                 ForEach-Object {
                     $_.psobject.properties.Remove('DeviceUUID')
