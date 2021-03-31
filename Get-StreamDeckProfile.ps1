@@ -12,6 +12,7 @@
     .Link
         Remove-StreamDeckProfile
     #>
+    [OutputType('StreamDeck.Profile')]
     param(
     # The name of the profile
     [Parameter(ValueFromPipelineByPropertyName)]

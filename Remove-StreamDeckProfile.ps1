@@ -13,6 +13,7 @@
         Get-StreamDeckProfile
     #>
     [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
+    [OutputType([nullable])]
     param(
     # The Profile Path
     [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -23,10 +24,11 @@
     )
 
     process {
+        #region Confirm and Remove
         if (-not (Test-Path $ProfilePath)) { return }
         if ($PSCmdlet.ShouldProcess("Remove '$ProfilePath'")) {
             $ProfilePath | Split-Path | Remove-Item -Recurse -Force
         }
-
+        #endregion Confirm and Remove
     }
 }

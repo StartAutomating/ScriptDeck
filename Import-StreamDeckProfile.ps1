@@ -12,6 +12,7 @@
     .Link
         Export-StreamDeckProfile
     #>
+    [OutputType([Nullable])]
     param(
     # The input path.
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -46,10 +47,11 @@
         }
 
         if (-not $OutputDirectory) { Write-Error "Could not determine -OutputDirectory."; return }
-        $unresolvedOutputDirectory = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputDirectory)
-
-        [IO.Compression.ZipFile]::ExtractToDirectory("$resolvedInputPath", "$unresolvedOutputDirectory") # ("$($sdpOutputDirectory | Split-path)", "$sdpOutputPath")
-
+        #region Expand Profile .zip
+        $unresolvedOutputDirectory =
+            $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputDirectory)
+        [IO.Compression.ZipFile]::ExtractToDirectory("$resolvedInputPath", "$unresolvedOutputDirectory")
+        #endregion Expand Profile .zip
         $streamDeckRunning = Get-Process streamdeck
         if ($streamDeckRunning) {
             $streamDeckRunning | Stop-Process

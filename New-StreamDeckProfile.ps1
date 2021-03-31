@@ -41,6 +41,7 @@
     .Link
         Save-StreamDeckProfile
     #>
+    [OutputType('StreamDeck.Profile')]
     param(
     # The name of the profile
     [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -86,6 +87,7 @@
 
 
     process {
+        #region Discover Device Model/UUID
         if (-not $DeviceModel -or -not $DeviceUUID) {
             $profiles = Get-StreamDeckProfile
             if (-not $DeviceModel) {
@@ -101,8 +103,9 @@
                     Select-Object -First 1 -ExpandProperty Name
             }
         }
+        #endregion Discover Device Model/UUID
 
-
+        #region Create Profile Object
         $streamDeckProfileObject = [Ordered]@{
             Name=$Name;
             DeviceModel=$DeviceModel;
@@ -111,8 +114,9 @@
             Actions=[Ordered]@{}
             PSTypeName = 'StreamDeck.Profile'
         }
+        #endregion Create Profile Object
 
-
+        #region Determine Profile Root
         $profileRoot=
             if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
                 "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
@@ -126,14 +130,17 @@
             if (-not $createdDir) { return }
         }
         $manifestPath = Join-Path $profileDirectory -ChildPath manifest.json
-
         $streamDeckProfileObject.Path = "$manifestPath"
+        #endregion Determine Profile Root
+
+        #region Map Actions
         foreach ($act in $Action.GetEnumerator()) {
             $streamDeckProfileObject.Actions[$act.Name] = $act.value
         }
         if ($streamDeckProfileObject.Actions.Count) {
             $streamDeckProfileObject.Actions = [PSCustomobject]$streamDeckProfileObject.Actions
         }
+        #endregion Map Actions
 
         [PSCustomObject]$streamDeckProfileObject
     }

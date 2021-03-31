@@ -10,6 +10,7 @@
     .Link
         New-StreamDeckAction
     #>
+    [OutputType('StreamDeck.Plugin')]
     param(
     # The name of the plugin
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -28,6 +29,7 @@
     )
 
     process {
+        #region Cache StreamDeck Plugins
         if ($force -or -not $Script:CachedStreamDeckPlugins) {
             $importManifest = { process {
                 $inFile = $_
@@ -59,6 +61,7 @@
                 }
             )
         }
+        #endregion Cache StreamDeck Plugins
 
         $Script:CachedStreamDeckPlugins
     }

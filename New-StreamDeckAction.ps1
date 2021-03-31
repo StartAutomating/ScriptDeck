@@ -8,11 +8,12 @@
     .Example
         New-StreamDeckAction -HotKey "CTRL+F4" -Title "Close"
     .Example
-        New-StreamDeckAction -Uri https://github.com/ -Title "GitHub" 
+        New-StreamDeckAction -Uri https://github.com/ -Title "GitHub"
     .Link
         Get-StreamDeckAction
     #>
     [OutputType('StreamDeck.Action')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("Test-ForParameterSetAmbiguity", "", Justification="Ambiguity Desired")]
     param(
     # The name of the plugin.
     [Parameter(Mandatory,ParameterSetName='PluginName',ValueFromPipelineByPropertyName)]
@@ -116,7 +117,6 @@
 
     begin {
         $streamDeckActions = Get-StreamDeckAction
-
     }
 
     process {
@@ -136,30 +136,37 @@
                     $uuid = $matchingPlugin.uuid
                 }
                 OpenURI {
+                    #region Website
                     $name = 'Website'
                     $uuid = 'com.elgato.streamdeck.system.website'
                     $Setting = [Ordered]@{
                         openInBrowser = $true
                         path = $Uri
                     }
+                    #endregion Website
                 }
                 ApplicationPath {
+                    #region Application
                     $name = 'open'
                     $uuid = 'com.elgato.streamdeck.system.open'
                     $Setting = [Ordered]@{
                         openInBrowser =  $true
                         path = $ApplicationPath
                     }
+                    #endregion Application
                 }
                 Text {
+                    #region Text
                     $name ='text'
                     $uuid = 'com.elgato.streamdeck.system.text'
                     $setting = @{
                         isSendingEnter = ($Newline -as [bool])
                         pastedText = $Text
                     }
+                    #region Text
                 }
                 HotKey {
+                    #region HotKey
                     $name = 'HotKey'
                     $uuid = 'com.elgato.streamdeck.system.hotkey'
                     $HotKeyRegex = [Regex]::new(@'
@@ -273,6 +280,7 @@
                                         VKeyCode = $vKey -as [int]
                                     }
                                 }
+                                # All hotkeys must be followed by this "non-key".
                                 [PSCustomObject][Ordered]@{
                                     KeyCmd = $false
                                     KeyCtrl = $false
@@ -285,6 +293,7 @@
                                 }
                             )
                         }
+                    #region HotKey
                 }
 
                 ScriptBlock {

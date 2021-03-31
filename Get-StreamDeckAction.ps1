@@ -12,6 +12,7 @@
     .Link
         New-StreamDeckAction
     #>
+    [OutputType('StreamDeck.PluginAction')]
     param(
     # The name of the action
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -30,6 +31,7 @@
     )
 
     process {
+        #region Cache Plugins
         $plugins = Get-StreamDeckPlugin -Force:$Force
         if ($force -or -not $Script:CachedStreamDeckActions) {
             $Script:CachedStreamDeckActions =
@@ -41,7 +43,9 @@
                     }
                 })
         }
+        #endregion Cache Plugins
 
+        #region Return Matching Plugins
         if (-not ($Name -or $UUID)) {
             $Script:CachedStreamDeckActions
         } else {
@@ -52,5 +56,6 @@
                     return $true
                 }
         }
+        #region Return Matching Plugins
     }
 }
