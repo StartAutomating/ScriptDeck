@@ -123,9 +123,14 @@
     process {
             switch ($PSCmdlet.ParameterSetName) {
                 PluginName {
-                    if (-not $UUID) {
-                        $uuid = $streamDeckActions | Where-Object Name -EQ $name | Select-Object -ExpandProperty UUID
+                    
+                    if (-not $UUID) { # If UUID has not been provided
+                        $uuid = 
+                            $streamDeckActions |
+                                Where-Object Name -EQ $name |
+                                Select-Object -ExpandProperty UUID # Attempt to find the plugin by name 
                         if (-not $uuid) {
+                            # If we could not, assume a base name
                             Write-Warning "Could not find UUID for Name '$name', assuming com.elgato.streamdeck.system.$name"
                             $uuid = "com.elgato.streamdeck.system.$name"
                         }
@@ -170,6 +175,7 @@
                     #region HotKey
                     $name = 'HotKey'
                     $uuid = 'com.elgato.streamdeck.system.hotkey'
+                    # Hotkeys are tricky.  First we need a RegEx to get the sequence parts out.
                     $HotKeyRegex = [Regex]::new(@'
 (?<Modifier>
     (?>
@@ -187,25 +193,27 @@
                     $Setting =
                         [Ordered]@{
                             Hotkeys = @(
-                                foreach ($hot in $HotKey) {
+                                foreach ($hot in $HotKey) { # Then we need to walk over each -HotKey
                                     $matched =  $HotKeyRegex.Match($Hot)
 
+                                    # Find what matched
                                     $keyCmd = $matched.Groups["Command"].Success
                                     $keyControl = $matched.Groups["Control"].Success
                                     $keyOption = $matched.Groups["Alt"].Success
                                     $keyShift = $matched.Groups["Shift"].Success
                                     $modifiers = 0
-
+                                    # Set the right modifiers
                                     if ($keyShift) { $modifiers = $modifiers -bor 1 }
                                     if ($keyControl) { $modifiers = $modifiers -bor 2 }
                                     if ($keyOption ) { $modifiers = $modifiers -bor 4 }
                                     if ($keyCmd) { $modifiers = $modifiers -bor 8 }
-                                    $nativeCode = $vKey = $qtKey =
+                                    $nativeCode = $vKey = $qtKey = # and map the key.
                                         if ($matched.Groups["Key"].Length -eq 1) {
-                                            # Easy mode, turn the key into a char to get the v-key
+                                            # If it's a single char, it's
+                                            # easy mode, turn the key into a char to get the v-key.
                                             [char]$matched.Groups["Key"].Value
                                         } else {
-                                            # lookup table time.
+                                            # Otherwise, it's lookup table time.
                                             $matchedKey = $matched.Groups["Key"].Value
                                             switch -Regex ($matchedKey)  {
                                                 'F(?>[1-2][0-9]|[0-9])' { # F1-F24
@@ -268,8 +276,10 @@
                                             }
                                         }
 
+                                    # If we could not find a match, error and return
                                     if (-not $nativeCode) { Write-Error "Could not map key code for HotKey '$hot'"; return}
 
+                                    # Otherwise, create the type of object StreamDeck will want.
                                     [PSCustomObject][Ordered]@{
                                         KeyCmd = $keyCmd
                                         KeyCtrl = $keyControl
@@ -298,6 +308,7 @@
                 }
 
                 ScriptBlock {
+                    #region ScriptBlock
                     $name = 'Open'
                     $uuid = 'com.elgato.streamdeck.system.open'
 
@@ -324,8 +335,7 @@
                         openInBrowser = $true
                         path = $cmdSequence
                     }
-
-
+                    #endregion ScriptBlock
                 }
             }
 
@@ -333,15 +343,15 @@
         if (-not $States) {
             $States =
                 @(if ($matchingPlugin.states) {
-                    foreach ($s in $matchingPlugin.states) {
-                        $sc = [Ordered]@{}
+                    foreach ($s in $matchingPlugin.states) { # If the plugin had a default state
+                        $sc = [Ordered]@{} # copy it so we don't change that data.
                         foreach ($p in $s.psobject.properties) {
                             $sc[$p.Name] = $p.Value
                         }
                         [PSCustomObject]$sc
                     }
                 } else {
-                    [PSCustomObject][Ordered]@{
+                    [PSCustomObject][Ordered]@{ # Otherwise, create a state object based off of built-in parameters
                         FFamily= $fontFamily
                         FSize = $fontSize
                         FUnderline = $Underline -as [bool]
