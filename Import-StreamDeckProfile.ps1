@@ -39,7 +39,7 @@
         if (-not $resolvedInputPath) { return }
         if (-not $OutputDirectory) {
             $OutputDirectory =
-                if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
+                if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
                     "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
                 } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
                     "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"

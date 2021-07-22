@@ -41,8 +41,10 @@
             } }
             $Script:CachedStreamDeckPlugins = @(
                 # On Windows, plugins can be in
-                if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
-                    Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\Plugins\" -Directory | # appdata
+                if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
+                    $sdPluginPath = "$env:AppData\Elgato\StreamDeck\Plugins\"
+                    Write-Verbose "Searching for Plugins beneath '$sdPluginPath'"
+                    Get-ChildItem -Path $sdPluginPath -Directory | # appdata
                         Get-ChildItem -Filter manifest.json |
                         & $importManifest
 
