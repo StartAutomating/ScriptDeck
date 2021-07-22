@@ -56,7 +56,7 @@
     }
 
     process {
-        if (-not $PSVersionTable.Platform -or ($PSVersionTable.Platform -eq 'Windows')) {
+        if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
             Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\ProfilesV2\" |
                 Get-ChildItem -Filter manifest.json -Recurse:$Recurse |
                 & $importProfile

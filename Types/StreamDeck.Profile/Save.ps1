@@ -1,6 +1,9 @@
-﻿$streamdeckprocess = Get-Process streamdeck
+﻿$streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
 $streamDeckPath    = "$($streamdeckprocess.Path)"
-$streamdeckprocess | Stop-Process
+if ($streamDeckPath) { 
+    Start-Process -FilePath $streamDeckPath -ArgumentList '--quit' -Wait
+}
+#$streamdeckprocess | Stop-Process
 
 foreach ($action in $this.Actions.psobject.properties) {
     $stateIndex = 0
@@ -48,5 +51,26 @@ $this |
     Set-Content -literalPath $this.Path -Encoding UTF8
 
 if ($streamDeckPath) {
-    Start-Process $streamDeckPath
+    $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
+    Register-ObjectEvent -InputObject $streamdeckProcess -EventName Exited -Action ([ScriptBlock]::Create(@"
+Write-Verbose 'Process Exited, Starting a new one'
+Start-Process '$($streamdeckprocess.Path)'
+"@)) |Out-Null
+    <#
+    for ($tries =0; $tries -lt 6; $tries++) {
+        Start-Sleep -Milliseconds 250
+        
+        $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
+        Write-Verbose "$streamdeckprocess " 
+        if (-not $streamdeckprocess) {break }
+        else {
+            $streamDeckNewPath = "$($streamdeckprocess.Path)"
+            Write-Verbose "$streamDeckNewPath "
+        }
+    }
+    
+    Start-Sleep -Seconds 2
+    Write-Verbose "Starting $streamDeckNewPath"
+    Start-Process $streamDeckNewPath -PassThru 2>&1
+    #>
 }
