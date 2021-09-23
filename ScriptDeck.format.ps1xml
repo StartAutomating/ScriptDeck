@@ -38,6 +38,77 @@
       </TableControl>
     </View>
     <View>
+      <Name>StreamDeck.Plugin</Name>
+      <ViewSelectedBy>
+        <TypeName>StreamDeck.Plugin</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+    @(
+    ''
+    '# ' + $_.Name, '[', $_.Version,']','(', $_.Author,')' -join ' '
+    ''
+    (' '* 3) + $_.Description -split '(?&gt;\r\n|\n)' -join ('    ' + [Environment]::NewLine)
+
+
+    ''
+    '## Actions:'
+    ''
+    foreach ($act in $_.actions) {
+        (' '* 2),$act.Name,'[',$act.uuid,']' -join ' '
+        (' '* 2),'&gt;',$act.tooltip -join ' '
+    }
+    ''
+    ) -join [Environment]::NewLine
+</ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    <View>
+      <Name>StreamDeck.Plugin</Name>
+      <ViewSelectedBy>
+        <TypeName>StreamDeck.Plugin</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Version</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Author</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>StreamDeck.PluginAction</Name>
       <ViewSelectedBy>
         <TypeName>StreamDeck.PluginAction</TypeName>
