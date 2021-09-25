@@ -1,6 +1,6 @@
 ﻿@{
     Description = "PowerShell Tools for Elgato StreamDeck"
-    ModuleVersion = '0.2'
+    ModuleVersion = '0.3'
     RootModule = 'ScriptDeck.psm1'
     TypesToProcess = 'ScriptDeck.types.ps1xml'
     FormatsToProcess = 'ScriptDeck.format.ps1xml'
