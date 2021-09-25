@@ -105,15 +105,15 @@
         } elseif ($AutoIncrement -and $pluginManifestJson.version) {
             $Version = if ($pluginManifestJson.version) { $pluginManifestJson.version } else { '0.0' }
             if ($AutoIncrement -eq 'Major') {
-                $Version = "$($Version.Major + 1).0.0"
+                $Version = "$([Math]::Max($Version.Major,0) + 1).0"
             }
             elseif ($AutoIncrement -eq 'Minor') {
-                $Version = "$($Version.Major).$($Version.Minor + 1).0"
+                $Version = "$($Version.Major).$([Math]::Max($Version.Minor,0) + 1)"
             }
             elseif ($AutoIncrement -eq 'Patch') {
-                $Version = "$($Version.Major).$($Version.Minor).$($Version.Build  +1)"
+                $Version = "$($Version.Major).$([Math]::Max($Version.Minor,0)).$([Math]::Max($Version.Build,0) + 1)"
             }
-            $pluginManifestJson.version = $Version
+            $pluginManifestJson.version = "$Version"
             $changed = $true
         }
         #endregion Handle Version Changes
