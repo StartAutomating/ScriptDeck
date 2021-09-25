@@ -15,7 +15,7 @@ describe ScriptDeck {
     context Plugins {
         it 'Can create and update plugins' {
             $tmpPath = if ($env:TEMP) { $env:TEMP } else { '/tmp' }
-            $tmpPath = Join-Path $env:TEMP (Get-Random)
+            $tmpPath = Join-Path $tmpPath (Get-Random)
             New-Item -ItemType Directory -Path $tmpPath
             Push-Location -Path $tmpPath
             $newPlugin = New-StreamDeckPlugin -Name MyTestPlugin -Author Me -Description "A brief description" -Icon NoIcon.png
