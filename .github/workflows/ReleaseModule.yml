@@ -78,7 +78,7 @@ jobs:
           $listOfReleases = Invoke-RestMethod -Uri $releasesUrl  -Method Get -Headers @{
               "Accept" = "application/vnd.github.v3+json"    
               "Authorization" = 'Bearer ${{ secrets.GITHUB_TOKEN }}'
-          }
+          } -Erroraction SilentlyContinue
           
           $releaseExists = $listOfReleases | Where-Object tag_name -eq $targetVersion
           
