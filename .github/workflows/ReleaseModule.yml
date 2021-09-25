@@ -73,7 +73,9 @@ jobs:
           
           $targetVersion  =$ExecutionContext.InvokeCommand.ExpandString($TagVersionFormat)
           $targetReleaseName = $targetVersion
-          $listOfReleases = Invoke-RestMethod -Uri 'https://api.github.com/repos/${{github.owner}}/${{github.repository}}/releases' -Method Get -Headers @{
+          $releasesUrl = 'https://api.github.com/repos/${{github.owner}}/${{github.repository}}/releases'
+          "ReleasesURL: $releasesUrl"  | Out-Host
+          $listOfReleases = Invoke-RestMethod -Uri $releasesUrl  -Method Get -Headers @{
               "Accept" = "application/vnd.github.v3+json"    
               "Authorization" = 'Bearer ${{ secrets.GITHUB_TOKEN }}'
           }
@@ -86,7 +88,7 @@ jobs:
           }
           
           
-          Invoke-RestMethod -Uri 'https://api.github.com/repos/${{github.owner}}/${{github.repository}}/releases' -Method Post -Body (
+          Invoke-RestMethod -Uri $releasesUrl  -Method Post -Body (
               [Ordered]@{
                   owner = '${{github.owner}}'
                   repo  = '${{github.repository}}'
