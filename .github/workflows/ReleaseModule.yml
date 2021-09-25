@@ -73,7 +73,7 @@ jobs:
           
           $targetVersion  =$ExecutionContext.InvokeCommand.ExpandString($TagVersionFormat)
           $targetReleaseName = $targetVersion
-          $releasesUrl = 'https://api.github.com/repos${{github.owner}}/${{github.repository}}/releases'
+          $releasesUrl = 'https://api.github.com/repos/${{github.repository_owner}}/${{github.repository}}/releases'
           "ReleasesURL: $releasesUrl"  | Out-Host          
           $listOfReleases = Invoke-RestMethod -Uri $releasesUrl  -Method Get -Headers @{
               "Accept" = "application/vnd.github.v3+json"    
@@ -83,7 +83,7 @@ jobs:
           $releaseExists = $listOfReleases | Where-Object tag_name -eq $targetVersion
           
           if ($releaseExists) {
-              "::warning::Release Already Exists" | Out-Host
+              "::warning::Release '$($releaseExists.name)' Already Exists" | Out-Host
               return
           }
           
