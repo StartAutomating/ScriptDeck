@@ -1,27 +1,37 @@
-﻿
-ScriptDeck [0.1]
+﻿ScriptDeck [0.3]
 ================
 
 PowerShell Tools for Elgato StreamDeck
 ----------------
 
 ### Commands
----------------------------
-|  Verb|Noun              |
-|-----:|:-----------------|
-|Export|-StreamDeckProfile|
-|   Get|-StreamDeckAction |
-|      |-StreamDeckPlugin |
-|      |-StreamDeckProfile|
-|Import|-StreamDeckProfile|
-|   New|-StreamDeckAction |
-|      |-StreamDeckProfile|
-|Remove|-StreamDeckProfile|
-|  Save|-StreamDeckProfile|
----------------------------
+-------------------------------
+|      Verb|Noun              |
+|---------:|:-----------------|
+|    Export|-StreamDeckProfile|
+|       Get|-StreamDeckAction |
+|          |-StreamDeckPlugin |
+|          |-StreamDeckProfile|
+|    Import|-StreamDeckProfile|
+|   Install|-StreamDeckPlugin |
+|       New|-StreamDeckAction |
+|          |-StreamDeckPlugin |
+|          |-StreamDeckProfile|
+|    Remove|-StreamDeckProfile|
+|   Restart|-StreamDeck       |
+|      Save|-StreamDeckProfile|
+|     Start|-StreamDeck       |
+|      Stop|-StreamDeck       |
+|    Update|-StreamDeckPlugin |
+-------------------------------
 ScriptDeck is a PowerShell module to help you work with Elgato StreamDeck devices.
 
-Currently, you can use ScriptDeck to create and manage profiles and actions.
+Currently, you can use ScriptDeck to:
+
+* Create and Manage StreamDeck Profiles and Actions.
+* Create or Update StreamDeck Plugins
+* Start, Stop, and Restart the StreamDeck Application
+
 
 ~~~PowerShell
 Get-StreamDeckProfile # Gets StreamDeck Profiles
@@ -66,8 +76,4 @@ New-StreamDeckProfile -Name NewProfile -Action @{
     Save-StreamDeckProfile
 ~~~
 
-
 Want the module to do something more?  Feel free to open an issue on GitHub.
-
-
-
