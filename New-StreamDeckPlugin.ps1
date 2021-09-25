@@ -22,7 +22,7 @@
     $Author,
 
     # Specifies an array of actions. A plugin can indeed have one or multiple actions.
-    [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+    [Parameter(ValueFromPipelineByPropertyName)]
     [ValidateScript({
         $validPropertyNames = 'Icon','Name','PropertyInspectorPath','States','SupportedInMultiActions','Tooltip'
         foreach ($prop in $_.psobject.properties) {
@@ -42,10 +42,10 @@
     [string]
     $Description,
 
-    # The version of the plugin which can only contain digits and periods. This is used for the software update mechanism.    
-    [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+    # The version of the plugin which can only contain digits and periods. This is used for the software update mechanism.
+    [Parameter(ValueFromPipelineByPropertyName)]
     [Version]
-    $Version,
+    $Version = "0.1",
 
     # The relative path to a PNG image without the .png extension. 
     # This image is displayed in the Plugin Store window.
@@ -166,7 +166,7 @@
         $pluginManifest = 
             [Ordered]@{
                 Name        = $Name
-                Version     = $Version
+                Version     = "$Version"
                 Description = $Description
                 Actions     = $Action
                 Author      = $Author
