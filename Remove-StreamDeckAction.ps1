@@ -61,7 +61,7 @@
             if ($actionExists) {
                 $currentPlugin.actions = @($currentPlugin.actions | Where-Object Name -NE $Name)
                 if ($PSCmdlet.ShouldProcess("Update Plugin $($PluginPath)")) {
-                    $currentPlugin | ConvertTo-Json -Depth 100 | Set-content -LiteralPath $pluginFound.PluginPath.Raw
+                    $currentPlugin | ConvertTo-Json -Depth 100 | Set-content -LiteralPath $pluginFound.PluginPath
                 }
             }                        
         }

@@ -121,7 +121,7 @@
                 }
 
             if ($PSCmdlet.ShouldProcess("Update Plugin $($PluginPath)")) {
-                $currentPlugin | ConvertTo-Json -Depth 100 | Set-content -LiteralPath $pluginFound.PluginPath.Raw
+                $currentPlugin | ConvertTo-Json -Depth 100 | Set-content -LiteralPath $pluginFound.PluginPath
             }            
         }
     }
