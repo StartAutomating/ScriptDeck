@@ -42,6 +42,7 @@
             }
             if ($PSCmdlet.ShouldProcess("Remove Action at $row, $column")) {            
                 $FoundProfile.RemoveAction($Row, $Column)
+                $FoundProfile.Save()
             }
             return
         }

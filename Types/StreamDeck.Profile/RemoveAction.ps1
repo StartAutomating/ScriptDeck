@@ -1,18 +1,20 @@
 ﻿param(
 [Parameter(Mandatory)]
-[string[]]
+[string]
 $Row,
 [Parameter(Mandatory)]
-[string[]]
+[string]
 $Column
 )
 
-$toRemove = @($this.actions.psobject.properties | Select-Object -ExpandProperty Name |
+$obj = $this
+$toRemove = @($obj.actions.psobject.properties | Select-Object -ExpandProperty Name |
     Where-Object {
-        $rowCol  = $_.Row + "," + $_.Column
-        $rowCol -like "$row,$column" -or $rowCol -match "$row,$column"
+        $r, $c = $_ -split ','
+        $colRow  = ''+  $c + "," + $r
+        $colRow -like "$column,$Row"
     })
 
 foreach ($tr in $toRemove) {
-    $this.actions.psobject.properties.Remove($tr)
+    $obj.actions.psobject.properties.Remove($tr)
 }

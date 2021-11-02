@@ -32,12 +32,12 @@
     $Action,
 
     # The row the action will be added to.  If a negative number is provided, will choose the first available row.
-    [Parameter(Mandatory,ParameterSetName='Profile',ValueFromPipelineByPropertyName,ValueFromPipeline)]    
+    [Parameter(ParameterSetName='Profile',ValueFromPipelineByPropertyName,ValueFromPipeline)]    
     [int]
     $Row = -1,
 
     # The column the action will be added to.  If a negative number is provided, will choose the first available column.
-    [Parameter(Mandatory,ParameterSetName='Profile',ValueFromPipelineByPropertyName,ValueFromPipeline)]    
+    [Parameter(ParameterSetName='Profile',ValueFromPipelineByPropertyName,ValueFromPipeline)]    
     [int]
     $Column = -1,
 
@@ -92,7 +92,9 @@
             }
             if ($PSCmdlet.ShouldProcess("Add Action at $row, $column")) {            
                 $FoundProfile.AddAction($Action, $Row, $Column)
+                $FoundProfile.Save()
             }
+            
             return
         }
 

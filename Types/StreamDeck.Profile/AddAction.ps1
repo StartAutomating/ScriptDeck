@@ -15,13 +15,13 @@ $foundSpot =
         :foundRow for ($r = 0; $r -lt $maxRows; $r++) {        
             if ($Column -lt 0) {
                 for ($c =0 ; $c -lt $maxCols; $c++) {
-                    if (-not $this.Actions."$r,$C") {
+                    if (-not $this.Actions."$c,$r") {
                         $r, $C
                         break foundRow
                     }
                 }                           
             } else {
-                if (-not $this.Actions."$r,$Column") {
+                if (-not $this.Actions."$Column,$r") {
                     $r, $Column
                     break foundRow
                 }        
@@ -29,13 +29,13 @@ $foundSpot =
         }        
     } elseif ($Column -lt 0) {
         for ($c =0 ; $c -lt $maxCols; $c++) {
-            if (-not $this.Actions."$Row,$c") {
+            if (-not $this.Actions."$c,$Row") {
                 $Row, $c
                 break
             }
         }
     } else {
-        $row, $Column
+        $Column, $row
     }
 
 
@@ -44,4 +44,4 @@ if (-not $foundSpot) {
 }
 
 $r, $c = $foundSpot
-Add-Member -MemberType NoteProperty "$r, $c" -Value $action -InputObject $this.Actions -Force
+Add-Member -MemberType NoteProperty "$c,$r" -Value $action -InputObject $this.Actions -Force
