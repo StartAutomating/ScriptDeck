@@ -28,7 +28,7 @@
     $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
     Register-ObjectEvent -InputObject $streamdeckProcess -EventName Exited -Action ([ScriptBlock]::Create(@"
 Write-Verbose 'StreamDeck Process Exited'
-New-Event -SourceIdentifier StreamDeck.Stopped -MessageData ($(if ($PassThru) { "`$event.Sender"}))
+New-Event -SourceIdentifier StreamDeck.Stopped -MessageData ($(if ($PassThru) { "`$event.Sender"} else {'$null'}))
 "@)) |Out-Null
 
     Wait-Event -SourceIdentifier StreamDeck.Stopped | 
