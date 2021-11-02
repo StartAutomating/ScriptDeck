@@ -65,6 +65,28 @@
     [string]
     $DeviceUUID,
 
+    # The next page.  This should be created by New-StreamDeckProfile, passing -IsNextPage
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='NextPage')]
+    [PSTypeName('StreamDeck.Profile')]
+    [PSObject]
+    $NextPage,
+
+    # A Child Profile.  These should be created by New-StreamDeckProfile, passing -IsChildProfile
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='ChildProfile')]
+    [PSTypeName('StreamDeck.Profile')]
+    [PSObject]
+    $ChildProfile,
+
+    # If set, will create an action that will navigate back to the parent folder.
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='BackToParent')]
+    [switch]
+    $BackToParent,
+
+    # If set, will create an action that will navigate back to the previous page.
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='PreviousPage')]
+    [switch]
+    $PreviousPage,
+
     # The text that should be automatically typed
     [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='Text')]
     [string]
@@ -150,6 +172,24 @@
                     $matchingPlugin =
                         $streamDeckActions | Where-Object UUID -EQ $UUID
                     $uuid = $matchingPlugin.uuid
+                }
+                ChildProfile {
+                    $name = 'Create Folder'
+                    $uuid = 'com.elgato.streamdeck.profile.openchild'
+                    $Setting = $ChildProfile
+                }
+                NextPage {
+                    $name = 'Next Page'
+                    $uuid = 'com.elgato.streamdeck.page.next'
+                    $Setting = $NextPage
+                }
+                PreviousPage {
+                    $name = 'Previous'
+                    $uuid = 'com.elgato.streamdeck.page.previous'
+                }
+                BackToParent {
+                    $name = 'BackToParent'
+                    $uuid = 'com.elgato.streamdeck.profile.backtoparent'
                 }
                 ProfileName {
                     #region Switch Profile
@@ -397,10 +437,10 @@
 
         [PSCustomobject]([Ordered]@{
             Name = $Name
-            UUID = $UUID
-            States = @($States)
-            State = $State
             Settings = $Setting
+            State = $State
+            States = @($States)            
+            UUID = $UUID
             PSTypeName = 'StreamDeck.Action'
         })
     }
