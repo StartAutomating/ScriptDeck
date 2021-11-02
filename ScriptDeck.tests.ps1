@@ -21,9 +21,9 @@ describe ScriptDeck {
             $newPlugin = New-StreamDeckPlugin -Name MyTestPlugin -Author Me -Description "A brief description" -Icon NoIcon.png  -Template WindowsPowerShell -OutputPath $tmpPath            
             Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Patch
             Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '0.1.1'
-            Update-StreamDeckPlugin -PluginPath MyTestPlugin.sdPlugin -AutoIncrement Minor
+            Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Minor
             Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '0.2'
-            Update-StreamDeckPlugin -PluginPath MyTestPlugin.sdPlugin -AutoIncrement Major
+            Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Major
             Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '1.0'
             Pop-Location
             Remove-Item -Path $tmpPath -Recurse -Force
