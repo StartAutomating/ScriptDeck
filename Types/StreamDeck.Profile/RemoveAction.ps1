@@ -10,7 +10,7 @@ $Column
 $obj = $this
 $toRemove = @($obj.actions.psobject.properties | Select-Object -ExpandProperty Name |
     Where-Object {
-        $r, $c = $_ -split ','
+        $c, $r = $_ -split ','
         $colRow  = ''+  $c + "," + $r
         $colRow -like "$column,$Row"
     })
