@@ -29,7 +29,9 @@
     process {
         #region .ShouldProcess and Save
         if (-not $PSCmdlet.ShouldProcess("Save $($StreamDeckProfile.Name)")) { return }
+        
         $StreamDeckProfile.Save()
+        Restart-StreamDeck
         #endregion .ShouldProcess and Save
     }
 }
