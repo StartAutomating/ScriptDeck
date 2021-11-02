@@ -18,13 +18,13 @@ describe ScriptDeck {
             $tmpPath = Join-Path $tmpPath (Get-Random)
             New-Item -ItemType Directory -Path $tmpPath
             Push-Location -Path $tmpPath
-            $newPlugin = New-StreamDeckPlugin -Name MyTestPlugin -Author Me -Description "A brief description" -Icon NoIcon.png
-            Update-StreamDeckPlugin -PluginPath MyTestPlugin.sdPlugin -AutoIncrement Patch
-            Get-Content $newPlugin  -Raw | ConvertFrom-Json | Select-Object -ExpandProperty Version | Should -Be '0.1.1'
-            Update-StreamDeckPlugin -PluginPath MyTestPlugin.sdPlugin -AutoIncrement Minor
-            Get-Content $newPlugin  -Raw | ConvertFrom-Json | Select-Object -ExpandProperty Version | Should -Be '0.2'
-            Update-StreamDeckPlugin -PluginPath MyTestPlugin.sdPlugin -AutoIncrement Major
-            Get-Content $newPlugin  -Raw | ConvertFrom-Json | Select-Object -ExpandProperty Version | Should -Be '1.0'
+            $newPlugin = New-StreamDeckPlugin -Name MyTestPlugin -Author Me -Description "A brief description" -Icon NoIcon.png  -Template WindowsPowerShell -OutputPath $tmpPath            
+            Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Patch
+            Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '0.1.1'
+            Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Minor
+            Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '0.2'
+            Update-StreamDeckPlugin -PluginPath $tmpPath -AutoIncrement Major
+            Get-StreamDeckPlugin -PluginPath $tmpPath | Select-Object -ExpandProperty Version | Should -Be '1.0'
             Pop-Location
             Remove-Item -Path $tmpPath -Recurse -Force
         }   

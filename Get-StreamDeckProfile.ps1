@@ -20,6 +20,11 @@
     [string]
     $Name,
 
+    # The profile root
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [string]
+    $ProfileRoot,
+
     # If set, will get profiles recursively
     [Parameter(ValueFromPipelineByPropertyName)]
     [switch]
@@ -56,15 +61,23 @@
     }
 
     process {
-        if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
-            Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\ProfilesV2\" |
-                Get-ChildItem -Filter manifest.json -Recurse:$Recurse |
-                & $importProfile
-        } elseif ($PSVersionTable.Platform -eq 'Unix') {
-            if ($PSVersionTable.OS -like '*darwin*') {
-                Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/ProfilesV2" |
+        if (-not $ProfileRoot) {
+            if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
+                Get-ChildItem -Path "$env:AppData\Elgato\StreamDeck\ProfilesV2\" |
+                    Get-ChildItem -Filter manifest.json -Recurse:$Recurse |
                     & $importProfile
+            } elseif ($PSVersionTable.Platform -eq 'Unix') {
+                if ($PSVersionTable.OS -like '*darwin*') {
+                    Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/ProfilesV2" |
+                        & $importProfile
+                }
             }
+        } else {
+            if ($name -eq $ProfileRoot -or $ProfileRoot -like "*$name") { 
+                $name = ''
+            }
+            Get-ChildItem -Path $ProfileRoot -Filter manifest.json -Recurse:$Recurse |
+                & $importProfile
         }
     }
 }

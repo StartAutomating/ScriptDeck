@@ -11,6 +11,7 @@
         New-StreamDeckAction
     #>
     [OutputType('StreamDeck.Plugin')]
+    [CmdletBinding(DefaultParameterSetName='Plugin')]
     param(
     # The name of the plugin
     [Parameter(ValueFromPipelineByPropertyName)]
@@ -18,7 +19,7 @@
     $Name,
 
     # The Plugin UUID
-    [Parameter(ValueFromPipelineByPropertyName)]
+    [Parameter(ParameterSetName='Plugin',ValueFromPipelineByPropertyName)]
     [string]
     $UUID,
 
@@ -28,9 +29,17 @@
     $Force,
 
     # The path to a plugin or a directory containing plugins.
+    # If -Template is provided, will look for Plugin Templates beneath -PluginPath.
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
-    $PluginPath
+    $PluginPath,
+
+    # If set, will get plugin template scripts.
+    # PluginTemplates are defined in *.StreamDeckPluginTemplate.ps1 files.
+    [Parameter(ParameterSetName='PluginTemplate')]
+    [Alias('PluginTemplate')]
+    [switch]
+    $Template
     )
 
     begin {
@@ -46,9 +55,48 @@
                 Write-Error -ErrorRecord $_
             }            
         }
+        ${?<PluginTemplate>} = 'StreamDeckPluginTemplate\.ps1$'
+        filter .ps1=>[StreamDeck.PluginTemplate] {
+            $inFile = $_
+            $pluginTemplate = $ExecutionContext.SessionState.InvokeCommand.GetCommand($inFile.fullname,'ExternalScript')
+            $pluginTemplate.pstypenames.clear()
+            $pluginTemplate.pstypenames.add('StreamDeck.PluginTemplate')
+            $pluginTemplate
+        }
     }
 
     process {
+        if ($PSCmdlet.ParameterSetName -eq 'PluginTemplate') {
+            if ($Force -or -not $Script:CachedStreamDeckPluginTemplates) {
+                $Script:CachedStreamDeckPluginTemplates = @($MyInvocation.MyCommand.Module |
+                    Split-Path | 
+                    Get-ChildItem -Filter *.ps1 |
+                    Where-Object Name -Match ${?<PluginTemplate>} |
+                    .ps1=>[StreamDeck.PluginTemplate])
+            }
+
+            $templateList = 
+                if (-not $PluginPath) {
+                    @() + $Script:CachedStreamDeckPluginTemplates
+                } else {
+                    @(if ($pluignPath -match ${?<PluginTemplate>}) {
+                        Get-ChildItem -Path $pluignPath |
+                                .ps1=>[StreamDeck.PluginTemplate]
+                    } else {
+                        Get-ChildItem -Path $PluginPath -Recurse -Filter *.ps1  |
+                            Where-Object Name -Match ${?<PluginTemplate>} |                        
+                            .ps1=>[StreamDeck.PluginTemplate]
+                    }) 
+                }
+
+            if ($name) {
+                $templateList | Where-Object { $_.Name -eq $Name -or $_.Name -like "$Name.ps1"}
+            } else {
+                $templateList
+            }
+            return
+        }
+        
         #region Cache StreamDeck Plugins
         if ($force -or -not $Script:CachedStreamDeckPlugins) {
             

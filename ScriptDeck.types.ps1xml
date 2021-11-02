@@ -5,13 +5,93 @@
     <Name>StreamDeck.Profile</Name>
     <Members>
       <ScriptMethod>
+        <Name>AddAction</Name>
+        <Script>
+                        param(
+[PSTypeName('StreamDeck.Action')]
+$Action,
+
+[int]
+$Row = -1,
+
+[int]
+$Column = -1
+)
+
+$maxRows, $maxCols = $this.DeviceSize
+$foundSpot = 
+    if ($Row -lt 0) {
+        :foundRow for ($r = 0; $r -lt $maxRows; $r++) {        
+            if ($Column -lt 0) {
+                for ($c =0 ; $c -lt $maxCols; $c++) {
+                    if (-not $this.Actions."$c,$r") {
+                        $r, $C
+                        break foundRow
+                    }
+                }                           
+            } else {
+                if (-not $this.Actions."$Column,$r") {
+                    $r, $Column
+                    break foundRow
+                }        
+            }    
+        }        
+    } elseif ($Column -lt 0) {
+        for ($c =0 ; $c -lt $maxCols; $c++) {
+            if (-not $this.Actions."$c,$Row") {
+                $Row, $c
+                break
+            }
+        }
+    } else {
+        $Column, $row
+    }
+
+
+if (-not $foundSpot) {
+    throw "Unable to find a location. Row: $row Column: $Column"
+}
+
+$r, $c = $foundSpot
+Add-Member -MemberType NoteProperty "$c,$r" -Value $action -InputObject $this.Actions -Force
+                    </Script>
+      </ScriptMethod>
+      <ScriptMethod>
+        <Name>RemoveAction</Name>
+        <Script>
+                        param(
+[Parameter(Mandatory)]
+[string]
+$Row,
+[Parameter(Mandatory)]
+[string]
+$Column
+)
+
+$obj = $this
+$toRemove = @($obj.actions.psobject.properties | Select-Object -ExpandProperty Name |
+    Where-Object {
+        $c, $r = $_ -split ','
+        $colRow  = ''+  $c + "," + $r
+        $colRow -like "$column,$Row"
+    })
+
+foreach ($tr in $toRemove) {
+    $obj.actions.psobject.properties.Remove($tr)
+}
+
+                    </Script>
+      </ScriptMethod>
+      <ScriptMethod>
         <Name>Save</Name>
         <Script>
-                        $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
+                        if (-not $this.Path) { throw "Cannot save profile, as it has no path" }
+
+&lt;#$streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
 $streamDeckPath    = "$($streamdeckprocess.Path)"
 if ($streamDeckPath) { 
     Start-Process -FilePath $streamDeckPath -ArgumentList '--quit' -Wait
-}
+}#&gt;
 #$streamdeckprocess | Stop-Process
 
 foreach ($action in $this.Actions.psobject.properties) {
@@ -20,6 +100,27 @@ foreach ($action in $this.Actions.psobject.properties) {
         Split-Path | 
         Join-Path -ChildPath $action.Name |
         Join-Path -ChildPath CustomImages
+
+    if ($action.value.uuid -in 'com.elgato.streamdeck.page.next', 'com.elgato.streamdeck.profile.openchild') {
+        
+        if ($action.value.settings.pstypenames -contains 'StreamDeck.Profile') {
+            $childPluginPath = $action.value.settings.guid
+            $root = $(if ($this.IsChild) {
+                $this.Parent
+            } else {
+                $this
+            })
+            $childRoot = $root | 
+                Split-Path | 
+                Join-Path -ChildPath Profiles | 
+                Join-Path -ChildPath "$($action.value.settings.guid).sdProfile" |
+                Join-Path -ChildPath "manifest.json"
+            
+            $childPlugin = $action.value.settings | Add-Member NoteProperty Path "$childRoot" -Force -PassThru
+            $childPlugin.Save()
+            $action.value.settings = [PSCustomObject]@{ProfileUUID=$childPlugin.guid}
+        }
+    }
     foreach ($state in $action.value.states) {
         
         if ($state.Image) {
@@ -54,38 +155,194 @@ foreach ($action in $this.Actions.psobject.properties) {
         $stateIndex++
     }
 }
+$scriptPropertyNames = $this.psobject.properties | Where-Object MemberType -EQ ScriptProperty | Select-Object -ExpandProperty Name -Unique
+$excludedProperties = @('Path','GUID') + $scriptPropertyNames
+
+if (-not (Test-Path $this.Path)) {
+    $createdProfile = New-Item -ItemType File -Path $this.Path -Force
+}
+
 $this |
-    Select-Object -Property * -ExcludeProperty Path, GUID | 
+    Select-Object -Property * -ExcludeProperty $excludedProperties| 
     ConvertTo-Json -Depth 100 | 
     Set-Content -literalPath $this.Path -Encoding UTF8
-
-if ($streamDeckPath) {
+&lt;#
+if ($streamDeckPath) {    
     $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
     Register-ObjectEvent -InputObject $streamdeckProcess -EventName Exited -Action ([ScriptBlock]::Create(@"
 Write-Verbose 'Process Exited, Starting a new one'
 Start-Process '$($streamdeckprocess.Path)'
-"@)) |Out-Null
-    &lt;#
-    for ($tries =0; $tries -lt 6; $tries++) {
-        Start-Sleep -Milliseconds 250
-        
-        $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
-        Write-Verbose "$streamdeckprocess " 
-        if (-not $streamdeckprocess) {break }
-        else {
-            $streamDeckNewPath = "$($streamdeckprocess.Path)"
-            Write-Verbose "$streamDeckNewPath "
-        }
-    }
-    
+"@)) |Out-Null        
     Start-Sleep -Seconds 2
     Write-Verbose "Starting $streamDeckNewPath"
-    Start-Process $streamDeckNewPath -PassThru 2&gt;&amp;1
-    #&gt;
+    Start-Process $streamDeckNewPath -PassThru 2&gt;&amp;1    
 }
-
+#&gt;
                     </Script>
       </ScriptMethod>
+      <ScriptProperty>
+        <Name>Children</Name>
+        <GetScriptBlock>
+                        if (-not $this.HasChildren) { return }
+@(if ($this.IsChild) {
+    $this.Parent | 
+        Split-Path |
+        Join-Path -child Profiles 
+} else {
+    $this | 
+        Split-Path |
+        Join-Path -child Profiles 
+}) | 
+    Get-ChildItem | 
+    Get-StreamDeckProfile -ProfileRoot {$_.fullname } 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>ColumnCount</Name>
+        <GetScriptBlock>
+                        switch ($this.DeviceName) {
+    StreamDeckXL { 8 }
+    StreamDeckMini { 3 }
+    StreamDeckMobile { 5 }
+    StreamDeck { 5 }
+    'Corsair G6 Keyboard' { 1 }
+}
+
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceName</Name>
+        <GetScriptBlock>
+                        switch ($this.DeviceModel) {
+    20GAI9901  { "StreamDeckMini" }
+    20GAT9901  { "StreamDeckXL" }
+    20GAA9901  { "StreamDeck" }
+    20GAA9902  { "StreamDeck" } 
+    'VSD/WiFi' { "StreamDeckMobile" }
+    default { $this.DeviceModel }
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceSize</Name>
+        <GetScriptBlock>
+                        switch ($this.DeviceName) {
+    StreamDeckXL { 4,8 }
+    StreamDeckMini { 2,3 }
+    StreamDeckMobile { 3,5 }
+    StreamDeck { 3,5 }
+    'Corsair G6 Keyboard' { 6,1 }
+}
+
+
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>HasChildren</Name>
+        <GetScriptBlock>
+                        foreach ($act in $this.Actions.psobject.properties) {
+    if ($act.value.uuid -in 'com.elgato.streamdeck.profile.openchild') {
+        return $true
+    }
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>HasPages</Name>
+        <GetScriptBlock>
+                        foreach ($act in $this.Actions.psobject.properties) {
+    if ($act.value.uuid -in 'com.elgato.streamdeck.page.previous','com.elgato.streamdeck.page.next') {
+        return $true
+    }
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>IsChild</Name>
+        <GetScriptBlock>
+                        if (-not $this.Path) { return $true }
+($this.Path | Split-Path | Split-Path | Split-Path | Split-Path -Leaf) -ne 'StreamDeck'
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>NextPage</Name>
+        <GetScriptBlock>
+                        foreach ($act in $this.Actions.psobject.properties) {
+    if ($act.value.uuid -in 'com.elgato.streamdeck.page.next') {
+        if ($this.Path) {
+            $this.Path | 
+                ForEach-Object {
+                    if ($this.IsChild) {
+                        $_ | Split-Path | Split-Path
+                    } else {
+                        $_ | Split-Path | Join-Path -ChildPath Profiles 
+                    }
+                } |                
+                Join-Path -ChildPath "$($act.value.settings.profileUUID).sdProfile" |
+                Get-StreamDeckProfile -ProfileRoot { $_ }            
+        }
+    }
+}
+
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PageNumber</Name>
+        <GetScriptBlock>
+                        if (-not $this.HasPages) { return 1 }
+if (-not $this.IsChild)  { return 1 }
+$page = $this.Parent
+$pageNumber = 1
+while ($page -and $page.Path -ne $this.Path) {
+    $pageNumber++
+    $page = $page.NextPage
+}
+if ($page) {
+    $pageNumber
+} else {
+    return 0
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Parent</Name>
+        <GetScriptBlock>
+                        if (-not $this.IsChild) { return $null }
+($this.Path | Split-Path | Split-Path | Split-Path | Get-StreamDeckProfile -ProfileRoot { $_ })
+
+
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>ProfilePath</Name>
+        <GetScriptBlock>
+                        return $this.Path
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>RowCount</Name>
+        <GetScriptBlock>
+                        switch ($this.DeviceName) {
+    StreamDeckXL { 4 }
+    StreamDeckMini { 2 }
+    StreamDeckMobile { 3 }
+    StreamDeck { 3 }
+    'Corsair G6 Keyboard' { 6 }
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
 </Types>

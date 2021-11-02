@@ -158,10 +158,93 @@
     # If not provided, the plugin will be created in a directory beneath the current directory.
     # This directory will be named $Name.sdPlugin.
     [string]
-    $OutputPath
+    $OutputPath,
+
+    # The name of a StreamDeck plugin template.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [ArgumentCompleter({
+        param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeboundParameters)
+
+
+        $templateList = Get-StreamDeckPlugin -Template
+        if ($wordToComplete) {
+            $templateList | 
+                Where-object { $_.Name -replace '\.StreamDeckPluginTemplate\.ps1$' -like "$wordToComplete*"}|
+                Foreach-Object { $_.Name -replace '\.StreamDeckPluginTemplate\.ps1$' }
+        } else {
+            $templateList | 
+                Foreach-Object { $_.Name -replace '\.StreamDeckPluginTemplate\.ps1$' }
+        }
+        
+    })]
+    [string]
+    $Template,
+
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Alias('TemplateParameters')]
+    [Collections.IDictionary]
+    $TemplateParameter,
+
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Alias('TemplateArguments')]
+    [PSObject[]]
+    $TemplateArgumentList
     )
 
-    process {
+    process {        
+        if (-not $OutputPath) { # If no -OutputPath was provided,
+            $OutputPath = $psBoundParameters['OutputPath'] = Join-Path $pwd "$Name.sdPlugin" # derive one from the name.
+        }
+        if (-not (Test-Path $OutputPath)) { # If there was not an OutputPath,
+            $createdDirectory = New-Item -ItemType Directory -Path $OutputPath # create the directory.
+            if (-not $createdDirectory) { return }
+        }
+        
+        if ($Template) { # If a template was provided
+            $templateCmd = # call Get-StreamDeckPlugin -Template to get the plugin template.
+                @(if ($Template.Contains([io.PATH]::DirectorySeparatorChar)) { 
+                    Get-StreamDeckPlugin -Template -PluginPath $Template
+                } else {
+                    Get-StreamDeckPlugin -Template | 
+                        Where-Object { $_.Name -replace '\.StreamDeckPluginTemplate\.ps1$' -eq $Template}
+                }) | Select-Object -First 1
+
+            if (-not $templateCmd) { # If we were unable to match the template, error out.
+                Write-Error "Unable to find StreamDeckPluginTemplate '$template'"
+                return 
+            }
+
+            $paramCopy = @{} + $PSBoundParameters # Copy our parameters.
+            foreach ($param in @($paramCopy.Keys)) {
+                if (-not $templateCmd.Parameters[$param]) { # If a parameter isn't used by the template
+                    $paramCopy.Remove($param)               # remove it.
+                }
+            }
+            if ($TemplateParameter -and $TemplateParameter.Count) {   # If we've been provided -TemplateParameters
+                foreach ($kv in $TemplateParameter.GetEnumerator()) { # copy those in (overriding any built-in parameters)
+                    $paramCopy[$kv.Key] = $kv.Value
+                }
+            }
+
+            $templateArgs = # If the template was provided with positional arguments, get them ready to pass.
+                if ($TemplateArgumentList) { $TemplateArgumentList } else { @() }
+
+            # Call the template.
+            $templateOutput = & $templateCmd @paramCopy @templateArgs
+
+            # If the template output was a dictionary, turn it into a PSObject.
+            if ($templateOutput -is [Collections.IDictionary]) {
+                $templateOutput = [PSCustomObject]$templateOutput
+            }
+
+            # Any properties set in the output that are parameters to this function
+            foreach ($prop in $templateOutput.psobject.properties) {                
+                if (-not $MyInvocation.MyCommand.Parameters[$prop.Name]) { continue }                
+                $PSBoundParameters[$prop.Name] = $prop.Value # will be overriden with the value provided from the template.
+                $ExecutionContext.SessionState.PSVariable.Set($prop.Name, $prop.Value)                
+            }
+        }
+
         # Create the manifest template.
         $pluginManifest = 
             [Ordered]@{
@@ -206,15 +289,9 @@
         # (it will end up there as a side-effect of the previous code, and it's not a part of the 'schema')
         $pluginManifest.Remove('OutputPath')
 
-        if (-not $OutputPath) {
-            $OutputPath = Join-Path $pwd "$Name.sdPlugin"
-        }
-        if (-not (Test-Path $OutputPath)) {
-            $createdDirectory = New-Item -ItemType Directory -Path $OutputPath
-            if (-not $createdDirectory) { return }
-        }
+        
         $pluginManifestPath = Join-Path $OutputPath manifest.json
         $pluginManifest | ConvertTo-Json | Set-Content -Path $pluginManifestPath
-        Get-Item $pluginManifestPath
+        Get-ChildItem -Path $OutputPath
     }
 }

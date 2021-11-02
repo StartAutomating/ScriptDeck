@@ -83,13 +83,55 @@
     # The version of the profile.  By default, 1.0
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
-    $Version = '1.0'
+    $Version = '1.0',
+    
+    # The profile UUID.  If not provided, a GUID will be generated.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [string]
+    $ProfileUUID,
+
+    # If provided, will create the profile beneath this directory.
+    # If not provided, the profile will be created beneath the user's profiles directory.
+    # On Windows, this is: "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
+    # On MacOS, this is  : "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
+    [string]
+    $ProfileRoot,
+
+    # If set, the stream deck profile created will be a child profile, and will not immediately be saved.
+    # Child profiles will automatically have an action linking to the parent profile in the upper left.
+    [switch]
+    $IsChildProfile,
+
+    # If set, the stream deck profile created will be an additional page, and will not immediately be saved.
+    # NextPages will automatically have an action linking to the previous page in the lower left.
+    [Alias('IsNextPageProfile')]
+    [switch]
+    $IsNextPage
     )
 
 
     process {
         #region Discover Device Model/UUID
-        if (-not $DeviceModel -or -not $DeviceUUID) {
+        if ($DeviceModel -notmatch '\d{2,}') {
+            # If the device model did not contain a set of digits
+            $DeviceModel = 
+                switch ($DeviceModel) { # assume it's a friendly name.  Convert that to it's system name.
+                    StreamDeck       { '20GAA9902'  }
+                    StreamDeckXL     { '20GAT9901'  } 
+                    StreamDeckMini   { '20GAI9901'  } 
+                    StreamDeckMobile { 'VSD/WiFi'   }
+                    default          { $DeviceModel }
+                }
+                
+            if (-not $DeviceUUID) { # If we do not know the DeviceUUID
+                $profiles = Get-StreamDeckProfile
+                $DeviceUUID = 
+                    $profiles | 
+                        Where-Object DeviceModel -EQ $DeviceModel | 
+                        Select-Object -ExpandProperty DeviceUUID  -First 1
+            }
+        }
+        if (-not $DeviceModel -and -not $DeviceUUID) {
             $profiles = Get-StreamDeckProfile
             if (-not $DeviceModel) {
                 $DeviceModel = $profiles |
@@ -109,9 +151,11 @@
         #region Create Profile Object
         $streamDeckProfileObject = [Ordered]@{
             Name=$Name;
-            DeviceModel=$DeviceModel;
-            DeviceUUID=$DeviceUUID;
-            Guid = [Guid]::NewGuid().ToString()
+            DeviceModel=$DeviceModel
+            DeviceUUID=$DeviceUUID
+            Guid = if (-not $ProfileUUID) {
+                [Guid]::NewGuid().ToString() 
+            } else { "$ProfileUUID" }
             Actions=[Ordered]@{}
             PSTypeName = 'StreamDeck.Profile'
             Version = $Version
@@ -123,21 +167,46 @@
         }
 
         #region Determine Profile Root
-        $profileRoot=
-            if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
-                "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
-            } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
-                "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
-            }
-
-        $profileDirectory = Join-Path $profileRoot -ChildPath "$($streamDeckProfileObject.Guid).sdProfile"
-        if (-not (Test-Path $profileDirectory)) {
-            $createdDir = New-Item -ItemType Directory -Path $profileDirectory
-            if (-not $createdDir) { return }
+        if (-not $ProfileRoot) {        
+            $profileRoot=
+                if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
+                    "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
+                } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
+                    "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
+                }
+            $profileDirectory = Join-Path $profileRoot -ChildPath "$($streamDeckProfileObject.Guid).sdProfile"
+        } else {
+            $profileDirectory = Join-Path (Join-Path $profileRoot -ChildPath "Profiles") -ChildPath "$($streamDeckProfileObject.Guid).sdProfile"
         }
-        $manifestPath = Join-Path $profileDirectory -ChildPath manifest.json
-        $streamDeckProfileObject.Path = "$manifestPath"
+
+        if (-not ($IsChildProfile -or $IsNextPage)) {
+            if (-not (Test-Path $profileDirectory)) {
+                $createdDir = New-Item -ItemType Directory -Path $profileDirectory -Force
+                if (-not $createdDir) { return }
+            }
+            $manifestPath = Join-Path $profileDirectory -ChildPath manifest.json
+            $streamDeckProfileObject.Path = "$manifestPath"
+        }
         #endregion Determine Profile Root
+
+        if ($IsChildProfile) {
+            $Action["0,0"] = New-StreamDeckAction -BackToParent
+        }
+
+        if ($IsNextPage) {
+            $row = 
+                if ($DeviceModel -in '20GAA9901', '20GAA9902', 'VSD/WiFi') {
+                    2
+                }
+                elseif ($DeviceModel -in '20GAI9901') {
+                    1
+                } elseif ($DeviceModel -in '20GAT9901') {
+                    3
+                } elseif ($DeviceModel -eq 'Corsair G6 Keyboard') {
+                    5
+                }
+            $Action["$row,0"] = New-StreamDeckAction -PreviousPage
+        }
 
         #region Map Actions
         foreach ($act in $Action.GetEnumerator()) {
