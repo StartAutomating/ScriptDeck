@@ -480,5 +480,12 @@ jobs:
               }
           }
           } @Parameters
+  RunScriptDeck: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Use ScriptDeck Action
+        uses: StartAutomating/ScriptDeck@latest
 env: 
   NoCoverage: true
