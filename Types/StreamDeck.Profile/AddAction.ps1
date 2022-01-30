@@ -35,7 +35,7 @@ $foundSpot =
             }
         }
     } else {
-        $Column, $row
+        $row, $Column
     }
 
 
