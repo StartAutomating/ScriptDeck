@@ -43,6 +43,8 @@
                     $distroToolUrl =  "$distroToolUrlRoot/DistributionToolMac.zip"
                     if ($PSVersionTable.OS -like '*darwin*') {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
+                    } elseif ($env:GITHUB_WORKSPACE) {
+                        Join-Path '/tmp' | Join-Path -ChildPath elgago | Join-Path Tools
                     } else {
                         Join-Path $home | Join-Path -ChildPath elgago | Join-Path Tools
                     }

@@ -1,14 +1,18 @@
-﻿ScriptDeck [0.3]
-================
+﻿ScriptDeck [0.4.1]
+==================
 
 PowerShell Tools for Elgato StreamDeck
-----------------
+------------------
 
 ### Commands
 -------------------------------
 |      Verb|Noun              |
 |---------:|:-----------------|
-|    Export|-StreamDeckProfile|
+|       Add|-StreamDeckAction |
+|          |-StreamDeckProfile|
+|     Clear|-StreamDeckProfile|
+|    Export|-StreamDeckPlugin |
+|          |-StreamDeckProfile|
 |       Get|-StreamDeckAction |
 |          |-StreamDeckPlugin |
 |          |-StreamDeckProfile|
@@ -17,12 +21,16 @@ PowerShell Tools for Elgato StreamDeck
 |       New|-StreamDeckAction |
 |          |-StreamDeckPlugin |
 |          |-StreamDeckProfile|
-|    Remove|-StreamDeckProfile|
+|   Receive|-StreamDeck       |
+|    Remove|-StreamDeckAction |
+|          |-StreamDeckProfile|
 |   Restart|-StreamDeck       |
 |      Save|-StreamDeckProfile|
+|      Send|-StreamDeck       |
 |     Start|-StreamDeck       |
 |      Stop|-StreamDeck       |
 |    Update|-StreamDeckPlugin |
+|     Watch|-StreamDeck       |
 -------------------------------
 ScriptDeck is a PowerShell module to help you work with Elgato StreamDeck devices.
 

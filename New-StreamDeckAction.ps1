@@ -194,14 +194,21 @@
                 ProfileName {
                     #region Switch Profile
                     # If switching profiles, find the profile
-                    $streamDeckProfile = Get-StreamDeckProfile -Name $ProfileName
+                    $streamDeckProfile = 
+                        if ($ProfileName -as [guid]) {
+                            $ProfileName
+                        } else {
+                            $streamDeckProfile = Get-StreamDeckProfile -Name $ProfileName
+                            if (-not $streamDeckProfile) { Write-Error "Could not find profile named '$ProfileName'"; return}
+                            $streamDeckProfile.guid
+                        }
                     # If we could not, error out.
-                    if (-not $streamDeckProfile) { Write-Error "Could not find profile named '$ProfileName'"; return}
+                    
                     $name = 'Switch Profile'
                     $UUID = 'com.elgato.streamdeck.profile.rotate'
                     $Setting = @{
                         DeviceUUID= $DeviceUUID
-                        ProfileUUID = $streamDeckProfile.Guid
+                        ProfileUUID = $streamDeckProfile
                     }
                     #endregion Switch Profile
                 }
