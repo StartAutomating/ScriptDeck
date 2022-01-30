@@ -1,6 +1,6 @@
 ﻿@{
     Description = "PowerShell Tools for Elgato StreamDeck"
-    ModuleVersion = '0.4'
+    ModuleVersion = '0.4.1'
     RootModule = 'ScriptDeck.psm1'
     TypesToProcess = 'ScriptDeck.types.ps1xml'
     FormatsToProcess = 'ScriptDeck.format.ps1xml'
@@ -13,6 +13,14 @@
             LicenseURI = 'https://github.com/StartAutomating/ScriptDeck/blob/main/LICENSE'            
 
             ReleaseNotes = @'
+0.4.1
+---
+Bugfixes:
+* Add-StreamDeckAction -ProfileName now works. (#10)
+* Fixing rows/column when adding actions to a profile (#11)
+
+Initial ScriptDeck GitHub action support (#12)
+
 0.4
 ---
 ## New Commands:
