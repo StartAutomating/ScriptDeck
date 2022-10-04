@@ -98,9 +98,15 @@
             if ((Test-Path $sdpOutputPath)) {
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
-            }            
+            }
 
-            $lines = & $distroToolExe.Fullname -b -i ($sdp.PluginPath | Split-path) -o $OutputPath 
+            $sdPluginRoot = ($sdp.PluginPath | Split-path)
+            if ($env:GITHUB_WORKSPACE) {
+                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
+            } else {
+                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
+            }
+            $lines = & $distroToolExe.Fullname -b -i $sdPluginRoot -o $OutputPath 
             if ($env:GITHUB_WORKSPACE) {
                 $lines | Out-Host
             }
@@ -116,6 +122,12 @@
 
             if (-not $LASTEXITCODE) {
                 Get-Item -LiteralPath $sdpOutputPath
+            }
+
+            if ($movedFiles) {
+                $movedFiles | Move-Item -Destination {
+                    Join-Path $sdPluginRoot $_.Name
+                }
             }
         }
         #endregion Export Profiles
