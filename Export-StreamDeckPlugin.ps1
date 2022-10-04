@@ -69,6 +69,9 @@
 
         if (-not $distroToolExe) {
             $distroZipPath = Split-Path $DistributionToolRoot | Join-Path -ChildPath ([uri]$distroToolUrlRoot).Segments[-1]
+            if ($env:GITHUB_WORKSPACE) {
+                "Attempting to download $distroToolUrl to $distroZipPath" | Out-Host
+            }
             [Net.WebClient]::new().DownloadFile($distroToolUrl, "$distroZipPath")
             [IO.Compression.ZipFile]::ExtractToDirectory("$distroZipPath", "$DistributionToolRoot")
             $distroToolExe = 
