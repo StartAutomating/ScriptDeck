@@ -216,7 +216,7 @@ runs:
         if (-not $SkipStreamDeckPluginExport) {
             Get-ChildItem -Recurse -Path $env:GITHUB_WORKSPACE -Directory |
                 Where-Object Name -Match '\.sdPlugin$' |
-                Export-StreamDeckPlugin |
+                Export-StreamDeckPlugin -Force |
                 Add-Member CommitMessage "Exporting StreamDeck Plugin [skip ci]" -Force -PassThru |
                 . $processScriptOutput
         }

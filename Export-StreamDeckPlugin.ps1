@@ -84,10 +84,6 @@
         $splat = @{PluginPath=$PluginPath}
         $sdplugins = @(Get-StreamDeckPlugin @splat)
         if (-not $OutputPath) {
-            if ($env:GITHUB_WORKSPACE) {
-                "Plugins Found:" | Out-Host
-                $sdplugins | Out-Host                
-            }
             $OutputPath = $sdplugins | Select-Object -ExpandProperty PluginPath | Split-Path | Split-Path
         }
 
@@ -98,6 +94,12 @@
             if ((Test-Path $sdpOutputPath)) {
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
+            }
+            $sdPluginRoot = ($sdp.PluginPath | Split-path)
+            if ($env:GITHUB_WORKSPACE) {
+                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
+            } else {
+                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -PassThru -Destination '..'
             }
 
             $sdPluginRoot = ($sdp.PluginPath | Split-path)
@@ -117,6 +119,12 @@
                     $useless, $useful = $line -split 'Error\:\s{0,}'
                     $hadErrorLines = $true
                     Write-Error -Message $useful
+                }
+            }
+
+            if ($movedFiles) {
+                $movedFiles | Move-Item -Destination { 
+                    Join-Path $sdPluginRoot $_.Name
                 }
             }
 
