@@ -45,7 +45,7 @@
                     if ($PSVersionTable.OS -like '*darwin*') {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
                     } elseif ($env:GITHUB_WORKSPACE) {
-                        Join-Path '/tmp' -ChildPath elgago | Join-Path -ChildPath Tools
+                        Join-Path $env:GITHUB_WORKSPACE -ChildPath elgago | Join-Path -ChildPath Tools
                     } else {
                         Join-Path $home  -ChildPath elgato | Join-Path -ChildPath Tools
                     }
