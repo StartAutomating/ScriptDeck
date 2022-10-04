@@ -84,7 +84,7 @@
         $splat = @{PluginPath=$PluginPath}
         $sdplugins = @(Get-StreamDeckPlugin @splat)
         if (-not $OutputPath) {
-            $OutputPath = $home
+            $OutputPath = $splugins | Select-Object -ExpandProperty PluginPath | Split-Path | Split-Path
         }
 
         #region Export Profiles
