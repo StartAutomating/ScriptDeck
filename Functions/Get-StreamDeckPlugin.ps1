@@ -31,6 +31,7 @@
     # The path to a plugin or a directory containing plugins.
     # If -Template is provided, will look for Plugin Templates beneath -PluginPath.
     [Parameter(ValueFromPipelineByPropertyName)]
+    [Alias('Fullname')]
     [string]
     $PluginPath,
 
@@ -113,7 +114,7 @@
                         Get-ChildItem -Filter manifest.json |
                         manifest.json=>[StreamDeck.Plugin]
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
-                    if ($PSVersionTable.OS -like '*darwin*') { # On Mac, plugins can be in
+                    if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) { # On Mac, plugins can be in
                         Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/Plugins" | # the library
                             Get-ChildItem -Filter manifest.json |
                             manifest.json=>[StreamDeck.Plugin]

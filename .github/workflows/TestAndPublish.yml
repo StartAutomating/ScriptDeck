@@ -525,10 +525,10 @@ jobs:
       - name: Use PSSVG Action
         uses: StartAutomating/PSSVG@main
         id: PSSVG
-      - name: BuildPipeScript
-        uses: StartAutomating/PipeScript@main
       - name: UseEZOut
         uses: StartAutomating/EZOut@master
+      - name: BuildPipeScript
+        uses: StartAutomating/PipeScript@main
       - name: UseHelpOut
         uses: StartAutomating/HelpOut@master
       - name: ScriptDeck

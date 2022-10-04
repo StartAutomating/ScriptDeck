@@ -45,7 +45,7 @@
                     if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
                     } elseif ($env:GITHUB_WORKSPACE) {
-                        Join-Path '/tmp' -ChildPath elgago | Join-Path -ChildPath Tools
+                        Join-Path $env:GITHUB_WORKSPACE -ChildPath elgago | Join-Path -ChildPath Tools
                     } else {
                         Join-Path $home  -ChildPath elgato | Join-Path -ChildPath Tools
                     }
@@ -67,8 +67,12 @@
         $distroToolExe = 
             Get-ChildItem -Path $DistributionToolRoot -ErrorAction SilentlyContinue -Filter DistributionTool* | Sort-Object Length | Select-Object -First 1
 
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         if (-not $distroToolExe) {
             $distroZipPath = Split-Path $DistributionToolRoot | Join-Path -ChildPath ([uri]$distroToolUrlRoot).Segments[-1]
+            if ($env:GITHUB_WORKSPACE) {
+                "Attempting to download $distroToolUrl to $distroZipPath" | Out-Host
+            }
             [Net.WebClient]::new().DownloadFile($distroToolUrl, "$distroZipPath")
             [IO.Compression.ZipFile]::ExtractToDirectory("$distroZipPath", "$DistributionToolRoot")
             $distroToolExe = 
@@ -98,7 +102,16 @@
                 $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -PassThru -Destination '..'
             }
 
-            $lines = & $distroToolExe.Fullname -b -i ($sdp.PluginPath | Split-path) -o $OutputPath 
+            $sdPluginRoot = ($sdp.PluginPath | Split-path)
+            if ($env:GITHUB_WORKSPACE) {
+                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
+            } else {
+                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
+            }
+            $lines = & $distroToolExe.Fullname -b -i $sdPluginRoot -o $OutputPath 
+            if ($env:GITHUB_WORKSPACE) {
+                $lines | Out-Host
+            }
             $hadErrorLines = $false
             foreach ($line in $lines) {
                 Write-Verbose "$line"                    
@@ -117,6 +130,12 @@
 
             if (-not $LASTEXITCODE) {
                 Get-Item -LiteralPath $sdpOutputPath
+            }
+
+            if ($movedFiles) {
+                $movedFiles | Move-Item -Destination {
+                    Join-Path $sdPluginRoot $_.Name
+                }
             }
         }
         #endregion Export Profiles
