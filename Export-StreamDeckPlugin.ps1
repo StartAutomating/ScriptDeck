@@ -42,7 +42,7 @@
                     
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
                     $distroToolUrl =  "$distroToolUrlRoot/DistributionToolMac.zip"
-                    if ($PSVersionTable.OS -like '*darwin*') {
+                    if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
                     } elseif ($env:GITHUB_WORKSPACE) {
                         Join-Path '/tmp' -ChildPath elgago | Join-Path -ChildPath Tools
@@ -80,7 +80,7 @@
         $splat = @{PluginPath=$PluginPath}
         $sdplugins = @(Get-StreamDeckPlugin @splat)
         if (-not $OutputPath) {
-            $OutputPath = $home
+            $OutputPath = $sdplugins | Select-Object -ExpandProperty PluginPath | Split-Path | Split-Path
         }
 
         #region Export Profiles
@@ -90,7 +90,13 @@
             if ((Test-Path $sdpOutputPath)) {
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
-            }            
+            }
+            $sdPluginRoot = ($sdp.PluginPath | Split-path)
+            if ($env:GITHUB_WORKSPACE) {
+                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
+            } else {
+                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -PassThru -Destination '..'
+            }
 
             $lines = & $distroToolExe.Fullname -b -i ($sdp.PluginPath | Split-path) -o $OutputPath 
             $hadErrorLines = $false
@@ -100,6 +106,12 @@
                     $useless, $useful = $line -split 'Error\:\s{0,}'
                     $hadErrorLines = $true
                     Write-Error -Message $useful
+                }
+            }
+
+            if ($movedFiles) {
+                $movedFiles | Move-Item -Destination { 
+                    Join-Path $sdPluginRoot $_.Name
                 }
             }
 

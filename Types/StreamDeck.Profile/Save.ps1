@@ -79,6 +79,7 @@ $this |
     Select-Object -Property * -ExcludeProperty $excludedProperties| 
     ConvertTo-Json -Depth 100 | 
     Set-Content -literalPath $this.Path -Encoding UTF8
+<<<<<<< Updated upstream
 <#
 if ($streamDeckPath) {    
     $streamdeckprocess = Get-Process streamdeck -ErrorAction SilentlyContinue
@@ -89,5 +90,15 @@ Start-Process '$($streamdeckprocess.Path)'
     Start-Sleep -Seconds 2
     Write-Verbose "Starting $streamDeckNewPath"
     Start-Process $streamDeckNewPath -PassThru 2>&1    
+=======
+
+if ($streamDeckPath) {
+    for ($tries =0; $tries -lt 3; $tries++) {
+        $streamdeckprocess = Get-Process streamdeck
+        if (-not $streamdeckprocess) {break }
+        Start-Sleep -Milliseconds 250
+    }
+    Start-Process $streamDeckPath
+>>>>>>> Stashed changes
 }
 #>
