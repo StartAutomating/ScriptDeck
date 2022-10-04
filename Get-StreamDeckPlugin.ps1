@@ -31,6 +31,7 @@
     # The path to a plugin or a directory containing plugins.
     # If -Template is provided, will look for Plugin Templates beneath -PluginPath.
     [Parameter(ValueFromPipelineByPropertyName)]
+    [Alias('Fullname')]
     [string]
     $PluginPath,
 
