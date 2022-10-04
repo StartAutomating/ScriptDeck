@@ -1,0 +1,81 @@
+{
+    "Actions":  [
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "PowerShell Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Runs a PowerShell Script or File",
+                        "UUID":  "ScriptDeck.InvokeScript",
+                        "PropertyInspectorPath":  "ScriptDeck.InvokeScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Paste Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Pastes Custom Content",
+                        "UUID":  "ScriptDeck.PasteScript",
+                        "PropertyInspectorPath":  "ScriptDeck.PasteScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "URL Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Run a Script and Open each URL in a browser",
+                        "UUID":  "ScriptDeck.URLScript",
+                        "PropertyInspectorPath":  "ScriptDeck.URLScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Start-Process",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "",
+                        "UUID":  "ScriptDeck.Start-Process",
+                        "PropertyInspectorPath":  "ScriptDeck.Start-Process.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    }                    
+                ],
+    "SDKVersion":  2,
+    "Author":  "Start-Automating",
+    "CodePath":  "StartPlugin.cmd",
+    "CodePathWin": "StartPlugin.cmd",
+    "CodePathMac": "StartPlugin.sh",
+    "Description":  "Run PowerShell from your StreamDeck",
+    "Name":  "ScriptDeck",
+    "URL":  "https://github.com/StartAutomating/ScriptDeck",
+    "Category":  "ScriptDeck",
+    "CategoryIcon":  "ScriptDeck",
+    "Icon":  "ScriptDeck",
+    "Version":  "1.1",
+    "OS":  [
+        {
+            "Platform": "mac", 
+            "MinimumVersion" : "10.11"
+        },
+        {
+            "Platform":  "windows",
+            "MinimumVersion":  "7"
+        }
+    ],
+    "Software":  {
+                     "MinimumVersion":  "4.1"
+                 }
+}

@@ -1,0 +1,44 @@
+﻿<head>
+    <meta charset="utf-8" />
+    <title>ScriptDeck - URL Script</title>
+
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <script src="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdtools.common.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdpi.css">
+</head>
+
+<body>    
+    <div class="sdpi-wrapper">        
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Script</div>
+            <div class="sdpi-item-value">                                                                                
+                <textarea type="textarea" rows="2" id="Script" class="sdProperty" oninput="setSettings()"></textarea>
+                <p style="font-size:.8em">This script should return a series of [uri]s.  Each [uri] returned will be opened in a browser.</p>
+            </div>
+        </div>        
+        <hr/>
+        <div type="textarea" class="sdpi-item">
+            <div class="sdpi-item-label">When Loaded</div>
+            <div class="sdpi-item-value">                                                                
+                <p style="font-size:.9em">Runs whenever the button is loaded.</p>                
+                <textarea type="textarea" rows="2" id="WillAppear" class="sdProperty" oninput="setSettings()"></textarea>
+                <p style="font-size:.8em">
+                    This is where any PowerShell modules should be imported, and any state should be set up (for instance, discovering devices)
+                </p>
+            </div>
+        </div>
+        <hr/>
+        <div type="textarea" class="sdpi-item">
+            <div class="sdpi-item-label">When Unloaded</div>
+            <div class="sdpi-item-value">                                                                
+                <p style="font-size:.9em">Runs whenever the button is loaded.</p>                
+                <textarea type="textarea" rows="2" id="WillDisappear" class="sdProperty" oninput="setSettings()"></textarea>
+                <p style="font-size:.8em">
+                    This is where any state should be cleaned up.  Unloading modules is not recommended due to the potential of another button using the same module.
+                </p>
+            </div>
+        </div>        
+    </div>    
+</body>
