@@ -14,6 +14,7 @@
     param(
     # The path of the plugin
     [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+    [Alias('Fullname')]
     [string]
     $PluginPath,
 
@@ -44,9 +45,9 @@
                     if ($PSVersionTable.OS -like '*darwin*') {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
                     } elseif ($env:GITHUB_WORKSPACE) {
-                        Join-Path '/tmp' | Join-Path -ChildPath elgago | Join-Path Tools
+                        Join-Path '/tmp' -ChildPath elgago | Join-Path -ChildPath Tools
                     } else {
-                        Join-Path $home | Join-Path -ChildPath elgago | Join-Path Tools
+                        Join-Path $home  -ChildPath elgato | Join-Path -ChildPath Tools
                     }
                 }
         }
@@ -85,7 +86,7 @@
         #region Export Profiles
         foreach ($sdp in $sdplugins) {
             # $sdpOutputDirectory = Join-Path $outputPath "$($sdp.Name)_sdPlugin" | Join-Path -ChildPath "$($sdp.Name.ToLower()).sdPlugin"
-            $sdpOutputPath      = Join-Path $OutputPath "$($sdp.Name).streamDeckPlugin"
+            $sdpOutputPath      = Join-Path $OutputPath "$(($sdp.Name -replace '\s').ToLower()).streamDeckPlugin"
             if ((Test-Path $sdpOutputPath)) {
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
