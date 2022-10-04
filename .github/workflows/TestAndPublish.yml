@@ -517,7 +517,7 @@ jobs:
           }
           } @Parameters
   BuildScriptDeck: 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: ${{ success() }}
     steps: 
       - name: Check out repository
