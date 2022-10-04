@@ -93,6 +93,9 @@
             }            
 
             $lines = & $distroToolExe.Fullname -b -i ($sdp.PluginPath | Split-path) -o $OutputPath 
+            if ($env:GITHUB_WORKSPACE) {
+                $lines | Out-Host
+            }
             $hadErrorLines = $false
             foreach ($line in $lines) {
                 Write-Verbose "$line"                    
