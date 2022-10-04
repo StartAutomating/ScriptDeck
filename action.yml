@@ -1,3 +1,4 @@
+
 name: ScriptDeck
 description: CI/CD for StreamDeck
 inputs: 
@@ -23,7 +24,7 @@ inputs:
     required: false
     description: The user name associated with a git commit.
 branding: 
-  icon: play-circle
+  icon: film
   color: blue
 outputs: 
   
@@ -46,12 +47,12 @@ runs:
       id: ScriptDeckAction
       shell: pwsh
       env: 
-        UserName: ${{inputs.UserName}}
         SkipScriptDeckPS1: ${{inputs.SkipScriptDeckPS1}}
-        UserEmail: ${{inputs.UserEmail}}
-        CommitMessage: ${{inputs.CommitMessage}}
-        SkipStreamDeckPluginExport: ${{inputs.SkipStreamDeckPluginExport}}
         ScriptDeckScript: ${{inputs.ScriptDeckScript}}
+        SkipStreamDeckPluginExport: ${{inputs.SkipStreamDeckPluginExport}}
+        CommitMessage: ${{inputs.CommitMessage}}
+        UserEmail: ${{inputs.UserEmail}}
+        UserName: ${{inputs.UserName}}
       run: |
         $Parameters = @{}
         $Parameters.ScriptDeckScript = ${env:ScriptDeckScript}
@@ -116,7 +117,22 @@ runs:
         [PSCustomObject]$PSBoundParameters | Format-List | Out-Host
         "::endgroup::" | Out-Host
         
-        if ($env:GITHUB_ACTION_PATH) {
+        $gitHubEvent = if ($env:GITHUB_EVENT_PATH) {
+            [IO.File]::ReadAllText($env:GITHUB_EVENT_PATH) | ConvertFrom-Json
+        } else { $null }
+        
+        @"
+        ::group::GitHubEvent
+        $($gitHubEvent | ConvertTo-Json -Depth 100)
+        ::endgroup::
+        "@ | Out-Host
+        
+        $PSD1Found = Get-ChildItem -Recurse -Filter "*.psd1" | Where-Object Name -eq 'ScriptDeck.psd1' | Select-Object -First 1
+        
+        if ($PSD1Found) {
+            $ScriptDeckModulePath = $PSD1Found
+            Import-Module $PSD1Found -Force -PassThru | Out-Host
+        } elseif ($env:GITHUB_ACTION_PATH) {
             $ScriptDeckModulePath = Join-Path $env:GITHUB_ACTION_PATH 'ScriptDeck.psd1'
             if (Test-path $ScriptDeckModulePath) {
                 Import-Module $ScriptDeckModulePath -Force -PassThru | Out-String
@@ -144,6 +160,12 @@ runs:
                 } elseif ($out.CommitMessage) {
                     git commit -m "$($out.CommitMessage)"
                 }
+                elseif ($CommitMessage) {
+                    git commit -m $CommitMessage   
+                }
+                elseif ($gitHubEvent.head_commit.message) {
+                    git commit -m "$($gitHubEvent.head_commit.message)"
+                }        
                 $anyFilesChanged = $true
             }
             $out
@@ -157,6 +179,11 @@ runs:
         git config --global user.name  $UserName
         
         if (-not $env:GITHUB_WORKSPACE) { throw "No GitHub workspace" }
+        
+        # Check to ensure we are on a branch
+        $branchName = git rev-parse --abrev-ref HEAD
+        # If we were not, return.
+        if (-not $branchName) {  return }
         
         git pull | Out-Host
         
@@ -189,7 +216,7 @@ runs:
         if (-not $SkipStreamDeckPluginExport) {
             Get-ChildItem -Recurse -Path $env:GITHUB_WORKSPACE -Directory |
                 Where-Object Name -Match '\.sdPlugin$' |
-                Export-StreamDeckPlugin |
+                Export-StreamDeckPlugin -Force |
                 Add-Member CommitMessage "Exporting StreamDeck Plugin [skip ci]" -Force -PassThru |
                 . $processScriptOutput
         }
@@ -215,7 +242,18 @@ runs:
         
             
             "::notice::Pushing Changes" | Out-Host
-            $gitPushed =  git push 2>&1
+            $checkDetached = git symbolic-ref -q HEAD
+            if (-not $LASTEXITCODE) {
+                "::notice::Pulling Changes" | Out-Host
+                git pull | Out-Host
+                "::notice::Pushing Changes" | Out-Host
+                git push | Out-Host
+                "Git Push Output: $($gitPushed  | Out-String)"
+            } else {
+                "::notice::Not pushing changes (on detached head)" | Out-Host
+                $LASTEXITCODE = 0
+                exit 0
+            }
             
             
             "Git Push Output: $($gitPushed  | Out-String)"
