@@ -1,4 +1,4 @@
-﻿
+
 name: Analyze, Test, Tag, and Publish
 on: 
   push: 
@@ -305,6 +305,7 @@ jobs:
           $Parameters.UserEmail = ${env:UserEmail}
           $Parameters.UserName = ${env:UserName}
           $Parameters.TagVersionFormat = ${env:TagVersionFormat}
+          $Parameters.ReleaseNameFormat = ${env:ReleaseNameFormat}
           foreach ($k in @($parameters.Keys)) {
               if ([String]::IsNullOrEmpty($parameters[$k])) {
                   $parameters.Remove($k)
@@ -326,7 +327,11 @@ jobs:
           # The tag version format (default value: 'v$(imported.Version)')
           # This can expand variables.  $imported will contain the imported module.
           [string]
-          $TagVersionFormat = 'v$($imported.Version)'
+          $TagVersionFormat = 'v$($imported.Version)',
+          
+          # The release name format (default value: '$($imported.Name) $($imported.Version)')
+          [string]
+          $ReleaseNameFormat = '$($imported.Name) $($imported.Version)'
           )
           
           
@@ -381,7 +386,7 @@ jobs:
                   owner = '${{github.owner}}'
                   repo  = '${{github.repository}}'
                   tag_name = $targetVersion
-                  name = "$($imported.Name) $targetVersion"
+                  name = $ExecutionContext.InvokeCommand.ExpandString($ReleaseNameFormat)
                   body = 
                       if ($env:RELEASENOTES) {
                           $env:RELEASENOTES
@@ -405,6 +410,8 @@ jobs:
         run: |
           $Parameters = @{}
           $Parameters.ModulePath = ${env:ModulePath}
+          $Parameters.Exclude = ${env:Exclude}
+          $Parameters.Exclude = $parameters.Exclude -split ';' -replace '^[''"]' -replace  '[''"]$'
           foreach ($k in @($parameters.Keys)) {
               if ([String]::IsNullOrEmpty($parameters[$k])) {
                   $parameters.Remove($k)
@@ -413,16 +420,30 @@ jobs:
           Write-Host "::debug:: PublishPowerShellGallery $(@(foreach ($p in $Parameters.GetEnumerator()) {'-' + $p.Key + ' ' + $p.Value}) -join ' ')"
           & {param(
           [string]
-          $ModulePath
+          $ModulePath,
+          
+          [string[]]
+          $Exclude = @('*.png', '*.mp4', '*.jpg','*.jpeg', '*.gif', 'docs[/\]*')
           )
+          
           $gitHubEvent = if ($env:GITHUB_EVENT_PATH) {
               [IO.File]::ReadAllText($env:GITHUB_EVENT_PATH) | ConvertFrom-Json
           } else { $null }
+          
+          if (-not $Exclude) {
+              $Exclude = @('*.png', '*.mp4', '*.jpg','*.jpeg', '*.gif','docs[/\]*')
+          }
           
           
           @"
           ::group::GitHubEvent
           $($gitHubEvent | ConvertTo-Json -Depth 100)
+          ::endgroup::
+          "@ | Out-Host
+          
+          @"
+          ::group::PSBoundParameters
+          $($PSBoundParameters | ConvertTo-Json -Depth 100)
           ::endgroup::
           "@ | Out-Host
           
@@ -443,9 +464,9 @@ jobs:
           
           if (-not $imported) { return } 
           
-          $foundModule = try { Find-Module -Name $imported.Name -ErrorAction SilentlyContinue } catch {}
+          $foundModule = try { Find-Module -Name $imported.Name -ErrorAction SilentlyContinue} catch {}
           
-          if ($foundModule -and $foundModule.Version -ge $imported.Version) {
+          if ($foundModule -and (([Version]$foundModule.Version) -ge ([Version]$imported.Version))) {
               "::warning::Gallery Version of $moduleName is more recent ($($foundModule.Version) >= $($imported.Version))" | Out-Host        
           } else {
               
@@ -468,9 +489,24 @@ jobs:
               if (Test-Path $moduleGitPath) {
                   Remove-Item -Recurse -Force $moduleGitPath
               }
+          
+              if ($Exclude) {
+                  "::notice::Attempting to Exlcude $exclude" | Out-Host
+                  Get-ChildItem $moduleTempPath -Recurse |
+                      Where-Object {                
+                          foreach ($ex in $exclude) {
+                              if ($_.FullName -like $ex) {
+                                  "::notice::Excluding $($_.FullName)" | Out-Host
+                                  return $true
+                              }
+                          }
+                      } | 
+                      Remove-Item
+              }
+          
               Write-Host "Module Files:"
               Get-ChildItem $moduleTempPath -Recurse
-              Write-Host "Publishing $moduleName [$($imported.Version)] to Gallery"
+              Write-Host "Publishing $moduleName [$($imported.Version)] to Gallery"    
               Publish-Module -Path $moduleTempPath -NuGetApiKey $gk
               if ($?) {
                   Write-Host "Published to Gallery"
@@ -480,5 +516,22 @@ jobs:
               }
           }
           } @Parameters
+  BuildScriptDeck: 
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    steps: 
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Use PSSVG Action
+        uses: StartAutomating/PSSVG@main
+        id: PSSVG
+      - name: BuildPipeScript
+        uses: StartAutomating/PipeScript@main
+      - name: UseEZOut
+        uses: StartAutomating/EZOut@master
+      - name: UseHelpOut
+        uses: StartAutomating/HelpOut@master
+      - name: ScriptDeck
+        uses: StartAutomating/ScriptDeck@main
 env: 
   NoCoverage: true
