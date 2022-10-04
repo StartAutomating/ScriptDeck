@@ -66,7 +66,7 @@
     "Icon":  "ScriptDeck",
     "Version":  {} /*{
 $version = (Import-Module ../ScriptDeck.psd1 -PassThru).Version
-"`"$([Math]::Max($version.Major, 1)).$($version.Minor)`""
+"`"$($version.Major).$($version.Minor).$($version.Build)`""
 }*/,
     "OS":  [
         {
