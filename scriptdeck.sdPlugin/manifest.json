@@ -64,7 +64,7 @@
     "Category":  "ScriptDeck",
     "CategoryIcon":  "ScriptDeck",
     "Icon":  "ScriptDeck",
-    "Version":  "1.1",
+    "Version":  0.4.1,
     "OS":  [
         {
             "Platform": "mac", 
@@ -72,10 +72,11 @@
         },
         {
             "Platform":  "windows",
-            "MinimumVersion":  "7"
+            "MinimumVersion":  "10"
         }
     ],
     "Software":  {
                      "MinimumVersion":  "4.1"
                  }
 }
+
