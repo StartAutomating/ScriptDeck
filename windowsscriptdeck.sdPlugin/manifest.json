@@ -62,7 +62,7 @@
     "Category":  "WindowsScriptDeck",
     "CategoryIcon":  "WindowsScriptDeck",
     "Icon":  "WindowsScriptDeck",
-    "Version":  "1.1.1",
+    "Version":  "0.4.1",
     "OS":  [
                {
                    "Platform":  "windows",
@@ -73,3 +73,4 @@
                      "MinimumVersion":  "4.1"
                  }
 }
+
