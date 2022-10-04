@@ -531,7 +531,5 @@ jobs:
         uses: StartAutomating/EZOut@master
       - name: UseHelpOut
         uses: StartAutomating/HelpOut@master
-      - name: ScriptDeck
-        uses: StartAutomating/ScriptDeck@main
 env: 
   NoCoverage: true
