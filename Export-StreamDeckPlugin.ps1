@@ -84,7 +84,11 @@
         $splat = @{PluginPath=$PluginPath}
         $sdplugins = @(Get-StreamDeckPlugin @splat)
         if (-not $OutputPath) {
-            $OutputPath = $splugins | Select-Object -ExpandProperty PluginPath | Split-Path | Split-Path
+            if ($env:GITHUB_WORKSPACE) {
+                "Plugins Found:" | Out-Host
+                $sdplugins | Out-Host                
+            }
+            $OutputPath = $sdplugins | Select-Object -ExpandProperty PluginPath | Split-Path | Split-Path
         }
 
         #region Export Profiles
