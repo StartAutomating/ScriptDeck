@@ -517,7 +517,7 @@ jobs:
           }
           } @Parameters
   BuildScriptDeck: 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: ${{ success() }}
     steps: 
       - name: Check out repository
@@ -531,5 +531,7 @@ jobs:
         uses: StartAutomating/EZOut@master
       - name: UseHelpOut
         uses: StartAutomating/HelpOut@master
+      - name: ScriptDeck
+        uses: StartAutomating/ScriptDeck@main
 env: 
   NoCoverage: true
