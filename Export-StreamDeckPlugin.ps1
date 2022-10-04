@@ -42,7 +42,7 @@
                     
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
                     $distroToolUrl =  "$distroToolUrlRoot/DistributionToolMac.zip"
-                    if ($PSVersionTable.OS -like '*darwin*') {
+                    if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) {
                         Join-Path "~/Library/Application Support/elgato/StreamDeck" -ChildPath Tools
                     } elseif ($env:GITHUB_WORKSPACE) {
                         Join-Path $env:GITHUB_WORKSPACE -ChildPath elgago | Join-Path -ChildPath Tools
@@ -67,6 +67,7 @@
         $distroToolExe = 
             Get-ChildItem -Path $DistributionToolRoot -ErrorAction SilentlyContinue -Filter DistributionTool* | Sort-Object Length | Select-Object -First 1
 
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         if (-not $distroToolExe) {
             $distroZipPath = Split-Path $DistributionToolRoot | Join-Path -ChildPath ([uri]$distroToolUrlRoot).Segments[-1]
             if ($env:GITHUB_WORKSPACE) {
