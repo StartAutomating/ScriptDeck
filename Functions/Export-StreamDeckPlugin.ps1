@@ -90,12 +90,14 @@
         #region Export Profiles
         foreach ($sdp in $sdplugins) {
             # $sdpOutputDirectory = Join-Path $outputPath "$($sdp.Name)_sdPlugin" | Join-Path -ChildPath "$($sdp.Name.ToLower()).sdPlugin"
-            $sdpOutputPath      = Join-Path $OutputPath "$(($sdp.Name -replace '\s').ToLower()).streamDeckPlugin"
+            $sdpOutputPath      = Join-Path $OutputPath "$(($sdp.Name -replace '\s').ToLower()).streamDeckPlugin"            
+            $sdPluginRoot = ($sdp.PluginPath | Split-path)
+            $sdPluginRootName = $sdPluginRoot | Split-Path -Leaf
+            $sdpOutputPath = Join-Path $OutputPath "$sdPluginRootName.streamDeckPlugin"
             if ((Test-Path $sdpOutputPath)) {
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
             }
-            $sdPluginRoot = ($sdp.PluginPath | Split-path)
             if ($env:GITHUB_WORKSPACE) {
                 Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
             } else {
@@ -124,7 +126,7 @@
 
             if ($movedFiles) {
                 $movedFiles | Move-Item -Destination { 
-                    Join-Path $sdPluginRoot $_.Name
+                    Join-Path $sdPluginRoot "$_.Name"
                 }
             }
 
