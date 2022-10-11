@@ -131,6 +131,11 @@
             }
 
             if (-not $LASTEXITCODE) {
+                if ($env:GITHUB_WORKSPACE) {
+                    "Plugin files found:" | Out-Host
+                    Get-ChildItem -Filter *.streamDeckPlugin | select name | Out-Host
+                    "SdpOutputPath $sdpOutputPath" | Out-Host
+                }
                 Get-Item -LiteralPath $sdpOutputPath
             }
 
