@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 1280 640" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 100 100" x="25%" width="50%" height="33%" y="33%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="40" stroke="White" stroke-width="1.5" opacity=".9" fill="#224488" />
+    <polygon points="40,20 45,20 60,50 35,80 32.5,80 55,50" fill="White" opacity=".8" />
+  </svg>
+  <text font-size="48" x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" fill="#224488">WindowsScriptDeck</text>
+  <text font-size="36" x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" fill="#224488">Supercharge your StreamDeck with Windows PowerShell</text>
+</svg>
