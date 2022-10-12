@@ -8,7 +8,6 @@
   * Plugins should be attached to GitHub Release (#30)
 ---
 
-
 ## 0.4.2
 * Plugins are here!
   * ScriptDeck - Run PowerShell Core using StreamDeck (should run on Mac/Windows)
