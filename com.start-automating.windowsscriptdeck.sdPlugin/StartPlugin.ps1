@@ -4,6 +4,12 @@ $global:STREAMDECK_PLUGINLOGPATH = $logPath =
         ([Datetime]::Now.ToString('o').replace(':','.') -replace '\.\d+(?=[+-])') + '.log'
     )
 
+# Clear older logs (only keep the last 10 executions around)
+Get-ChildItem -Path $psScriptRoot -Filter *.log |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -Skip 10 |
+    Remove-Item
+
 "Log Started @ $([DateTime]::Now.ToString('s')).  Running under process ID $($pid)" | Add-Content -Path $logPath
 
 # Put each named argument into a dictionary.
@@ -65,9 +71,11 @@ $localFiles | Where-Object Name -Like 'On_*.ps1'
             `$err = `$_
             `$errorString = `$err | Out-String
             `$errorString | Add-Content -Path `$global:STREAMDECK_PLUGINLOGPATH
-            Start-Job -ScriptBlock {
-                (New-Object -ComObject WScript.Shell).Popup(`"`$args`",0,`"`StreamDeck - ProcessID: `$pid`", 16)
-            } -ArgumentList `$errorString
+            if (-not `$IsLinux -or `$IsMac) {
+                Start-Job -ScriptBlock {
+                    (New-Object -ComObject WScript.Shell).Popup(`"`$args`",0,`"`StreamDeck - ProcessID: `$pid`", 16)
+                } -ArgumentList `$errorString
+            }
         }
     ")
     Register-EngineEvent -SourceIdentifier $sourceIdentifier -Action $actionScriptBlock

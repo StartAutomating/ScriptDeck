@@ -1,38 +1,31 @@
-﻿ScriptDeck [0.4.1]
-==================
+﻿
+<div align='center'>
+<img src='Assets/ScriptDeck.svg' />
+<h2>Supercharge your StreamDeck with PowerShell</h2>
+</div>
 
-PowerShell Tools for Elgato StreamDeck
-------------------
+ScriptDeck is:
 
-### Commands
--------------------------------
-|      Verb|Noun              |
-|---------:|:-----------------|
-|       Add|-StreamDeckAction |
-|          |-StreamDeckProfile|
-|     Clear|-StreamDeckProfile|
-|    Export|-StreamDeckPlugin |
-|          |-StreamDeckProfile|
-|       Get|-StreamDeckAction |
-|          |-StreamDeckPlugin |
-|          |-StreamDeckProfile|
-|    Import|-StreamDeckProfile|
-|   Install|-StreamDeckPlugin |
-|       New|-StreamDeckAction |
-|          |-StreamDeckPlugin |
-|          |-StreamDeckProfile|
-|   Receive|-StreamDeck       |
-|    Remove|-StreamDeckAction |
-|          |-StreamDeckProfile|
-|   Restart|-StreamDeck       |
-|      Save|-StreamDeckProfile|
-|      Send|-StreamDeck       |
-|     Start|-StreamDeck       |
-|      Stop|-StreamDeck       |
-|    Update|-StreamDeckPlugin |
-|     Watch|-StreamDeck       |
--------------------------------
-ScriptDeck is a PowerShell module to help you work with Elgato StreamDeck devices.
+* A set of StreamDeck Plugins for PowerShell
+* A PowerShell module to help you work with Elgato StreamDeck devices.
+* A GitHub action that helps you prepare Elgato StreamDeck plugins for publication.
+
+### ScriptDeck and WindowsScriptDeck (the plugins)
+
+ScriptDeck and WindowsScriptDeck are a pair of plugins that let your StreamDeck run PowerShell Core and Windows PowerShell, respectively.
+
+Both plugins let you run any command at the touch of a button.
+
+The PowerShell engine stays running and responsive, ready for your next press.
+
+Using the plugins, you can:
+
+* Run any PowerShell command from any module
+* Populate the clipboard with a script's output, then paste the content
+* Open as many URLs as a script returns.
+* Start any Process with any verb (Run as Admin, Print, Edit)
+
+### ScriptDeck (the PowerShell Module)
 
 Currently, you can use ScriptDeck to:
 

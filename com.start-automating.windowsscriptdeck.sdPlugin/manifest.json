@@ -1,84 +1,76 @@
 {
     "Actions":  [
                     {
-                        "Icon":  "ScriptDeck",
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "PowerShell Script",
                         "States":  [
                                        {
-                                           "Image":  "ScriptDeck"
+                                           "Image":  "WindowsScriptDeck"
                                        }
                                    ],
                         "Tooltip":  "Runs a PowerShell Script or File",
-                        "UUID":  "ScriptDeck.InvokeScript",
-                        "PropertyInspectorPath":  "ScriptDeck.InvokeScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.InvokeScript",
+                        "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
-                        "Icon":  "ScriptDeck",
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "Paste Script",
                         "States":  [
                                        {
-                                           "Image":  "ScriptDeck"
+                                           "Image":  "WindowsScriptDeck"
                                        }
                                    ],
                         "Tooltip":  "Pastes Custom Content",
-                        "UUID":  "ScriptDeck.PasteScript",
-                        "PropertyInspectorPath":  "ScriptDeck.PasteScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.PasteScript",
+                        "PropertyInspectorPath":  "PasteScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
-                        "Icon":  "ScriptDeck",
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "URL Script",
                         "States":  [
                                        {
-                                           "Image":  "ScriptDeck"
+                                           "Image":  "WindowsScriptDeck"
                                        }
                                    ],
                         "Tooltip":  "Run a Script and Open each URL in a browser",
-                        "UUID":  "ScriptDeck.URLScript",
-                        "PropertyInspectorPath":  "ScriptDeck.URLScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.URLScript",
+                        "PropertyInspectorPath":  "URLScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
-                        "Icon":  "ScriptDeck",
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "Start-Process",
                         "States":  [
                                        {
-                                           "Image":  "ScriptDeck"
+                                           "Image":  "WindowsScriptDeck"
                                        }
                                    ],
                         "Tooltip":  "",
-                        "UUID":  "ScriptDeck.Start-Process",
-                        "PropertyInspectorPath":  "ScriptDeck.Start-Process.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.Start-Process",
+                        "PropertyInspectorPath":  "Start-Process.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     }                    
                 ],
     "SDKVersion":  2,
     "Author":  "Start-Automating",
     "CodePath":  "StartPlugin.cmd",
-    "CodePathWin": "StartPlugin.cmd",
-    "CodePathMac": "StartPlugin.sh",
-    "Description":  "Run PowerShell from your StreamDeck",
-    "Name":  "ScriptDeck",
+    "Description":  "Run Windows PowerShell from your StreamDeck",
+    "Name":  "Windows ScriptDeck",
     "URL":  "https://github.com/StartAutomating/ScriptDeck",
-    "Category":  "ScriptDeck",
-    "CategoryIcon":  "ScriptDeck",
-    "Icon":  "ScriptDeck",
-    "Version":  {} /*{
-$version = (Import-Module ../ScriptDeck.psd1 -PassThru).Version
-"`"$($version.Major).$($version.Minor).$($version.Build)`""
-}*/,
+    "Category":  "WindowsScriptDeck",
+    "CategoryIcon":  "WindowsScriptDeck",
+    "Icon":  "WindowsScriptDeck",
+    "Version":  "0.4.3",
     "OS":  [
-        {
-            "Platform": "mac", 
-            "MinimumVersion" : "10.11"
-        },
-        {
-            "Platform":  "windows",
-            "MinimumVersion":  "10"
-        }
-    ],
+               {
+                   "Platform":  "windows",
+                   "MinimumVersion":  "10"
+               }
+           ],
     "Software":  {
                      "MinimumVersion":  "4.1"
                  }
 }
+

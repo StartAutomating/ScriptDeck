@@ -9,8 +9,8 @@
                                        }
                                    ],
                         "Tooltip":  "Runs a PowerShell Script or File",
-                        "UUID":  "ScriptDeck.InvokeScript",
-                        "PropertyInspectorPath":  "ScriptDeck.InvokeScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.scriptdeck.InvokeScript",
+                        "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -22,8 +22,8 @@
                                        }
                                    ],
                         "Tooltip":  "Pastes Custom Content",
-                        "UUID":  "ScriptDeck.PasteScript",
-                        "PropertyInspectorPath":  "ScriptDeck.PasteScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.scriptdeck.PasteScript",
+                        "PropertyInspectorPath":  "PasteScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -35,8 +35,8 @@
                                        }
                                    ],
                         "Tooltip":  "Run a Script and Open each URL in a browser",
-                        "UUID":  "ScriptDeck.URLScript",
-                        "PropertyInspectorPath":  "ScriptDeck.URLScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.scriptdeck.URLScript",
+                        "PropertyInspectorPath":  "URLScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -48,8 +48,8 @@
                                        }
                                    ],
                         "Tooltip":  "",
-                        "UUID":  "ScriptDeck.Start-Process",
-                        "PropertyInspectorPath":  "ScriptDeck.Start-Process.PropertyInspector.html",
+                        "UUID":  "com.start-automating.scriptdeck.Start-Process",
+                        "PropertyInspectorPath":  "Start-Process.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     }                    
                 ],
@@ -64,7 +64,7 @@
     "Category":  "ScriptDeck",
     "CategoryIcon":  "ScriptDeck",
     "Icon":  "ScriptDeck",
-    "Version":  "0.4.2",
+    "Version":  "0.4.3",
     "OS":  [
         {
             "Platform": "mac", 

@@ -1,6 +1,6 @@
 ﻿@{
-    Description = "PowerShell Tools and Plugins for Elgato StreamDeck"
-    ModuleVersion = '0.4.2'
+    Description = "Supercharge your StreamDeck with PowerShell"
+    ModuleVersion = '0.4.3'
     RootModule = 'ScriptDeck.psm1'
     TypesToProcess = 'ScriptDeck.types.ps1xml'
     FormatsToProcess = 'ScriptDeck.format.ps1xml'
@@ -12,6 +12,16 @@
             ProjectURI = 'https://github.com/StartAutomating/ScriptDeck'
             LicenseURI = 'https://github.com/StartAutomating/ScriptDeck/blob/main/LICENSE'            
             ReleaseNotes = @'
+## ScriptDeck 0.4.3:
+* Export-StreamDeckPlugin: Fixing plugin name prediction (Fixes #26)
+* StreamDeck Plugin Improvements:
+  * Adding Preview Images (#28)
+  * Plugins clear old logs (#27)
+  * StartPlugin.sh no longer contains carriage returns (#29)
+  * Plugin names now use Reverse DNS Format (#25)
+  * Plugins should be attached to GitHub Release (#30)
+---
+
 ## 0.4.2
 * Plugins are here!
   * ScriptDeck - Run PowerShell Core using StreamDeck (should run on Mac/Windows)

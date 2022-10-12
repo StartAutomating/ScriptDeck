@@ -9,8 +9,8 @@
                                        }
                                    ],
                         "Tooltip":  "Runs a PowerShell Script or File",
-                        "UUID":  "WindowsScriptDeck.InvokeScript",
-                        "PropertyInspectorPath":  "WindowsScriptDeck.InvokeScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.InvokeScript",
+                        "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -22,8 +22,8 @@
                                        }
                                    ],
                         "Tooltip":  "Pastes Custom Content",
-                        "UUID":  "WindowsScriptDeck.PasteScript",
-                        "PropertyInspectorPath":  "WindowsScriptDeck.PasteScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.PasteScript",
+                        "PropertyInspectorPath":  "PasteScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -35,8 +35,8 @@
                                        }
                                    ],
                         "Tooltip":  "Run a Script and Open each URL in a browser",
-                        "UUID":  "WindowsScriptDeck.URLScript",
-                        "PropertyInspectorPath":  "WindowsScriptDeck.URLScript.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.URLScript",
+                        "PropertyInspectorPath":  "URLScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
                     {
@@ -48,8 +48,8 @@
                                        }
                                    ],
                         "Tooltip":  "",
-                        "UUID":  "WindowsScriptDeck.Start-Process",
-                        "PropertyInspectorPath":  "WindowsScriptDeck.Start-Process.PropertyInspector.html",
+                        "UUID":  "com.start-automating.windowsscriptdeck.Start-Process",
+                        "PropertyInspectorPath":  "Start-Process.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     }                    
                 ],
