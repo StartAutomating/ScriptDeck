@@ -115,10 +115,11 @@
                         manifest.json=>[StreamDeck.Plugin]
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
                     if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) { # On Mac, plugins can be in
-                        Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/Plugins" | # the library
+                        Get-ChildItem -Path "~/Library/Application Support/com.elgato.StreamDeck/Plugins" | # the library
                             Get-ChildItem -Filter manifest.json |
                             manifest.json=>[StreamDeck.Plugin]
 
+                            
                         Get-ChildItem -Path "/Applications/Stream Deck.app/Contents/Plugins" -Directory | # or applications.
                             Get-ChildItem -Filter manifest.json |
                             manifest.json=>[StreamDeck.Plugin]
