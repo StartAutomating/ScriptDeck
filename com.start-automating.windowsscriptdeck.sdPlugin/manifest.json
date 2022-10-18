@@ -15,6 +15,19 @@
                     },
                     {
                         "Icon":  "WindowsScriptDeck",
+                        "Name":  "Copy Script",
+                        "States":  [
+                                       {
+                                           "Image":  "WindowsScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Copy Custom Content",
+                        "UUID":  "com.start-automating.scriptdeck.CopyScript",
+                        "PropertyInspectorPath":  "CopyScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "Paste Script",
                         "States":  [
                                        {
@@ -62,7 +75,7 @@
     "Category":  "WindowsScriptDeck",
     "CategoryIcon":  "WindowsScriptDeck",
     "Icon":  "WindowsScriptDeck",
-    "Version":  "0.4.3",
+    "Version":  "0.4.4",
     "OS":  [
                {
                    "Platform":  "windows",

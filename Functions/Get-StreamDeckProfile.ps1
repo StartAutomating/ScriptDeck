@@ -68,7 +68,7 @@
                     & $importProfile
             } elseif ($PSVersionTable.Platform -eq 'Unix') {
                 if ($PSVersionTable.OS -like '*darwin*') {
-                    Get-ChildItem -Path "~/Library/Application Support/elgato/StreamDeck/ProfilesV2" |
+                    Get-ChildItem -Path "~/Library/Application Support/com.elgato.StreamDeck/ProfilesV2" |
                         & $importProfile
                 }
             }

@@ -36,7 +36,7 @@
                     "$env:AppData\Elgato\StreamDeck\Plugins\"
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {                    
                     # or the library if it is a Mac
-                    "~/Library/Application Support/elgato/StreamDeck/Plugins"
+                    "~/Library/Application Support/com.elgato.StreamDeck/Plugins"
                 }
 
             if (-not $DestinationPath) { # If we could not determine the -DestinationPath
@@ -56,7 +56,7 @@
 
 
         # Find the source item
-        $sourcePathItem = $sourceFileInfo = Get-Item -LiteralPath $resolvedSourcePath
+        $sourcePathItem = $sourceFileInfo = Get-Item $resolvedSourcePath
 
         if ($sourcePathItem -is [IO.FileInfo]) { # If it is a file
             if ($sourcePathItem.Extension -notin '.zip', '.streamDeckPlugin') { # it must be a .zip or .streamDeckPlugin
@@ -98,9 +98,13 @@
         $DestinationPathLeaf = $resolvedDestinationPath | Split-Path -Leaf
 
         if ($DestinationPathLeaf -notlike '*.sdPlugin') { # If it's not already a .sdPlugin directory
-            $newDestPath  = Join-Path $resolvedDestinationPath (
-                $sourcePathItem.Name.Replace("$($sourcePathItem.Extension)",'') + '.sdPlugin'
-            ) # determine the right .sdPlugin path
+            $destinationName = # determine the right .sdPlugin path
+                if ($sourcePathItem.Extension) {
+                    $sourcePathItem.Name.Replace("$($sourcePathItem.Extension)",'') + '.sdPlugin'
+                } else {
+                    $sourcePathItem.Name + '.sdPlugin'
+                }
+            $newDestPath  = Join-Path $resolvedDestinationPath $destinationName 
             if (-not (Test-Path $newDestPath)) {
                 $createdDirectory = New-Item -ItemType Directory -Path $newDestPath 
                 if (-not $createdDirectory) {
@@ -118,7 +122,7 @@
         $progressId  = Get-Random
         foreach ($pluginFile in $pluginFiles) {
             # determine it's relative path,        
-            $relativePath = $pluginFile.FullName.Replace("$($sourcePathItem.Fullname)$([IO.Path]::DirectorySeparatorChar)", "")
+            $relativePath = $pluginFile.FullName.Substring($sourcePathItem.FullName.Length) -replace '^[\\/]'
             $newPath = Join-Path $resolvedDestinationPath $relativePath
             $null = 
                 try {

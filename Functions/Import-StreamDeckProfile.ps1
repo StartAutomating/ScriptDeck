@@ -42,7 +42,7 @@
                 if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
                     "$env:AppData\Elgato\StreamDeck\ProfilesV2\"
                 } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
-                    "~/Library/Application Support/elgato/StreamDeck/ProfilesV2"
+                    "~/Library/Application Support/com.elgato.StreamDeck/ProfilesV2"
                 }
         }
 

@@ -15,6 +15,19 @@
                     },
                     {
                         "Icon":  "ScriptDeck",
+                        "Name":  "Copy Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Copy Custom Content",
+                        "UUID":  "com.start-automating.scriptdeck.CopyScript",
+                        "PropertyInspectorPath":  "CopyScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
                         "Name":  "Paste Script",
                         "States":  [
                                        {
@@ -25,7 +38,7 @@
                         "UUID":  "com.start-automating.scriptdeck.PasteScript",
                         "PropertyInspectorPath":  "PasteScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
-                    },
+                    },                    
                     {
                         "Icon":  "ScriptDeck",
                         "Name":  "URL Script",
@@ -64,7 +77,7 @@
     "Category":  "ScriptDeck",
     "CategoryIcon":  "ScriptDeck",
     "Icon":  "ScriptDeck",
-    "Version":  "0.4.3",
+    "Version":  "0.4.4",
     "OS":  [
         {
             "Platform": "mac", 

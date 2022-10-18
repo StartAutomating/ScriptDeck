@@ -417,7 +417,7 @@ jobs:
               $releasedIt | Out-Host
           }
           
-          $releaseUploadUrl = 'https://uploads.github.com/repos/${{github.repository}}/releases/' + "$($releasedIt.id)/assets"
+          $releaseUploadUrl = $releasedIt.upload_url -replace '\{.+$'
           
           if ($ReleaseAsset) {
               $fileList = Get-ChildItem -Recurse
@@ -442,7 +442,7 @@ jobs:
                   } else {
                       $fileBytes = [IO.File]::ReadAllBytes($file.FullName)
                       $releasedFiles[$file.Name] =
-                          Invoke-RestMethod -Uri "$releaseUploadUrl?name=$($file.Name)" -Headers @{
+                          Invoke-RestMethod -Uri "${releaseUploadUrl}?name=$($file.Name)" -Headers @{
                               "Accept"        = "application/vnd.github+json"
                               "ContentType"   = "application/octet-stream"
                               "Authorization" = 'Bearer ${{ secrets.GITHUB_TOKEN }}'
