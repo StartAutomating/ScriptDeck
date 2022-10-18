@@ -18,7 +18,7 @@
                         "Name":  "Copy Script",
                         "States":  [
                                        {
-                                           "Image":  "ScriptDeck"
+                                           "Image":  "WindowsScriptDeck"
                                        }
                                    ],
                         "Tooltip":  "Copy Custom Content",
