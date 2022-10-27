@@ -22,7 +22,7 @@
                                        }
                                    ],
                         "Tooltip":  "Copy Custom Content",
-                        "UUID":  "com.start-automating.scriptdeck.CopyScript",
+                        "UUID":  "com.start-automating.windowsscriptdeck.CopyScript",
                         "PropertyInspectorPath":  "CopyScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
