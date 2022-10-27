@@ -14,7 +14,7 @@
                         "VisibleInActionsList":  true
                     },
                     {
-                        "Icon":  "ScriptDeck",
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "Start PowerShell",
                         "States":  [
                                        {
