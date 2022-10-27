@@ -14,6 +14,19 @@
                         "VisibleInActionsList":  true
                     },
                     {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Start PowerShell",
+                        "States":  [
+                                       {
+                                           "Image":  "WindowsScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Runs a PowerShell Script or File in a new shell",
+                        "UUID":  "com.start-automating.windowsscriptdeck.Start-PowerShell",
+                        "PropertyInspectorPath":  "Start-PowerShell.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
                         "Icon":  "WindowsScriptDeck",
                         "Name":  "Copy Script",
                         "States":  [

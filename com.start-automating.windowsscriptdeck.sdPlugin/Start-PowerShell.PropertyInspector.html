@@ -1,0 +1,61 @@
+<head>
+    <meta charset="utf-8" />
+    <title>ScriptDeck - Start PowerShell</title>
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>    
+    <script src="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdtools.common.js"></script>    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdpi.css">
+</head>
+<body>    
+    <div class="sdpi-wrapper">       
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Startup Script</div>
+            <div class="sdpi-item-value">                                                                
+                <p style="font-size:.9em">The script to run in a new shell</p>
+                <textarea type="textarea" rows="2" id="StartupScript" class="sdProperty" oninput="setSettings()"></textarea>                
+            </div>
+        </div>
+        <hr/>
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Script File</div>
+            <div class="sdpi-item-group file" id="filepickergroup">                                                                    
+                <p style="font-size:.9em">The file that will run in the new shell </p>
+                <input type="file" id="ScriptFile" class="sdpi-item-value sdProperty sdFile" oninput="setSettings()" accept=".ps1"/>
+                <label class="sdpi-file-info " for="ScriptFile" id="ScriptFileFilename">No file...</label>
+            </div>
+        </div>
+        <hr/>
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Working Directory</div>
+            <div class="sdpi-item-value">                                                                
+                <p style="font-size:.9em">The WorkingDirectory for the Script</p>
+                <input id="WorkingDirectory" class="sdProperty" oninput="setSettings()" />
+            </div>
+        </div>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">NoExit</div>
+            <div class="sdpi-item-value">
+                <input id="NoExit" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="NoExit" class="sdpi-item-label"><span></span>NoExit</label>
+            </div>
+        </div>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">NoProfile</div>
+            <div class="sdpi-item-value">
+                <input id="NoProfile" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="NoProfile" class="sdpi-item-label"><span></span>NoProfile</label>
+            </div>
+        </div>
+        <hr/> 
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">NoLogo</div>
+            <div class="sdpi-item-value">
+                <input id="NoLogo" type="checkbox" value="checked" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="NoLogo" class="sdpi-item-label"><span></span>NoLogo</label>
+            </div>
+        </div>       
+    </div>    
+</body>
