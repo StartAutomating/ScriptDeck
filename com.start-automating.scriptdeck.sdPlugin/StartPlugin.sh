@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pwsh -noprofile -nologo -file "./StartPlugin.ps1" $*
+pwsh -nologo -file "./StartPlugin.ps1" $*

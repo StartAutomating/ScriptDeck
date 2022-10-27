@@ -1,1 +1,1 @@
-powershell -ExecutionPolicy Bypass -NoProfile -File "%~dp0StartPlugin.ps1" %*
+powershell -ExecutionPolicy Bypass -File "%~dp0StartPlugin.ps1" %*
