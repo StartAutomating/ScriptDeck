@@ -90,7 +90,7 @@
     "Category":  "ScriptDeck",
     "CategoryIcon":  "ScriptDeck",
     "Icon":  "ScriptDeck",
-    "Version":  "0.4.4",
+    "Version":  "0.4.5",
     "OS":  [
         {
             "Platform": "mac", 
