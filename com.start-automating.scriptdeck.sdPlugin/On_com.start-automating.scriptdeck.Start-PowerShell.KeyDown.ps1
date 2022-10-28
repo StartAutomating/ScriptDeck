@@ -25,10 +25,6 @@ if ($event.MessageData.payload.settings.ScriptFile) {
                 '[\\/]', ([IO.Path]::DirectorySeparatorChar)
     }
 }
-elseif ($event.MessageData.payload.settings.StartupScript) {
-    "-encodedcommand"    
-    [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($event.MessageData.payload.settings.StartupScript))
-}
 
 )
 
