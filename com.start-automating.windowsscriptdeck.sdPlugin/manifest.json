@@ -88,7 +88,7 @@
     "Category":  "WindowsScriptDeck",
     "CategoryIcon":  "WindowsScriptDeck",
     "Icon":  "WindowsScriptDeck",
-    "Version":  "0.4.4",
+    "Version":  "0.4.5",
     "OS":  [
                {
                    "Platform":  "windows",
