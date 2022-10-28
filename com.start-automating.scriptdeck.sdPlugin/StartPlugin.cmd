@@ -1,1 +1,1 @@
-pwsh -ExecutionPolicy Bypass -NoProfile -File "%~dp0StartPlugin.ps1" %*
+pwsh -ExecutionPolicy Bypass -File "%~dp0StartPlugin.ps1" %*

@@ -1,3 +1,10 @@
+## ScriptDeck 0.4.5:
+
+* Plugins now Include "Start PowerShell" and "Start PowerShell" (Fixes #41)
+* Plugins now load PowerShell profiles (Fixes #39)
+
+---
+
 ## ScriptDeck 0.4.4:
 * Adding CopyScript to ScriptDeck and WindowsScriptDeck plugins (Fixes #35)
 * MacOS ScriptDeck Plugin Fix (Fixes #33, thanks @corbob)

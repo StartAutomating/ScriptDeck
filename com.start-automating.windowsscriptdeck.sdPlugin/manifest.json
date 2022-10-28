@@ -15,6 +15,19 @@
                     },
                     {
                         "Icon":  "WindowsScriptDeck",
+                        "Name":  "Start PowerShell",
+                        "States":  [
+                                       {
+                                           "Image":  "WindowsScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Runs a PowerShell Script or File in a new shell",
+                        "UUID":  "com.start-automating.windowsscriptdeck.Start-PowerShell",
+                        "PropertyInspectorPath":  "Start-PowerShell.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "WindowsScriptDeck",
                         "Name":  "Copy Script",
                         "States":  [
                                        {
@@ -22,7 +35,7 @@
                                        }
                                    ],
                         "Tooltip":  "Copy Custom Content",
-                        "UUID":  "com.start-automating.scriptdeck.CopyScript",
+                        "UUID":  "com.start-automating.windowsscriptdeck.CopyScript",
                         "PropertyInspectorPath":  "CopyScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
                     },
@@ -75,7 +88,7 @@
     "Category":  "WindowsScriptDeck",
     "CategoryIcon":  "WindowsScriptDeck",
     "Icon":  "WindowsScriptDeck",
-    "Version":  "0.4.4",
+    "Version":  "0.4.5",
     "OS":  [
                {
                    "Platform":  "windows",

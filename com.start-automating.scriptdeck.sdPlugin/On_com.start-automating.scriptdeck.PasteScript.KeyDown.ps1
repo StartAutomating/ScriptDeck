@@ -1,7 +1,4 @@
-﻿if (-not ('windows.Clipboard' -as [type])) {
-    Add-Type -AssemblyName PresentationCore
-}
-$msg = @(
+﻿$msg = @(
 if ($event.MessageData.payload.settings.header) {
     $event.MessageData.payload.settings.header
     
@@ -17,5 +14,7 @@ if ($event.MessageData.payload.settings.footer) {
 }
 
 ) -join [Environment]::NewLine
-[Windows.Clipboard]::SetText($msg)
-(New-Object -ComObject WScript.Shell).SendKeys('^v')
+Set-Clipboard -Value $msg
+if ($IsWindows) {
+    (New-Object -ComObject WScript.Shell).SendKeys('^v')
+}
