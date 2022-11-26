@@ -102,7 +102,7 @@
                 if ($sourcePathItem.Extension) {
                     $sourcePathItem.Name.Replace("$($sourcePathItem.Extension)",'') + '.sdPlugin'
                 } else {
-                    $sourcePathItem.Name + '.sdPlugin'
+                    ($sourcePathItem.Name -replace '\.sdPlugin$') + '.sdPlugin'
                 }
             $newDestPath  = Join-Path $resolvedDestinationPath $destinationName 
             if (-not (Test-Path $newDestPath)) {
