@@ -69,11 +69,16 @@
 
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         if (-not $distroToolExe) {
-            $distroZipPath = Split-Path $DistributionToolRoot | Join-Path -ChildPath ([uri]$distroToolUrlRoot).Segments[-1]
+            $lastSegment = (([uri]$distroToolUrlRoot).Segments[-1])            
+            $distroZipPath = Split-Path $DistributionToolRoot | Join-Path -ChildPath (([uri]$distroToolUrlRoot).Segments[-1])
             if ($env:GITHUB_WORKSPACE) {
+                "Last URI Segment: $lastSegment" | Out-Host
                 "Attempting to download $distroToolUrl to $distroZipPath" | Out-Host
             }
-            [Net.WebClient]::new().DownloadFile($distroToolUrl, "$distroZipPath")
+            Invoke-WebRequest -Uri $distroToolUrl | 
+                Select-Object -ExpandProperty Content |
+                Set-Content -Path $distroZipPath -AsByteStream
+            # [Net.WebClient]::new().DownloadFile($distroToolUrl, "$distroZipPath")
             [IO.Compression.ZipFile]::ExtractToDirectory("$distroZipPath", "$DistributionToolRoot")
             $distroToolExe = 
                 Get-ChildItem -Path $DistributionToolRoot -ErrorAction SilentlyContinue -Filter DistributionTool* | Sort-Object Length | Select-Object -First 1
