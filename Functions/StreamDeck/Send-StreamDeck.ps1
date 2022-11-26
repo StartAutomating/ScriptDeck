@@ -54,6 +54,12 @@
     [string]
     $ImagePath,
 
+    # The title 
+    [Parameter(Mandatory,ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
+    [Alias('ButtonText')]
+    [string]
+    $Title,
+
     # The state index of an image or title.  Defaults to zero.
     [Parameter(ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
     [Parameter(ParameterSetName='setImage',ValueFromPipelineByPropertyName)]
@@ -106,7 +112,7 @@
 
         # A number of different parameter sets are named to reflect the EventName StreamDeck expects.
         # If we find an argument that hints that this is true
-        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath) {
+        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath -or $Title) {
             $EventName = $PSCmdlet.ParameterSetName # set -EventName to the $psCmdlet.ParameterSetName.
         }
 
@@ -125,7 +131,7 @@
             $resolvedItem = Get-Item -LiteralPath $resolvedPath 
             if (-not $resolvedItem) { return } 
             # and check that it actually is an image.
-            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp'
+            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp','.jpeg'
             if ($resolvedItem.Extension -notin $imageExtensions) {
                 Write-Error "-ImagePath '$ImagePath' has an invalid extension. Valid extensions are: $imageExtensions"
                 return
@@ -150,6 +156,14 @@
                 }
             }
         }
+        
+        if ($Title) {
+            $Payload = [Ordered]@{ # Otherwise, it's base64 binary.
+                title = $Title 
+                target = $eventTarget
+                state  = $State
+            }
+        }
 
         # If no one provided a -Context but $Global:STREAMDECK_CONTEXT is set,
         if ((-not $Context) -and $Global:STREAMDECK_CONTEXT) { 
@@ -160,7 +174,7 @@
             event   = $EventName
             context = $Context
             payload = $Payload
-        }        
+        }
 
         if (-not $WebSocketPayload.payload -or $WebSocketPayload.payload.count -eq 0) { # If the payload was blank
             $WebSocketPayload.Remove('payload') # remove it
