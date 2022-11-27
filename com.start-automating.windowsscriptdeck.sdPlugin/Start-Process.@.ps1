@@ -32,7 +32,7 @@ if ($event.SourceIdentifier -match 'KeyDown') {
                 $settingsSplat[$command.Parameters[$Matches.n]] = & $sb
             }
         }
-        elseif ($command.parameters.($prop.Name)) {
+        elseif ($command.parameters[$prop.Name]) {
             $settingsSplat[$prop.Name] = $prop.Value
         }
     }
