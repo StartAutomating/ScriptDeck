@@ -22,6 +22,10 @@ Updates a StreamDeck profile
 
 
 
+* [New-StreamDeckProfile](New-StreamDeckProfile.md)
+
+
+
 ---
 ### Examples
 #### EXAMPLE 1
