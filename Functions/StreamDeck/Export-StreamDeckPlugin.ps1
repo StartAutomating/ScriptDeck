@@ -115,6 +115,19 @@
             } else {
                 $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
             }
+            $hasPs1Files = Get-ChildItem -Path $sdPluginRoot -Recurse -Filter *.ps1
+            if ($hasPs1Files) {
+                Get-Command Send-StreamDeck, Receive-StreamDeck, Watch-StreamDeck |
+                    ForEach-Object {
+                        $cmd = $_
+                        $scriptFile = [IO.FileInfo]$_.ScriptBlock.File                    
+                        if ($env:GITHUB_WORKSPACE) {
+                            "Copying Latest $cmd to $sdPluginRoot" | Out-Host
+                        }
+                        Copy-Item $scriptFile.FullName (Join-Path $sdPluginRoot "$($cmd.Name).ps1")
+                    }
+            }
+
             $lines = & $distroToolExe.Fullname -b -i $sdPluginRoot -o $OutputPath 
             if ($env:GITHUB_WORKSPACE) {
                 $lines | Out-Host
