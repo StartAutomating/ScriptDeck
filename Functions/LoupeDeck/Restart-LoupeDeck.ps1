@@ -33,7 +33,7 @@ function Restart-LoupeDeck
                 } elseif ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
                     "${env:ProgramFiles(x86)}\Loupedeck\Loupedeck2\Loupedeck2.exe"
                 } elseif ($PSVersionTable.Platform -eq 'Unix' -and $PSVersionTable.OS -like '*darwin*') {
-                    " /Applications/Loupedeck.app/Contents/Resources/LoupedeckServiceTool.app”
+                    "/Applications/Loupedeck.app/Contents/Resources/LoupedeckServiceTool.app"
                 }            
         }
 
