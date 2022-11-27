@@ -76,7 +76,7 @@ This will temporarily show an OK checkmark icon on the image displayed by an ins
 ---
 #### **ShowAlert**
 
-If set, will send a showOk event to the Stream Deck application.
+If set, will send a showAlert event to the Stream Deck application.
 This will temporarily show an alert icon on the image displayed by an instance of an action.
 
 
