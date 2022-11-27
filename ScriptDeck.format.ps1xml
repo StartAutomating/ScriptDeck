@@ -3,6 +3,36 @@
 <Configuration>
   <ViewDefinitions>
     <View>
+      <Name>LoupeDeck.Profile</Name>
+      <ViewSelectedBy>
+        <TypeName>LoupeDeck.Profile</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>DeviceType</PropertyName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>StreamDeck.Action</Name>
       <ViewSelectedBy>
         <TypeName>StreamDeck.Action</TypeName>
