@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdpi.css">
 </head>
 
-<body>    
+<body>
     <div class="sdpi-wrapper">
         <div class="sdpi-item">
             <div class="sdpi-item-label">Path</div>
@@ -33,8 +33,19 @@
         <div type="checkbox" class="sdpi-item">
             <div class="sdpi-item-label">Automatically Set Image</div>
             <div class="sdpi-item-value">
-                <input id="AutoSetImage" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <input id="AutoSetImage" type="checkbox" value="checked" class="sdProperty sdCheckbox" oninput="setSettings()">
                 <label for="AutoSetImage" class="sdpi-item-label"><span></span><br/>If checked, changing an image file will set the button image.</label>
+            </div>
+        </div>
+        <hr/>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">Automatically Set Title</div>
+            <div class="sdpi-item-value">
+                <input id="AutoSetTitle" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="AutoSetTitle" class="sdpi-item-label"><span></span><br/>
+                    If checked, changing an file will change the title.
+                </label>
             </div>
         </div>
         <hr/>
@@ -42,7 +53,7 @@
             <div class="sdpi-item-label">Send Message</div>
             <div class="sdpi-item-value">
                 
-                <input id="SendMessage" type="checkbox" value="checked" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <input id="SendMessage" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
                 <label style="font-size:.8em" for="SendMessage" class="sdpi-item-label">
                     <span></span>
                     <br/>
@@ -51,7 +62,7 @@
                 
                     This fill will be named:
                     <br/>
-                    Receive-StreamDeck.EventName.$Context.json                
+                    EventName.$Context.json
                     <br/>
                     $context will be a unique ID for the button.
                 </label>
@@ -59,31 +70,28 @@
         </div>
         <hr/>
         <div type="checkbox" class="sdpi-item">
-            <div class="sdpi-item-label">Receive Message</div>
+            <div class="sdpi-item-label">Run Scripts</div>
             <div class="sdpi-item-value">
 
-                <input type="checkbox" id="ReceiveMessage" class="sdProperty sdCheckbox" oninput="setSettings()" checked="true" />
-                <label for="ReceiveMessage" class="sdpi-item-label">
+                <input type="checkbox" id="RunScripts" class="sdProperty sdCheckbox" oninput="setSettings()" />
+                <label for="RunScripts" class="sdpi-item-label">
                     <span></span>
                     <br/>
-                    If checked, will receive message files for the StreamDeck.
+                    If checked, will run .ps1 files that change.
+                </label>
+            </div>
+        </div>
+        <hr/>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">Recurse</div>
+            <div class="sdpi-item-value">
 
+                <input type="checkbox" id="Recurse" class="sdProperty sdCheckbox" oninput="setSettings()" />
+                <label for="Recurse" class="sdpi-item-label">
+                    <span></span>
                     <br/>
-
-                    These files will be named:
-                    <br/>
-
-                    Send-StreamDeck.*.json
-                    <br/>
-                    OR
-                    <br/>
-                    Send-StreamDeck.*.clixml
-                    OR
-                    <br/>
-                    Send-StreamDeck.*.ps1
-
-                    <br/>
-                    Each file will be deleted once it is handled by the plugin.
+                    If checked, will recursively check for file changes
                 </label>
             </div>
         </div>
