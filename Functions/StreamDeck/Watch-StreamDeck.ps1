@@ -155,7 +155,7 @@ function Watch-StreamDeck
                     @(
                         @(
                             $sourceIdentifierParts[0..$($sourceIdentifierParts.Length - 2)] -notmatch 
-                                '\.' -ne ''
+                                '^\.$' -ne ''
                         ) +
                             $eventName
                     ) -join '.'
