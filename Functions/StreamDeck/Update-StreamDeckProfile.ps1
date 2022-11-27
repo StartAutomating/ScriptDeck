@@ -82,6 +82,8 @@ function Update-StreamDeckProfile
         Remove-StreamDeckProfile
     .Link
         Save-StreamDeckProfile
+    .Link
+        New-StreamDeckProfile
     #>
     [OutputType('StreamDeck.Profile')]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "", Justification="Does not change state")]
