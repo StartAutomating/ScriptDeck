@@ -153,10 +153,13 @@ function Watch-StreamDeck
                 # and get the full source identifier for each event.
                 $sourceIdentifier =
                     @(
-                        @($sourceIdentifierParts[0..$($sourceIdentifierParts.Length - 2)] -ne '') +
+                        @(
+                            $sourceIdentifierParts[0..$($sourceIdentifierParts.Length - 2)] -notmatch 
+                                '\.' -ne ''
+                        ) +
                             $eventName
                     ) -join '.'
-                    
+
                 # Log what we're about to do.
                 Add-Content -Path $logPath -value "Registering Handler for '$sourceIdentifier': $($file.fullname)"
                 $actionScriptBlock = [ScriptBlock]::Create(@"
