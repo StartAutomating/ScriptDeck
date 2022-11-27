@@ -7,7 +7,20 @@ Watches StreamDeck
 ### Description
 
 Watches StreamDeck for events.
+
 This function provides the backbone of a StreamDeck plugin written in PowerShell.
+
+Watch-StreamDeck should not be called directly, unless you are testing a plugin.
+
+---
+### Related Links
+* [Send-StreamDeck](Send-StreamDeck.md)
+
+
+
+* [Receive-StreamDeck](Receive-StreamDeck.md)
+
+
 
 ---
 ### Examples
