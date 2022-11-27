@@ -5,10 +5,17 @@ function Watch-StreamDeck
         Watches StreamDeck
     .DESCRIPTION
         Watches StreamDeck for events.
+        
         This function provides the backbone of a StreamDeck plugin written in PowerShell.
+        
+        Watch-StreamDeck should not be called directly, unless you are testing a plugin.
     .EXAMPLE
         # This will start watching the plugin with arguments passed by StreamDeck
-        Watch-StreamDeck -StreamDeckInfo $args 
+        Watch-StreamDeck -StreamDeckInfo $args
+    .LINK
+        Send-StreamDeck
+    .LINK
+        Receive-StreamDeck
     #>
     param(
     # The StreamDeck Information.
@@ -110,7 +117,7 @@ function Watch-StreamDeck
             $sourceIdentifierParts = @($sourceIdentifier -split '\.' -ne '')
             
             # If we only have two chunks and the first chunk is not 'StreamDeck'
-            if ($sourceIdentifierParts.Length -eq 2 -and 
+            if ($sourceIdentifierParts.Length -le 2 -and 
                 $sourceIdentifierParts[0] -ne 'StreamDeck') {
                 # then we need to include the plugin UUID in the source identifier
                 $sourceIdentifierParts = @($StreamDeckInfo.info.plugin.uuid) + $sourceIdentifierParts
