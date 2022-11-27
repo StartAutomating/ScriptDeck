@@ -12,6 +12,19 @@
                         "UUID":  "com.start-automating.scriptdeck.InvokeScript",
                         "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
                         "VisibleInActionsList":  true
+                    },                    
+                    {
+                        "Icon": "ScriptDeck",
+                        "Name": "WatchPath",
+                        "States":  [
+                            {
+                                "Image":  "ScriptDeck"
+                            }
+                        ],
+                        "Tooltip":  "Watches for file changes",
+                        "UUID":  "com.start-automating.scriptdeck.WatchPath",
+                        "PropertyInspectorPath":  "WatchPath.PropertyInspector.html",
+                        "VisibleInActionsList":  true
                     },
                     {
                         "Icon":  "ScriptDeck",
