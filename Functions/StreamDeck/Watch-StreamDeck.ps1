@@ -107,12 +107,14 @@ function Watch-StreamDeck
         # Walk over each file we find
         foreach ($file in $localFiles) {
             # If it does not look like a .handler.ps1 or is not like On_*.ps1
-            if ($file.Name -notlike '*.handler.ps1' -and $file.Name -notlike 'On_*.ps1') {
+            if ($file.Name -notlike '*.handler.ps1' -and 
+                $file.Name -notlike 'On_*.ps1' -and 
+                $file.Name -notmatch '@') {
                 continue # keep moving.
             }
         
             # Remove the naming hints from the file to get the source identifier
-            $sourceIdentifier = $file.Name -replace '^On_' -replace '\.ps1$' -replace '\.handler$'
+            $sourceIdentifier = $file.Name -replace '^On_' -replace '\.ps1$' -replace '\.handler$' -replace '@', '.'
             # and then break the source identifier into chunks.
             $sourceIdentifierParts = @($sourceIdentifier -split '\.')            
             
@@ -135,7 +137,8 @@ function Watch-StreamDeck
 
             # If there was not an event name, register for all possible events.
             if (-not $eventNames) {
-                $eventNames = 'KeyDown', 'KeyUp', 
+                $eventNames = 
+                    'KeyDown', 'KeyUp', 
                     'WillAppear', 'WillDisappear', 
                     'DeviceDidConnect', 'DeviceDidDisconnect',
                     'DidReceiveSettings', 'DidReceiveGlobalSettings',
