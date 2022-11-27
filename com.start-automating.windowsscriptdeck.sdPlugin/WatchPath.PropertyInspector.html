@@ -1,0 +1,114 @@
+﻿<head>
+    <meta charset="utf-8" />
+    <title>ScriptDeck - Watch Path</title>
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <script src="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdtools.common.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barraider/streamdeck-easypi@latest/src/sdpi.css">
+</head>
+
+<body>    
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Path</div>
+            <div class="sdpi-item-value">
+                <input type="text" id="Path" class="sdProperty" oninput="setSettings()" />
+                <p style="font-size:.8em">The path to watch.</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Handler</div>
+            <div class="sdpi-item-value">
+                <textarea type="textarea" rows="4" id="Handler" class="sdProperty" oninput="setSettings()">
+                
+                </textarea>
+                <p style="font-size:.8em">
+                    The event handler.  This script will be run whenever the event happens the files change.
+                </p>
+            </div>
+        </div>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">Automatically Set Image</div>
+            <div class="sdpi-item-value">
+                <input id="AutoSetImage" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="AutoSetImage" class="sdpi-item-label"><span></span><br/>If checked, changing an image file will set the button image.</label>
+            </div>
+        </div>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">Send Message</div>
+            <div class="sdpi-item-value">
+                
+                <input id="SendMessage" type="checkbox" value="checked" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label style="font-size:.8em" for="SendMessage" class="sdpi-item-label">
+                    <span></span>
+                    <br/>
+                    If checked, will create a message file whenever StreamDeck events occur.
+                    <br/>
+                
+                    This fill will be named:
+                    <br/>
+                    Receive-StreamDeck.EventName.$Context.json                
+                    <br/>
+                    $context will be a unique ID for the button.
+                </label>
+            </div>
+        </div>
+        <hr/>
+        <div type="checkbox" class="sdpi-item">
+            <div class="sdpi-item-label">Receive Message</div>
+            <div class="sdpi-item-value">
+
+                <input type="checkbox" id="ReceiveMessage" class="sdProperty sdCheckbox" oninput="setSettings()" checked="true" />
+                <label for="ReceiveMessage" class="sdpi-item-label">
+                    <span></span>
+                    <br/>
+                    If checked, will receive message files for the StreamDeck.
+
+                    <br/>
+
+                    These files will be named:
+                    <br/>
+
+                    Send-StreamDeck.*.json
+                    <br/>
+                    OR
+                    <br/>
+                    Send-StreamDeck.*.clixml
+                    OR
+                    <br/>
+                    Send-StreamDeck.*.ps1
+
+                    <br/>
+                    Each file will be deleted once it is handled by the plugin.
+                </label>
+            </div>
+        </div>
+        <hr/>
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Filter</div>
+            <div class="sdpi-item-value">                                                                                
+                <input type="text" id="PathFilter" class="sdProperty" oninput="setSettings()" />
+                <p style="font-size:.8em">
+                    A file filter to apply.
+
+                    This can be implied if the last segment of the Path contains wildcards.
+                </p>
+            </div>
+        </div>
+        <hr/> 
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">File Change Event</div>
+            <div class="sdpi-item-value">                                                                                
+                <input id="FileChangeEvent" type="text" class="sdProperty" oninput="setSettings()" value="LastWrite">
+                <p style="font-size:.8em">
+                    One or more file change events to watch (separated by commas).   Only valid if the EventName is a path.
+                    Can be one of <pre>FileName, DirectoryName, Attributes, Size, LastWrite, LastAccess, CreationTime, Security</pre>                    
+                </p>
+            </div>
+        </div>
+    </div>    
+</body>

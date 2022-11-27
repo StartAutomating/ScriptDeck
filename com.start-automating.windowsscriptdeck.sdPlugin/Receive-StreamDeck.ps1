@@ -1,4 +1,6 @@
-﻿function Receive-StreamDeck {    
+#region ScriptDeck@0.4.1/Receive-StreamDeck
+function Receive-StreamDeck {
+    
     <#
     .Synopsis
         Receives messages from a StreamDeck
@@ -237,6 +239,8 @@ $($MyInvocation.InvocationName) @params
 
         } catch {
             Write-Error -Exception $_.Exception -Message "StreamDeck Exception: $($_ | Out-String)" -ErrorId "WebSocket.State.$($Websocket.State)"
-        }        
+        }
     }
+
 }
+#endregion ScriptDeck@0.4.1/Receive-StreamDeck

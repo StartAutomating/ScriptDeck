@@ -5,9 +5,9 @@
     .Description
         Sends messages to a StreamDeck.  
         
-        This function will be used within StreamDeck plugins.
+        This function will often be used within StreamDeck plugins.
     .Link
-        Recieve-StreamDeck
+        Receive-StreamDeck
     .Link
         https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/
     #>
@@ -54,13 +54,19 @@
     [string]
     $ImagePath,
 
+    # The title 
+    [Parameter(Mandatory,ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
+    [Alias('ButtonText')]
+    [string]
+    $Title,
+
     # The state index of an image or title.  Defaults to zero.
     [Parameter(ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
     [Parameter(ParameterSetName='setImage',ValueFromPipelineByPropertyName)]
     [int]
     $State = 0,
 
-    # The target of a title or image change.  Valid values are: both, hardware, and software.
+    # The target of a title or image change.  Valid values are
     [Parameter(ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
     [Parameter(ParameterSetName='setImage',ValueFromPipelineByPropertyName)]
     [ValidateSet('both','hardware', 'software')]
@@ -73,11 +79,30 @@
     [string]
     $Context,
 
+    # The maximum amount of time to wait for a WebSocket to open.  By default, 30 seconds.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Timespan]
+    $WaitFor      = '00:00:30',
+
+    # The interval to wait while receiving a message.  By default, 11 milliseconds.
+    [TimeSpan]$WaitInterval = '00:00:00.011',
+
     # The web socket.
     # If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
     [Parameter(Position=4,ValueFromPipelineByPropertyName)]
     [Net.WebSockets.ClientWebSocket]
-    $Websocket
+    $Websocket,
+
+    # The web socket.
+    # If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
+    [Parameter(Position=4,ValueFromPipelineByPropertyName)]
+    [int]
+    $Port,
+
+    # The plugin UUID.  This is used in plugin registration.
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName='registerPlugin')]
+    [string]
+    $PluginUUID
     )
     process {
         # If no -WebSocket was provided, use the $global:STREAMDECK_WEBSOCKET
@@ -87,7 +112,7 @@
 
         # A number of different parameter sets are named to reflect the EventName StreamDeck expects.
         # If we find an argument that hints that this is true
-        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath) {
+        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath -or $Title) {
             $EventName = $PSCmdlet.ParameterSetName # set -EventName to the $psCmdlet.ParameterSetName.
         }
 
@@ -106,69 +131,85 @@
             $resolvedItem = Get-Item -LiteralPath $resolvedPath 
             if (-not $resolvedItem) { return } 
             # and check that it actually is an image.
-            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp' 
+            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp','.jpeg'
             if ($resolvedItem.Extension -notin $imageExtensions) {
                 Write-Error "-ImagePath '$ImagePath' has an invalid extension. Valid extensions are: $imageExtensions"
                 return
             }
-            $eventTargetParameterAttributes = $MyInvocation.MyCommand.Parameters['EventTarget'].Attributes
-            if ($resolvedItem.Extension -eq '.svg') {
+            # Ensure that -EventTarget is lowercase and create a payload with the image data.
+            $eventTarget = $EventTarget.ToLower()
+            if ($resolvedItem.Extension -eq '.svg') { # If the image was an SVG,
                 $Payload = [Ordered]@{
-                    image = "data:image/svg+xml;charset=utf8,$(
+                    image = "data:image/svg+xml;charset=utf8,$( # it will be inline UTF8 text
                         [IO.File]::ReadAllText($resolvedItem.FullName, [Text.Encoding]::UTF8)
                     )"
-                    target = $eventTargetParameterAttributes.ValidValues.IndexOf($EventTarget.ToLower())
+                    target = $eventTarget
                     state  = $State
                 }
             } else {
-                $Payload = [Ordered]@{
+                $Payload = [Ordered]@{ # Otherwise, it's base64 binary.
                     image = "data:image/$($resolvedItem.Extension.TrimStart('.'));base64,$(
                         [Convert]::ToBase64String([IO.File]::ReadAllBytes($resolvedItem.FullName))
                     )"
-                    target = $eventTargetParameterAttributes.ValidValues.IndexOf($EventTarget.ToLower())
+                    target = $eventTarget
                     state  = $State
                 }
             }
         }
+        
+        if ($Title) {
+            $Payload = [Ordered]@{ # Otherwise, it's base64 binary.
+                title = $Title 
+                target = $eventTarget
+                state  = $State
+            }
+        }
 
-        if ((-not $Context) -and $Global:STREAMDECK_CONTEXT) {
-            $Context = $Global:STREAMDECK_CONTEXT
+        # If no one provided a -Context but $Global:STREAMDECK_CONTEXT is set,
+        if ((-not $Context) -and $Global:STREAMDECK_CONTEXT) { 
+            $Context = $Global:STREAMDECK_CONTEXT # use that.
         }
         
-
         $WebSocketPayload = @{
             event   = $EventName
             context = $Context
             payload = $Payload
-        }        
+        }
 
-        if (-not $WebSocketPayload.payload -or $WebSocketPayload.payload.count -eq 0) {
-            $WebSocketPayload.Remove('payload')
+        if (-not $WebSocketPayload.payload -or $WebSocketPayload.payload.count -eq 0) { # If the payload was blank
+            $WebSocketPayload.Remove('payload') # remove it
         }
-        if (-not $WebSocketPayload.context) {
-            $WebSocketPayload.Remove('context')
+        if (-not $WebSocketPayload.context) { # If the context was blank,
+            $WebSocketPayload.Remove('context') # remove it.
         }
-        if ($WhatIfPreference) {
-            return $WebSocketPayload
+        if ($PluginUUID) { # If we've got a plugin UUID, 
+            $WebSocketPayload.uuid = $PluginUUID # set .uuid
+        }
+        if ($WhatIfPreference) { # If -WhatIf was passed
+            return $WebSocketPayload # return the payload.
         }
         
-        if (-not $PSCmdlet.ShouldProcess("Send $($WebSocketPayload | ConvertTo-json)")) {
-            return
-        }
+        # If -Confirm was passed, and they chose not to send this payload, return.
+        if (-not $PSCmdlet.ShouldProcess("Send $($WebSocketPayload | ConvertTo-json)")) {  return  }
+
+        # If we don't have a context or a pluginUUID:
         if (-not $Context -and -not $PluginUUID) {
-            Write-Error "Must provide -Context" -ErrorId Context.Missing -Category InvalidArgument
+            Write-Error "Must provide -Context" -ErrorId Context.Missing -Category InvalidArgument # error out.
             return
         }
 
-        if (-not $Websocket ){
-            Write-Error "Must provide a -WebSocket" -ErrorId WebSocket.Missing -Category ConnectionError
+        if (-not $Websocket ){ # If we don't have a websocket:
+            Write-Error "Must provide a -WebSocket" -ErrorId WebSocket.Missing -Category ConnectionError # error out.
             return
         }
-        $PayloadJson  = $WebSocketPayload | ConvertTo-Json -Depth 100        
+        
+                
+        $PayloadJson  = $WebSocketPayload | ConvertTo-Json -Depth 100   # Construct the payload
         $SendSegment  = [ArraySegment[Byte]]::new([Text.Encoding]::UTF8.GetBytes($PayloadJson))        
-        $SendTask     = $Websocket.SendAsync($SendSegment, 'Binary', $true, [Threading.CancellationToken]::new($false))
-        while (!$SendTask.IsCompleted) {
-            Start-Sleep -Milliseconds 11
-        }        
+        $SendTask     = $Websocket.SendAsync($SendSegment, 'Binary', $true, 
+                            [Threading.CancellationToken]::new($false)) # send it
+        while (!$SendTask.IsCompleted) { # and wait for it to be sent.
+            Start-Sleep -Milliseconds $WaitInterval.TotalMilliseconds
+        }
     }
 }
