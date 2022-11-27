@@ -114,14 +114,14 @@ function Watch-StreamDeck
             # Remove the naming hints from the file to get the source identifier
             $sourceIdentifier = $file.Name -replace '^On_' -replace '\.ps1$' -replace '\.handler$'
             # and then break the source identifier into chunks.
-            $sourceIdentifierParts = @($sourceIdentifier -split '\.' -ne '')
+            $sourceIdentifierParts = @($sourceIdentifier -split '\.')
             
             # If we only have two chunks and the first chunk is not 'StreamDeck'
             if ($sourceIdentifierParts.Length -le 2 -and 
                 $sourceIdentifierParts[0] -ne 'StreamDeck') {
                 # then we need to include the plugin UUID in the source identifier
                 $sourceIdentifierParts = @($StreamDeckInfo.info.plugin.uuid) + $sourceIdentifierParts
-                $sourceIdentifier = $sourceIdentifierParts -join '.'                
+                $sourceIdentifier = $sourceIdentifierParts -ne '' -join '.'                
             }
 
             # Get the list of event names.
