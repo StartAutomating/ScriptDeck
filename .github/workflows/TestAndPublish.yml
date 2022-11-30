@@ -588,5 +588,5 @@ jobs:
       - name: ScriptDeck
         uses: StartAutomating/ScriptDeck@main
 env: 
-  ReleaseAsset: '*.streamDeckPlugin'
   NoCoverage: true
+  ReleaseAsset: '*.streamDeckPlugin'
