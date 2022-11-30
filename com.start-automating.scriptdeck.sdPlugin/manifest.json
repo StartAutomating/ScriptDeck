@@ -103,7 +103,7 @@
     "Category":  "ScriptDeck",
     "CategoryIcon":  "ScriptDeck",
     "Icon":  "ScriptDeck",
-    "Version":  "0.4.5",
+    "Version":  "0.4.6",
     "OS":  [
         {
             "Platform": "mac", 
