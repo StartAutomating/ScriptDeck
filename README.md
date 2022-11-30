@@ -7,7 +7,7 @@
 ScriptDeck is:
 
 * A set of StreamDeck Plugins for PowerShell
-* A PowerShell module to help you work with Elgato StreamDeck devices.
+* A PowerShell module to help you work with deck devices (StreamDeck and LoupeDeck)
 * A GitHub action that helps you prepare Elgato StreamDeck plugins for publication.
 
 ### ScriptDeck and WindowsScriptDeck (the plugins)
@@ -21,9 +21,18 @@ The PowerShell engine stays running and responsive, ready for your next press.
 Using the plugins, you can:
 
 * Run any PowerShell command from any module
+* Watch a path 
 * Populate the clipboard with a script's output, then paste the content
 * Open as many URLs as a script returns.
 * Start any Process with any verb (Run as Admin, Print, Edit)
+* Launch PowerShell in a new window
+
+Two variations of the ScriptDeck plugin can be downloaded:
+
+|Plugin|Description|OS|
+|-|-|-|
+|[ScriptDeck](https://apps.elgato.com/plugins/com.start-automating.scriptdeck)|ScriptDeck running on PowerShell Core|MacOS/Windows|
+|[WindowsScriptDeck](https://apps.elgato.com/plugins/com.start-automating.windowsscriptdeck)|ScriptDeck running on Windows PowerShell|Windows|
 
 ### ScriptDeck (the PowerShell Module)
 
@@ -32,7 +41,6 @@ Currently, you can use ScriptDeck to:
 * Create and Manage StreamDeck Profiles and Actions.
 * Create or Update StreamDeck Plugins
 * Start, Stop, and Restart the StreamDeck Application
-
 
 ~~~PowerShell
 Get-StreamDeckProfile # Gets StreamDeck Profiles
