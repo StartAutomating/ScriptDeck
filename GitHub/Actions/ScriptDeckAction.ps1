@@ -102,6 +102,34 @@ $processScriptOutput = { process {
 
 "::notice title=ModuleLoaded::ScriptDeck Loaded from Path - $($ScriptDeckModulePath)" | Out-Host
 
+if (-not $UserName)  {
+    $UserName =  
+        if ($env:GITHUB_TOKEN) {
+            Invoke-RestMethod -uri "https://api.github.com/user" -Headers @{
+                Authorization = "token $env:GITHUB_TOKEN"
+            } |
+                Select-Object -First 1 -ExpandProperty name
+        } else {
+            $env:GITHUB_ACTOR
+        }
+}
+
+if (-not $UserEmail) { 
+    $GitHubUserEmail = 
+        if ($env:GITHUB_TOKEN) {
+            Invoke-RestMethod -uri "https://api.github.com/user/emails" -Headers @{
+                Authorization = "token $env:GITHUB_TOKEN"
+            } |
+                Select-Object -First 1 -ExpandProperty email
+        } else {''}
+    $UserEmail = 
+        if ($GitHubUserEmail) {
+            $GitHubUserEmail
+        } else {
+            "$UserName@github.com"
+        }    
+}
+
 if (-not $UserName) { $UserName = $env:GITHUB_ACTOR }
 if (-not $UserEmail) { $UserEmail = "$UserName@github.com" }
 git config --global user.email $UserEmail
@@ -123,7 +151,7 @@ if ($ScriptDeckScript) {
         Out-Host
 }
 $ScriptDeckScriptTook = [Datetime]::Now - $ScriptDeckScriptStart
-"::set-output name=ScriptDeckScriptRuntime::$($ScriptDeckScriptTook.TotalMilliseconds)"   | Out-Host
+# "::set-output name=ScriptDeckScriptRuntime::$($ScriptDeckScriptTook.TotalMilliseconds)"   | Out-Host
 
 $ScriptDeckPS1Start = [DateTime]::Now
 $ScriptDeckPS1List  = @()
@@ -153,9 +181,9 @@ if (-not $SkipStreamDeckPluginExport) {
 
 $ScriptDeckPS1EndStart = [DateTime]::Now
 $ScriptDeckPS1Took = [Datetime]::Now - $ScriptDeckPS1Start
-"::set-output name=ScriptDeckPS1Count::$($ScriptDeckPS1List.Length)"   | Out-Host
-"::set-output name=ScriptDeckPS1Files::$($ScriptDeckPS1List -join ';')"   | Out-Host
-"::set-output name=ScriptDeckPS1Runtime::$($ScriptDeckPS1Took.TotalMilliseconds)"   | Out-Host
+# "::set-output name=ScriptDeckPS1Count::$($ScriptDeckPS1List.Length)"   | Out-Host
+# "::set-output name=ScriptDeckPS1Files::$($ScriptDeckPS1List -join ';')"   | Out-Host
+# "::set-output name=ScriptDeckPS1Runtime::$($ScriptDeckPS1Took.TotalMilliseconds)"   | Out-Host
 if ($CommitMessage -or $anyFilesChanged) {
     if ($CommitMessage) {
         dir $env:GITHUB_WORKSPACE -Recurse |

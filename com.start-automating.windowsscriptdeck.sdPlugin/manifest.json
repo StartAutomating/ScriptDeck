@@ -14,6 +14,19 @@
                         "VisibleInActionsList":  true
                     },
                     {
+                        "Icon": "WindowsScriptDeck",
+                        "Name": "WatchPath",
+                        "States":  [
+                            {
+                                "Image":  "WindowsScriptDeck"
+                            }
+                        ],
+                        "Tooltip":  "Watches for file changes",
+                        "UUID":  "com.start-automating.windowsscriptdeck.WatchPath",
+                        "PropertyInspectorPath":  "WatchPath.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
                         "Icon":  "WindowsScriptDeck",
                         "Name":  "Start PowerShell",
                         "States":  [
@@ -88,7 +101,7 @@
     "Category":  "WindowsScriptDeck",
     "CategoryIcon":  "WindowsScriptDeck",
     "Icon":  "WindowsScriptDeck",
-    "Version":  "0.4.5",
+    "Version":  "0.4.6",
     "OS":  [
                {
                    "Platform":  "windows",
