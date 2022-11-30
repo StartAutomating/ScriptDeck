@@ -1,3 +1,26 @@
+## ScriptDeck 0.4.6:
+
+* Plugin Improvements
+  * Adding 'WatchPath' action: run code whenever files change.
+  * Start-Process StreamDeck Action:  Fixing Multiaction support (Fixes #47)
+  * Simplifying plugin structure
+* Module Improvements
+  * StreamDeck
+    * Send-StreamDeck:  Fixing ShowOK event name (Fixes #55)
+    * Send-StreamDeck:  Supporting -Title (Fixes #45)
+    * Adding Uninstall-StreamDeckPlugin (Fixes #56)
+    * Adding Watch-StreamDeck (Fixes #48)
+    * Export-StreamDeckPlugin:  Copying Send/Receive/Watch-StreamDeck to plugin
+    * Install-StreamDeckPlugin: Fixing Installed Path (Fixes #50)
+  * LoupeDeck
+    * Adding Start/Stop/Restart-LoupeDeck (Fixes #52)
+    * Adding Get-LoupeDeckProfile (Fixes #53)
+* GitHub Improvements
+  * Cleaning up action (Fixes #58)
+  * Using [GitPub](https://github.com/StartAutomating/GitPub) for microblogging (Fixes #57)
+
+---
+
 ## ScriptDeck 0.4.5:
 
 * Plugins now Include "Start PowerShell" and "Start PowerShell" (Fixes #41)
