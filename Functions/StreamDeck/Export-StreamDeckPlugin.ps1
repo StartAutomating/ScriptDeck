@@ -159,7 +159,7 @@
                         Select-Object -ExpandProperty Fullname |
                         Out-Host
                 }
-                Get-Item -LiteralPath $sdpOutputPath
+                Get-Item -LiteralPath ($sdpOutputPath -replace '\.streamDeckPlugin', '.sdPlugin')
             }
 
             if ($movedFiles) {
