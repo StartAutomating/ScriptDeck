@@ -130,6 +130,7 @@
 
             $lines = & $distroToolExe.Fullname -b -i $sdPluginRoot -o $OutputPath 
             if ($env:GITHUB_WORKSPACE) {
+                "Distribution Tool Has Completed (output below)" | Out-Host
                 $lines | Out-Host
             }
             $hadErrorLines = $false
