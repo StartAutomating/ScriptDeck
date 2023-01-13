@@ -37,9 +37,11 @@
             $DistributionToolRoot = 
                 if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
                     $distroToolUrl =  "$distroToolUrlRoot/DistributionToolWindows.zip"
-                    Join-Path "$env:AppData\Elgato\StreamDeck\" -ChildPath Tools
-                    
-                    
+                    if ($env:GITHUB_WORKSPACE) {
+                        Join-Path $env:GITHUB_WORKSPACE -ChildPath elgago | Join-Path -ChildPath Tools
+                    } else {
+                        Join-Path "$env:AppData\Elgato\StreamDeck\" -ChildPath Tools
+                    }                                                            
                 } elseif ($PSVersionTable.Platform -eq 'Unix') {
                     $distroToolUrl =  "$distroToolUrlRoot/DistributionToolMac.zip"
                     if ($PSVersionTable.OS -like '*darwin*' -and -not $env:GITHUB_WORKSPACE) {
