@@ -105,7 +105,8 @@
             }
 
             $sdPluginRoot = ($sdp.PluginPath | Split-path)
-            $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
+            $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json |
+                Move-Item -Destination ($sdPluginRoot | Split-Path) -PassThru -Force
             
             $hasPs1Files = Get-ChildItem -Path $sdPluginRoot -Recurse -Filter *.ps1
             if ($hasPs1Files) {
@@ -156,9 +157,11 @@
             }
 
             if ($movedFiles) {
-                $movedFiles | Move-Item -Destination {
-                    Join-Path $sdPluginRoot $_.Name
-                }
+                $movedFiles |
+                    Select-Object -ExpandProperty FullName | 
+                    Move-Item -Destination {
+                        Join-Path $sdPluginRoot $_.Name
+                    } -Path { $_ }
             }
         }
         #endregion Export Profiles
