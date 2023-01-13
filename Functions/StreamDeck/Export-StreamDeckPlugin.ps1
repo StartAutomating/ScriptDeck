@@ -153,13 +153,13 @@
                         Out-Host
                 }
 
-                Get-Item -LiteralPath ($sdpOutputPath -replace '\.streamDeckPlugin', '.sdPlugin')
+                Get-Item -LiteralPath $sdpOutputPath
             }
 
             if ($ToPutBack) {
                 foreach ($setContentSplat in $ToPutBack) {
                     Set-Content @setContentSplat
-                    Get-Item -Path $setContentSplat.Path
+                    # Get-Item -Path $setContentSplat.Path
                 }                
             }
         }
