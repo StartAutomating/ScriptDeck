@@ -33,13 +33,12 @@ The name of the action
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 1
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |1       |true (ByPropertyName)|
 
 
 
@@ -50,13 +49,12 @@ The action UUID
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 2
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |2       |true (ByPropertyName)|
 
 
 
@@ -67,13 +65,12 @@ If set, will rebuild the cache of streamdeck actions.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
