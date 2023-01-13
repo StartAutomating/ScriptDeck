@@ -114,7 +114,8 @@ function Watch-StreamDeck
             }
         
             # Remove the naming hints from the file to get the source identifier
-            $sourceIdentifier = $file.Name -replace '^On_' -replace '\.ps1$' -replace '\.handler$' -replace '@', '.'
+            $sourceIdentifier = $file.Name -replace '^On_' -replace '\.ps1$' -replace '\.handler$' -replace '@', 
+                '.' -replace '\.{1,}', '.'
             # and then break the source identifier into chunks.
             $sourceIdentifierParts = @($sourceIdentifier -split '\.')            
             
@@ -139,9 +140,11 @@ function Watch-StreamDeck
             if (-not $eventNames) {
                 $eventNames = 
                     'KeyDown', 'KeyUp', 
+                    'TouchTap',
+                    'DialPress','DialRotate',
                     'WillAppear', 'WillDisappear', 
                     'DeviceDidConnect', 'DeviceDidDisconnect',
-                    'DidReceiveSettings', 'DidReceiveGlobalSettings',
+                    'DidReceiveSettings', 'DidReceiveGlobalSettings',                
                     'TitleParametersDidChange', 
                     'ApplicationDidLaunch',
                     'ApplicationDidTerminate',
