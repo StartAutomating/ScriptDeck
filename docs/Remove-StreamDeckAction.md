@@ -16,13 +16,12 @@ The path to a StreamDeck plugin
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -33,13 +32,12 @@ The name of the action being removed from the plugin.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
