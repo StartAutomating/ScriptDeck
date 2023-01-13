@@ -41,13 +41,12 @@ The name of one or more profiles
 
 
 
-> **Type**: ```[String[]]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:false
+|Type        |Required|Position|PipelineInput|
+|------------|--------|--------|-------------|
+|`[String[]]`|true    |named   |false        |
 
 
 
@@ -58,13 +57,12 @@ The root directory to look for profiles.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[String]`|false   |named   |false        |
 
 
 
@@ -75,13 +73,12 @@ The row the action will be added to.  If a negative number is provided, will cho
 
 
 
-> **Type**: ```[Int32]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type     |Required|Position|PipelineInput        |
+|---------|--------|--------|---------------------|
+|`[Int32]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -92,13 +89,12 @@ The column the action will be added to.  If a negative number is provided, will 
 
 
 
-> **Type**: ```[Int32]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type     |Required|Position|PipelineInput        |
+|---------|--------|--------|---------------------|
+|`[Int32]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -110,13 +106,12 @@ This is created using New-StreamDeckAction.
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByValue, ByPropertyName)
+|Type        |Required|Position|PipelineInput                 |
+|------------|--------|--------|------------------------------|
+|`[PSObject]`|true    |named   |true (ByValue, ByPropertyName)|
 
 
 
