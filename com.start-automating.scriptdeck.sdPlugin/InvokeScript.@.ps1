@@ -2,7 +2,7 @@
 
 $invokeError = $null
 
-foreach ($settingName in 'KeyDown','KeyUp','WillAppear', 'WillDisappear') {
+foreach ($settingName in 'KeyDown','KeyUp','WillAppear', 'WillDisappear', 'DialPress', 'DialRotate', 'TouchTap') {
     if ($event.SourceIdentifier -match $settingName -and
     $event.MessageData.payload.settings.$settingName) {
         $settingScript = $event.MessageData.payload.settings.$settingName
