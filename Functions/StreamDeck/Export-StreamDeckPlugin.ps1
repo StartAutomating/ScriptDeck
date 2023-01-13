@@ -103,18 +103,10 @@
                 if (-not $Force) { continue }                
                 Remove-Item -Path $sdpOutputPath
             }
-            if ($env:GITHUB_WORKSPACE) {
-                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
-            } else {
-                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -PassThru -Destination '..'
-            }
 
             $sdPluginRoot = ($sdp.PluginPath | Split-path)
-            if ($env:GITHUB_WORKSPACE) {
-                Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Remove-Item
-            } else {
-                $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
-            }
+            $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json | Move-Item -Destination '..' -PassThru
+            
             $hasPs1Files = Get-ChildItem -Path $sdPluginRoot -Recurse -Filter *.ps1
             if ($hasPs1Files) {
                 Get-Command Send-StreamDeck, Receive-StreamDeck, Watch-StreamDeck |
@@ -145,7 +137,7 @@
 
             if ($movedFiles) {
                 $movedFiles | Move-Item -Destination { 
-                    Join-Path $sdPluginRoot "$_.Name"
+                    Join-Path $sdPluginRoot $_.Name
                 }
             }
 
@@ -159,7 +151,7 @@
                         Select-Object -ExpandProperty Fullname |
                         Out-Host
                 }
-                
+
                 Get-Item -LiteralPath ($sdpOutputPath -replace '\.streamDeckPlugin', '.sdPlugin')
             }
 
