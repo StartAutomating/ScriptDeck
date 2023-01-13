@@ -63,13 +63,12 @@ The name of the profile
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: 1
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |1       |true (ByPropertyName)|
 
 
 
@@ -80,13 +79,12 @@ A collection of actions.
 
 
 
-> **Type**: ```[IDictionary]```
 
-> **Required**: true
 
-> **Position**: 2
 
-> **PipelineInput**:true (ByPropertyName)
+|Type           |Required|Position|PipelineInput        |
+|---------------|--------|--------|---------------------|
+|`[IDictionary]`|true    |2       |true (ByPropertyName)|
 
 
 
@@ -98,13 +96,12 @@ If provided, this profile will be activated whenever this application is given f
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 3
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |3       |true (ByPropertyName)|
 
 
 
@@ -116,13 +113,12 @@ If not provided, the most commonly used device model from your other profiles wi
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 4
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |4       |true (ByPropertyName)|
 
 
 
@@ -134,13 +130,12 @@ If not provided, the most commonly used device uuid from your other profiles wil
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 5
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |5       |true (ByPropertyName)|
 
 
 
@@ -151,13 +146,12 @@ The version of the profile.  By default, 1.0
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 6
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |6       |true (ByPropertyName)|
 
 
 
@@ -168,13 +162,12 @@ The profile UUID.  If not provided, a GUID will be generated.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 7
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |7       |true (ByPropertyName)|
 
 
 
@@ -188,13 +181,12 @@ On MacOS, this is  : "~/Library/Application Support/elgato/StreamDeck/ProfilesV2
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 8
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[String]`|false   |8       |false        |
 
 
 
@@ -206,13 +198,12 @@ Child profiles will automatically have an action linking to the parent profile i
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
 
 
 
@@ -224,13 +215,12 @@ NextPages will automatically have an action linking to the previous page in the 
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
 
 
 
