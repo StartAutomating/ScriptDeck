@@ -10,7 +10,11 @@ Gets plugins for StreamDeck.
 
 ---
 ### Related Links
-* [New-StreamDeckAction](New-StreamDeckAction.md)
+* [Install-StreamDeckPlugin](Install-StreamDeckPlugin.md)
+
+
+
+* [New-StreamDeckPlugin](New-StreamDeckPlugin.md)
 
 
 
