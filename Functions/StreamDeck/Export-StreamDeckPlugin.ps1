@@ -136,7 +136,7 @@
             }
 
             if ($movedFiles) {
-                $movedFiles | Move-Item -Destination { 
+                $movedFiles | Move-Item -Path { $_.Fullname } -Destination { 
                     Join-Path $sdPluginRoot $_.Name
                 }
             }
