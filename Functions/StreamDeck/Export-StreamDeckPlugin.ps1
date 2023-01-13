@@ -105,9 +105,15 @@
             }
 
             $sdPluginRoot = ($sdp.PluginPath | Split-path)
-            $movedFiles = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json |
-                Move-Item -Destination ($sdPluginRoot | Split-Path) -PassThru -Force
-            
+            $ToPutBack = Get-ChildItem -Path $sdPluginRoot -Filter *.ps1.json |
+                ForEach-Object {
+                    [Ordered]@{
+                        Path = $_.FullName
+                        Value = [IO.File]::ReadAllText($_.FullName)
+                    }
+                }
+            $ToPutBack | Remove-Item
+                        
             $hasPs1Files = Get-ChildItem -Path $sdPluginRoot -Recurse -Filter *.ps1
             if ($hasPs1Files) {
                 Get-Command Send-StreamDeck, Receive-StreamDeck, Watch-StreamDeck |
@@ -150,10 +156,11 @@
                 Get-Item -LiteralPath ($sdpOutputPath -replace '\.streamDeckPlugin', '.sdPlugin')
             }
 
-            if ($movedFiles) {
-                $movedFiles | Move-Item -Path { $_.Fullname } -Destination { 
-                    Join-Path $sdPluginRoot $_.Name
-                }
+            if ($ToPutBack) {
+                foreach ($setContentSplat in $ToPutBack) {
+                    Set-Content @setContentSplat
+                    Get-Item -Path $setContentSplat.Path
+                }                
             }
         }
         #endregion Export Profiles
