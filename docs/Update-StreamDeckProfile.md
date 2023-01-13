@@ -108,13 +108,12 @@ The name of the profile
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 1
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |1       |true (ByPropertyName)|
 
 
 
@@ -125,13 +124,12 @@ A collection of actions.
 
 
 
-> **Type**: ```[IDictionary]```
 
-> **Required**: true
 
-> **Position**: 2
 
-> **PipelineInput**:true (ByPropertyName)
+|Type           |Required|Position|PipelineInput        |
+|---------------|--------|--------|---------------------|
+|`[IDictionary]`|true    |2       |true (ByPropertyName)|
 
 
 
@@ -142,26 +140,24 @@ The profile UUID.  If not provided, a GUID will be generated.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 3
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |3       |true (ByPropertyName)|
 
 
 
 ---
 #### **DeviceType**
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 4
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[String]`|false   |4       |false        |
 
 
 
