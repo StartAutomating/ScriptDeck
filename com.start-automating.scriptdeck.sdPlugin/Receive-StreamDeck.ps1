@@ -237,6 +237,6 @@ $($MyInvocation.InvocationName) @params
 
         } catch {
             Write-Error -Exception $_.Exception -Message "StreamDeck Exception: $($_ | Out-String)" -ErrorId "WebSocket.State.$($Websocket.State)"
-        }        
+        }
     }
 }
