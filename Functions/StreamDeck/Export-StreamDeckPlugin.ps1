@@ -111,8 +111,8 @@
                         Path = $_.FullName
                         Value = [IO.File]::ReadAllText($_.FullName)
                     }
-                }
-            $ToPutBack | Remove-Item
+                    $_ | Remove-Item
+                }            
                         
             $hasPs1Files = Get-ChildItem -Path $sdPluginRoot -Recurse -Filter *.ps1
             if ($hasPs1Files) {
