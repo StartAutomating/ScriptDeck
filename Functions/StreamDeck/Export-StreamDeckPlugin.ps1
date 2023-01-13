@@ -153,7 +153,7 @@
                         Out-Host
                 }
 
-                Get-Item -LiteralPath $sdpOutputPath
+                Get-Item -Path $sdpOutputPath
             }
 
             if ($ToPutBack) {
