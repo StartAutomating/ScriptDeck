@@ -33,13 +33,12 @@ The path to a StreamDeck plugin
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -50,13 +49,12 @@ The name of the action being added to the plugin.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -67,13 +65,12 @@ The tooltip for the plugin action.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -84,13 +81,12 @@ The UUID for the plugin action.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -101,13 +97,12 @@ The icon for the plugin action.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -118,13 +113,12 @@ One or more states for the plugin action.
 
 
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -135,13 +129,12 @@ The relative path to the property inspector for the plugin action.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -152,13 +145,12 @@ If not explicitly set to false, the plugin action will be supported within Multi
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
