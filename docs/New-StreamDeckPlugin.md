@@ -26,13 +26,12 @@ The name of the plugin. This string is displayed to the user in the Stream Deck 
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: 1
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |1       |true (ByPropertyName)|
 
 
 
@@ -43,13 +42,12 @@ The author of the plugin. This string is displayed to the user in the Stream Dec
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: 2
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |2       |true (ByPropertyName)|
 
 
 
@@ -60,13 +58,12 @@ Specifies an array of actions. A plugin can indeed have one or multiple actions.
 
 
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: 3
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |3       |true (ByPropertyName)|
 
 
 
@@ -78,13 +75,12 @@ This is displayed to the user in the Stream Deck store.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: 4
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |4       |true (ByPropertyName)|
 
 
 
@@ -95,13 +91,12 @@ The version of the plugin which can only contain digits and periods. This is use
 
 
 
-> **Type**: ```[Version]```
 
-> **Required**: false
 
-> **Position**: 5
 
-> **PipelineInput**:true (ByPropertyName)
+|Type       |Required|Position|PipelineInput        |
+|-----------|--------|--------|---------------------|
+|`[Version]`|false   |5       |true (ByPropertyName)|
 
 
 
@@ -116,13 +111,12 @@ The Stream Deck application takes care of loading the appropriate version of the
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: 6
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |6       |true (ByPropertyName)|
 
 
 
@@ -135,13 +129,12 @@ If you don't provide a category, the actions will appear inside a "Custom" categ
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 7
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |7       |true (ByPropertyName)|
 
 
 
@@ -156,13 +149,12 @@ The Stream Deck application takes care of loading the appropriate version of the
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 8
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |8       |true (ByPropertyName)|
 
 
 
@@ -173,13 +165,12 @@ The relative path to the HTML/binary file containing the code of the plugin.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 9
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |9       |true (ByPropertyName)|
 
 
 
@@ -190,13 +181,12 @@ Override CodePath for Windows.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 10
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |10      |true (ByPropertyName)|
 
 
 
@@ -207,13 +197,12 @@ Override CodePath for macOS.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 11
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |11      |true (ByPropertyName)|
 
 
 
@@ -225,13 +214,12 @@ If missing, the plugin will have an empty Property Inspector.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 12
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |12      |true (ByPropertyName)|
 
 
 
@@ -243,13 +231,12 @@ Default value is [500, 650].
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 13
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |13      |true (ByPropertyName)|
 
 
 
@@ -260,13 +247,12 @@ The list of operating systems supported by the plugin as well as the minimum sup
 
 
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: 14
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |14      |true (ByPropertyName)|
 
 
 
@@ -277,13 +263,12 @@ Indicates which version of the Stream Deck application is required to install th
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: false
 
-> **Position**: 15
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[PSObject]`|false   |15      |true (ByPropertyName)|
 
 
 
@@ -294,13 +279,12 @@ A URL displayed to the user if he wants to get more info about the plugin.
 
 
 
-> **Type**: ```[Uri]```
 
-> **Required**: false
 
-> **Position**: 16
 
-> **PipelineInput**:true (ByPropertyName)
+|Type   |Required|Position|PipelineInput        |
+|-------|--------|--------|---------------------|
+|`[Uri]`|false   |16      |true (ByPropertyName)|
 
 
 
@@ -312,13 +296,12 @@ See the applicationDidLaunch and applicationDidTerminate events.
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: false
 
-> **Position**: 17
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[PSObject]`|false   |17      |true (ByPropertyName)|
 
 
 
@@ -331,13 +314,12 @@ This lets you create fullscreen plugins.
 
 
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: 18
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |18      |true (ByPropertyName)|
 
 
 
@@ -350,13 +332,12 @@ This directory will be named $Name.sdPlugin.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 19
 
-> **PipelineInput**:false
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[String]`|false   |19      |false        |
 
 
 
@@ -367,39 +348,36 @@ The name of a StreamDeck plugin template.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: 20
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |20      |true (ByPropertyName)|
 
 
 
 ---
 #### **TemplateParameter**
 
-> **Type**: ```[IDictionary]```
 
-> **Required**: false
 
-> **Position**: 21
 
-> **PipelineInput**:true (ByPropertyName)
+|Type           |Required|Position|PipelineInput        |
+|---------------|--------|--------|---------------------|
+|`[IDictionary]`|false   |21      |true (ByPropertyName)|
 
 
 
 ---
 #### **TemplateArgumentList**
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: 22
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |22      |true (ByPropertyName)|
 
 
 
