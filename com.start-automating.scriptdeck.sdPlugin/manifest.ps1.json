@@ -1,0 +1,131 @@
+{
+    "Actions":  [
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "PowerShell Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Controllers": ["Keypad", "Encoder"],
+                        "Encoder": {
+                            "TriggerDescription": {
+                                "Rotate": "WhenRotated",
+                                "Push": "WhenPushed",
+                                "Touch": "WhenTouched"
+                            }
+                        },
+                        "Tooltip":  "Runs a PowerShell Script or File",
+                        "UUID":  "com.start-automating.scriptdeck.InvokeScript",
+                        "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },                    
+                    {
+                        "Icon": "ScriptDeck",
+                        "Name": "WatchPath",
+                        "States":  [
+                            {
+                                "Image":  "ScriptDeck"
+                            }
+                        ],
+                        "Tooltip":  "Watches for file changes",
+                        "UUID":  "com.start-automating.scriptdeck.WatchPath",
+                        "PropertyInspectorPath":  "WatchPath.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Start PowerShell Core",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Runs a PowerShell Script or File in a new shell",
+                        "UUID":  "com.start-automating.scriptdeck.Start-PowerShell",
+                        "PropertyInspectorPath":  "Start-PowerShell.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Copy Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Copy Custom Content",
+                        "UUID":  "com.start-automating.scriptdeck.CopyScript",
+                        "PropertyInspectorPath":  "CopyScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Paste Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Pastes Custom Content",
+                        "UUID":  "com.start-automating.scriptdeck.PasteScript",
+                        "PropertyInspectorPath":  "PasteScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },                    
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "URL Script",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "Run a Script and Open each URL in a browser",
+                        "UUID":  "com.start-automating.scriptdeck.URLScript",
+                        "PropertyInspectorPath":  "URLScript.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    },
+                    {
+                        "Icon":  "ScriptDeck",
+                        "Name":  "Start-Process",
+                        "States":  [
+                                       {
+                                           "Image":  "ScriptDeck"
+                                       }
+                                   ],
+                        "Tooltip":  "",
+                        "UUID":  "com.start-automating.scriptdeck.Start-Process",
+                        "PropertyInspectorPath":  "Start-Process.PropertyInspector.html",
+                        "VisibleInActionsList":  true
+                    }                    
+                ],
+    "SDKVersion":  2,
+    "Author":  "Start-Automating",
+    "CodePath":  "StartPlugin.cmd",
+    "CodePathWin": "StartPlugin.cmd",
+    "CodePathMac": "StartPlugin.sh",
+    "Description":  "Run PowerShell from your StreamDeck",
+    "Name":  "ScriptDeck",
+    "URL":  "https://github.com/StartAutomating/ScriptDeck",
+    "Category":  "ScriptDeck",
+    "CategoryIcon":  "ScriptDeck",
+    "Icon":  "ScriptDeck",
+    "Version":  {} /*{
+$version = (Import-Module ../ScriptDeck.psd1 -PassThru).Version
+"`"$($version.Major).$($version.Minor).$($version.Build)`""
+}*/,
+    "OS":  [
+        {
+            "Platform": "mac", 
+            "MinimumVersion" : "10.11"
+        },
+        {
+            "Platform":  "windows",
+            "MinimumVersion":  "10"
+        }
+    ],
+    "Software":  {
+                     "MinimumVersion":  "4.1"
+                 }
+}
