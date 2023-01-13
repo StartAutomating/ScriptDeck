@@ -1,14 +1,16 @@
 ﻿function Get-StreamDeckPlugin
 {
     <#
-    .Synopsis
+    .SYNOPSIS
         Gets Stream Deck Plugins
-    .Description
+    .DESCRIPTION
         Gets plugins for StreamDeck.
-    .Example
+    .EXAMPLE
         Get-StreamDeckPlugin
-    .Link
-        New-StreamDeckAction
+    .LINK
+        Install-StreamDeckPlugin
+    .LINK
+        New-StreamDeckPlugin
     #>
     [OutputType('StreamDeck.Plugin')]
     [CmdletBinding(DefaultParameterSetName='Plugin')]
@@ -103,7 +105,7 @@
             
             $Script:CachedStreamDeckPlugins = @(
                 # On Windows, plugins can be in
-                if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win')) {
+                if ((-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -match 'Win') -and -not $env:GITHUB_WORKSPACE) {
                     $sdPluginPath = "$env:AppData\Elgato\StreamDeck\Plugins\"
                     Write-Verbose "Searching for Plugins beneath '$sdPluginPath'"
                     Get-ChildItem -Path $sdPluginPath -Directory | # appdata
