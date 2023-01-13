@@ -148,7 +148,7 @@
                     Get-ChildItem -Filter *.streamDeckPlugin | select name | Out-Host
                     "SdpOutputPath $sdpOutputPath" | Out-Host
                     Get-ChildItem -Path $OutputPath -Recurse | 
-                        Where-Object Name -like '*.sdplugin' |
+                        Where-Object Name -like '*streamdeckplugin' |
                         Select-Object -ExpandProperty Fullname |
                         Out-Host
                 }
