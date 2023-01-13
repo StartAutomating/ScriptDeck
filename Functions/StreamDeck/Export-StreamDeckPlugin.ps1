@@ -136,12 +136,6 @@
                 }
             }
 
-            if ($movedFiles) {
-                $movedFiles | Move-Item -Path { $_.Fullname } -Destination { 
-                    Join-Path $sdPluginRoot $_.Name
-                }
-            }
-
             if (-not $LASTEXITCODE) {
                 if ($env:GITHUB_WORKSPACE) {
                     "Plugin files found:" | Out-Host
@@ -157,11 +151,9 @@
             }
 
             if ($movedFiles) {
-                $movedFiles |
-                    Select-Object -ExpandProperty FullName | 
-                    Move-Item -Destination {
-                        Join-Path $sdPluginRoot $_.Name
-                    } -Path { $_ }
+                $movedFiles | Move-Item -Path { $_.Fullname } -Destination { 
+                    Join-Path $sdPluginRoot $_.Name
+                }
             }
         }
         #endregion Export Profiles
