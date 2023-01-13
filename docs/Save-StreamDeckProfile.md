@@ -37,13 +37,12 @@ Returned from Get-StreamDeckProfile or New-StreamDeckProfile.
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: true
 
-> **Position**: 1
 
-> **PipelineInput**:true (ByValue)
+|Type        |Required|Position|PipelineInput |
+|------------|--------|--------|--------------|
+|`[PSObject]`|true    |1       |true (ByValue)|
 
 
 
