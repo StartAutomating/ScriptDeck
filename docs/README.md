@@ -86,3 +86,4 @@ New-StreamDeckProfile -Name NewProfile -Action @{
 ~~~
 
 Want the module to do something more?  Feel free to open an issue on GitHub.
+
