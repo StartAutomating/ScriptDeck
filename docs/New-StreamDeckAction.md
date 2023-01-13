@@ -34,13 +34,12 @@ The name of the plugin.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -51,13 +50,12 @@ The StreamDeck Plugin UUID.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -68,13 +66,12 @@ A sequence of hotkeys
 
 
 
-> **Type**: ```[String[]]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[String[]]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -85,13 +82,12 @@ A URI.
 
 
 
-> **Type**: ```[Uri]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type   |Required|Position|PipelineInput        |
+|-------|--------|--------|---------------------|
+|`[Uri]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -103,13 +99,12 @@ Currently, this will run using pwsh by default, and use -WindowsPowerShell if pr
 
 
 
-> **Type**: ```[ScriptBlock]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type           |Required|Position|PipelineInput        |
+|---------------|--------|--------|---------------------|
+|`[ScriptBlock]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -122,13 +117,12 @@ This option is obviously not supported on MacOS.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -139,13 +133,12 @@ The path to an application.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -156,13 +149,12 @@ The name of a StreamDeck profile.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -173,13 +165,12 @@ The device UUID, when switching profiles.
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -190,13 +181,12 @@ The next page.  This should be created by New-StreamDeckProfile, passing -IsNext
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[PSObject]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -207,13 +197,12 @@ A Child Profile.  These should be created by New-StreamDeckProfile, passing -IsC
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[PSObject]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -224,13 +213,12 @@ If set, will create an action that will navigate back to the parent folder.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -241,13 +229,12 @@ If set, will create an action that will navigate back to the previous page.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -258,13 +245,12 @@ The text that should be automatically typed
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: true
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|
 
 
 
@@ -275,13 +261,12 @@ If set, will send an enter key after typing the text.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -292,13 +277,12 @@ The settings passed to the plugin.
 
 
 
-> **Type**: ```[PSObject]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[PSObject]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -309,13 +293,12 @@ The title of the action
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -326,13 +309,12 @@ The image used for the action
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -343,13 +325,12 @@ The font size
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -360,13 +341,12 @@ The font family
 
 
 
-> **Type**: ```[String]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -377,13 +357,12 @@ If set, will underline the action title
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -394,13 +373,12 @@ The possible states of the plugin.
 
 
 
-> **Type**: ```[PSObject[]]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type          |Required|Position|PipelineInput        |
+|--------------|--------|--------|---------------------|
+|`[PSObject[]]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -411,13 +389,12 @@ The state index.
 
 
 
-> **Type**: ```[UInt32]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[UInt32]`|false   |named   |true (ByPropertyName)|
 
 
 
@@ -428,13 +405,12 @@ If set, will not show a title.
 
 
 
-> **Type**: ```[Switch]```
 
-> **Required**: false
 
-> **Position**: named
 
-> **PipelineInput**:true (ByPropertyName)
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
 
 
 
