@@ -8,6 +8,14 @@
                                            "Image":  "ScriptDeck"
                                        }
                                    ],
+                        "Controllers": ["Keypad", "Encoder"],
+                        "Encoder": {
+                            "TriggerDescription": {
+                                "Rotate": "WhenRotated",
+                                "Push": "WhenPushed",
+                                "Touch": "WhenTouched"
+                            }
+                        },
                         "Tooltip":  "Runs a PowerShell Script or File",
                         "UUID":  "com.start-automating.scriptdeck.InvokeScript",
                         "PropertyInspectorPath":  "InvokeScript.PropertyInspector.html",
