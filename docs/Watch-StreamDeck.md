@@ -1,9 +1,17 @@
 Watch-StreamDeck
 ----------------
+
+
+
+
 ### Synopsis
 Watches StreamDeck
 
+
+
 ---
+
+
 ### Description
 
 Watches StreamDeck for events.
@@ -12,7 +20,11 @@ This function provides the backbone of a StreamDeck plugin written in PowerShell
 
 Watch-StreamDeck should not be called directly, unless you are testing a plugin.
 
+
+
 ---
+
+
 ### Related Links
 * [Send-StreamDeck](Send-StreamDeck.md)
 
@@ -22,7 +34,11 @@ Watch-StreamDeck should not be called directly, unless you are testing a plugin.
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
@@ -30,7 +46,11 @@ Watch-StreamDeck should not be called directly, unless you are testing a plugin.
 Watch-StreamDeck -StreamDeckInfo $args
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **StreamDeckInfo**
 
@@ -48,7 +68,6 @@ This will be the JSON object initially passed in.
 
 
 
----
 #### **HandlerPath**
 
 The path containing event handlers.  By default, the current directory.
@@ -64,7 +83,6 @@ The path containing event handlers.  By default, the current directory.
 
 
 
----
 #### **AsJob**
 
 If set, will receive events from StreamDeck in a background job.
@@ -82,7 +100,6 @@ The main runspace will not be able to send data back to the StreamDeck.
 
 
 
----
 #### **LogPath**
 
 The log path.
@@ -99,9 +116,12 @@ If no log path is provided, one will be created in the same directory as this sc
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Watch-StreamDeck [[-StreamDeckInfo] <PSObject>] [[-HandlerPath] <String>] [-AsJob] [[-LogPath] <String>] [<CommonParameters>]
 ```
----
