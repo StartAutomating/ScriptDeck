@@ -1,14 +1,26 @@
 Save-StreamDeckProfile
 ----------------------
+
+
+
+
 ### Synopsis
 Saves StreamDeck Profiles
 
+
+
 ---
+
+
 ### Description
 
 Saves StreamDeck Profiles and restarts any running StreamDeck instances.
 
+
+
 ---
+
+
 ### Related Links
 * [Get-StreamDeckProfile](Get-StreamDeckProfile.md)
 
@@ -18,7 +30,11 @@ Saves StreamDeck Profiles and restarts any running StreamDeck instances.
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
@@ -28,7 +44,11 @@ New-StreamDeckProfile -Name TestProfile -Action @{
     Save-StreamDeckProfile
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **StreamDeckProfile**
 
@@ -46,29 +66,35 @@ Returned from Get-StreamDeckProfile or New-StreamDeckProfile.
 
 
 
----
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -WhatIf is used to see what would happen, or return operations without executing them
 #### **Confirm**
 -Confirm is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -Confirm is used to -Confirm each operation.
-    
+
 If you pass ```-Confirm:$false``` you will not be prompted.
-    
-    
+
+
 If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$confirmImpactPreference```, you will not be prompted unless -Confirm is passed.
 
+
+
 ---
+
+
 ### Outputs
 * [Nullable](https://learn.microsoft.com/en-us/dotnet/api/System.Nullable)
 
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Save-StreamDeckProfile [-StreamDeckProfile] <PSObject> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
----
