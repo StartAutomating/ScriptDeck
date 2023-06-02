@@ -1,9 +1,17 @@
 Receive-StreamDeck
 ------------------
+
+
+
+
 ### Synopsis
 Receives messages from a StreamDeck
 
+
+
 ---
+
+
 ### Description
 
 Receives websocket messages from a StreamDeck.
@@ -27,7 +35,11 @@ Register-EngineEvent -SourceIdentifier MyPlugin.KeyDown -Action {
     "MyPlugin.KeyDown was pressed" | Out-Gridview
 }
 
+
+
 ---
+
+
 ### Related Links
 * [Send-StreamDeck](Send-StreamDeck.md)
 
@@ -37,7 +49,11 @@ Register-EngineEvent -SourceIdentifier MyPlugin.KeyDown -Action {
 
 
 
+
+
 ---
+
+
 ### Parameters
 #### **RegisterEvent**
 
@@ -54,7 +70,6 @@ The registration event. This is used in plugin registration.
 
 
 
----
 #### **PluginUUID**
 
 The plugin UUID.  This is used in plugin registration.
@@ -70,7 +85,6 @@ The plugin UUID.  This is used in plugin registration.
 
 
 
----
 #### **Port**
 
 The port.
@@ -86,7 +100,6 @@ The port.
 
 
 
----
 #### **Websocket**
 
 The web socket.
@@ -104,7 +117,6 @@ If $GLOBAL:STREAMDECK_WEBSOCKET has not been set, one will be created using -Por
 
 
 
----
 #### **BufferSize**
 
 The buffer size for received messages.  By default: 16 kilobytes.
@@ -120,7 +132,6 @@ The buffer size for received messages.  By default: 16 kilobytes.
 
 
 
----
 #### **WaitFor**
 
 The maximum amount of time to wait for a WebSocket to open.  By default, 30 seconds.
@@ -136,7 +147,6 @@ The maximum amount of time to wait for a WebSocket to open.  By default, 30 seco
 
 
 
----
 #### **WaitInterval**
 
 The interval to wait while receiving a message.  By default, 17 milliseconds.
@@ -152,7 +162,6 @@ The interval to wait while receiving a message.  By default, 17 milliseconds.
 
 
 
----
 #### **OutputType**
 
 The output type.  Default is 'Data' Can be:
@@ -181,7 +190,6 @@ Valid Values:
 
 
 
----
 #### **AsJob**
 
 If set, will watch the streamdeck in a background job.
@@ -197,9 +205,12 @@ If set, will watch the streamdeck in a background job.
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Receive-StreamDeck [[-RegisterEvent] <String>] [[-PluginUUID] <String>] [[-Port] <Int32>] [[-Websocket] <ClientWebSocket>] [[-BufferSize] <Int32>] [[-WaitFor] <TimeSpan>] [[-WaitInterval] <TimeSpan>] [[-OutputType] <String>] [-AsJob] [<CommonParameters>]
 ```
----
