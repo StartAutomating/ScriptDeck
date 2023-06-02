@@ -1,16 +1,28 @@
 Send-StreamDeck
 ---------------
+
+
+
+
 ### Synopsis
 Sends messages to a StreamDeck
 
+
+
 ---
+
+
 ### Description
 
 Sends messages to a StreamDeck.  
 
 This function will often be used within StreamDeck plugins.
 
+
+
 ---
+
+
 ### Related Links
 * [Receive-StreamDeck](Receive-StreamDeck.md)
 
@@ -20,7 +32,11 @@ This function will often be used within StreamDeck plugins.
 
 
 
+
+
 ---
+
+
 ### Parameters
 #### **EventName**
 
@@ -31,13 +47,12 @@ The name of the event
 
 
 
-|Type      |Required|Position|PipelineInput        |
-|----------|--------|--------|---------------------|
-|`[String]`|true    |1       |true (ByPropertyName)|
+|Type      |Required|Position|PipelineInput        |Aliases|
+|----------|--------|--------|---------------------|-------|
+|`[String]`|true    |1       |true (ByPropertyName)|Event  |
 
 
 
----
 #### **Payload**
 
 The event payload.
@@ -53,7 +68,6 @@ The event payload.
 
 
 
----
 #### **ShowOK**
 
 If set, will send a showOk event to the Stream Deck application.
@@ -70,7 +84,6 @@ This will temporarily show an OK checkmark icon on the image displayed by an ins
 
 
 
----
 #### **ShowAlert**
 
 If set, will send a showAlert event to the Stream Deck application.
@@ -87,7 +100,6 @@ This will temporarily show an alert icon on the image displayed by an instance o
 
 
 
----
 #### **OpenURL**
 
 If set, will send an openURL event to the Stream Deck application.
@@ -104,11 +116,9 @@ This will temporarily show an alert icon on the image displayed by an instance o
 
 
 
----
 #### **LogMessage**
 
-If set, will send an openURL event to the Stream Deck application.
-This will temporarily show an alert icon on the image displayed by an instance of an action.
+A message to log in the Stream Deck application.
 
 
 
@@ -121,7 +131,6 @@ This will temporarily show an alert icon on the image displayed by an instance o
 
 
 
----
 #### **ImagePath**
 
 If provided will send a showImage event to the Stream Deck application using the contents of the file in ImagePath
@@ -131,13 +140,12 @@ If provided will send a showImage event to the Stream Deck application using the
 
 
 
-|Type      |Required|Position|PipelineInput        |
-|----------|--------|--------|---------------------|
-|`[String]`|true    |named   |true (ByPropertyName)|
+|Type      |Required|Position|PipelineInput        |Aliases |
+|----------|--------|--------|---------------------|--------|
+|`[String]`|true    |named   |true (ByPropertyName)|Fullname|
 
 
 
----
 #### **Title**
 
 The title
@@ -147,13 +155,12 @@ The title
 
 
 
-|Type      |Required|Position|PipelineInput        |
-|----------|--------|--------|---------------------|
-|`[String]`|true    |named   |true (ByPropertyName)|
+|Type      |Required|Position|PipelineInput        |Aliases   |
+|----------|--------|--------|---------------------|----------|
+|`[String]`|true    |named   |true (ByPropertyName)|ButtonText|
 
 
 
----
 #### **State**
 
 The state index of an image or title.  Defaults to zero.
@@ -169,10 +176,9 @@ The state index of an image or title.  Defaults to zero.
 
 
 
----
 #### **EventTarget**
 
-The target of a title or image change.  Valid values are
+The target of a title or image change.  Valid values are: 'both', 'hardware', 'software'
 
 
 
@@ -193,7 +199,36 @@ Valid Values:
 
 
 
----
+#### **SetFeedback**
+
+Will send a setFeedback event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
+
+
+
+#### **SetFeedbackLayout**
+
+Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[String]`|false   |named   |true (ByPropertyName)|
+
+
+
 #### **Context**
 
 The event context.  
@@ -210,7 +245,6 @@ If not provided, the global variable STREAMDECK_CONTEXT will be used
 
 
 
----
 #### **WaitFor**
 
 The maximum amount of time to wait for a WebSocket to open.  By default, 30 seconds.
@@ -226,7 +260,6 @@ The maximum amount of time to wait for a WebSocket to open.  By default, 30 seco
 
 
 
----
 #### **WaitInterval**
 
 The interval to wait while receiving a message.  By default, 11 milliseconds.
@@ -242,7 +275,6 @@ The interval to wait while receiving a message.  By default, 11 milliseconds.
 
 
 
----
 #### **Websocket**
 
 The web socket.
@@ -259,7 +291,6 @@ If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
 
 
 
----
 #### **Port**
 
 The web socket.
@@ -276,7 +307,6 @@ If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
 
 
 
----
 #### **PluginUUID**
 
 The plugin UUID.  This is used in plugin registration.
@@ -292,20 +322,23 @@ The plugin UUID.  This is used in plugin registration.
 
 
 
----
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -WhatIf is used to see what would happen, or return operations without executing them
 #### **Confirm**
 -Confirm is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -Confirm is used to -Confirm each operation.
-    
+
 If you pass ```-Confirm:$false``` you will not be prompted.
-    
-    
+
+
 If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$confirmImpactPreference```, you will not be prompted unless -Confirm is passed.
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Send-StreamDeck [-EventName] <String> [[-Payload] <PSObject>] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
@@ -329,6 +362,11 @@ Send-StreamDeck -ImagePath <String> [-State <Int32>] [-EventTarget <String>] [[-
 Send-StreamDeck -Title <String> [-State <Int32>] [-EventTarget <String>] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 ```PowerShell
+Send-StreamDeck [-SetFeedback] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+```PowerShell
+Send-StreamDeck [-SetFeedbackLayout <String>] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+```PowerShell
 Send-StreamDeck [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] -PluginUUID <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
----
