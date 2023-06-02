@@ -1,20 +1,36 @@
 Stop-LoupeDeck
 --------------
+
+
+
+
 ### Synopsis
 Stops Loupedeck
 
+
+
 ---
+
+
 ### Description
 
 Stops the LoupeDeck application.
 
+
+
 ---
+
+
 ### Related Links
 * [Start-LoupeDeck](Start-LoupeDeck.md)
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
@@ -26,7 +42,11 @@ Stop-LoupeDeck
 Restart-LoupeDeck
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **LoupeDeckPath**
 
@@ -44,7 +64,6 @@ If this parameter is not provided, this will attempt to launch Loupedeck from th
 
 
 
----
 #### **PassThru**
 
 If set, will output the created process.
@@ -60,9 +79,12 @@ If set, will output the created process.
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Stop-LoupeDeck [[-LoupeDeckPath] <String>] [-PassThru] [<CommonParameters>]
 ```
----
