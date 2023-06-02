@@ -1,14 +1,26 @@
 Start-LoupeDeck
 ---------------
+
+
+
+
 ### Synopsis
 Starts Loupedeck
 
+
+
 ---
+
+
 ### Description
 
 Starts the LoupeDeck application.
 
+
+
 ---
+
+
 ### Related Links
 * [Stop-LoupeDeck](Stop-LoupeDeck.md)
 
@@ -18,14 +30,22 @@ Starts the LoupeDeck application.
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
 Start-LoupeDeck
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **LoupeDeckPath**
 
@@ -43,7 +63,6 @@ If this parameter is not provided, this will attempt to launch Loupedeck from th
 
 
 
----
 #### **PassThru**
 
 If set, will output the created process.
@@ -59,9 +78,12 @@ If set, will output the created process.
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Start-LoupeDeck [[-LoupeDeckPath] <String>] [-PassThru] [<CommonParameters>]
 ```
----
