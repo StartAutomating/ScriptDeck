@@ -1,14 +1,26 @@
 Restart-LoupeDeck
 -----------------
+
+
+
+
 ### Synopsis
 Restarts Loupedeck
 
+
+
 ---
+
+
 ### Description
 
 Restarts the LoupeDeck application.
 
+
+
 ---
+
+
 ### Related Links
 * [Start-LoupeDeck](Start-LoupeDeck.md)
 
@@ -18,14 +30,22 @@ Restarts the LoupeDeck application.
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
 Restart-LoupeDeck
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **LoupeDeckPath**
 
@@ -43,7 +63,6 @@ If this parameter is not provided, this will attempt to launch Loupedeck from th
 
 
 
----
 #### **PassThru**
 
 If set, will output the created process.
@@ -59,9 +78,12 @@ If set, will output the created process.
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Restart-LoupeDeck [[-LoupeDeckPath] <String>] [-PassThru] [<CommonParameters>]
 ```
----
