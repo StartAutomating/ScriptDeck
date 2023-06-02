@@ -1,14 +1,26 @@
 New-StreamDeckProfile
 ---------------------
+
+
+
+
 ### Synopsis
 Creates a StreamDeck profile
 
+
+
 ---
+
+
 ### Description
 
 Creates a StreamDeck profile object
 
+
+
 ---
+
+
 ### Related Links
 * [Get-StreamDeckProfile](Get-StreamDeckProfile.md)
 
@@ -22,7 +34,11 @@ Creates a StreamDeck profile object
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
@@ -55,7 +71,11 @@ for ($r = 0 ;$r -lt $rows; $r++) {
 ```
 New-StreamDeckProfile -Name GitRepos -Action $actions |
     Save-StreamDeckProfile
+
+
 ---
+
+
 ### Parameters
 #### **Name**
 
@@ -72,7 +92,6 @@ The name of the profile
 
 
 
----
 #### **Action**
 
 A collection of actions.
@@ -88,7 +107,6 @@ A collection of actions.
 
 
 
----
 #### **AppIdentifier**
 
 The application identifier.
@@ -105,7 +123,6 @@ If provided, this profile will be activated whenever this application is given f
 
 
 
----
 #### **DeviceModel**
 
 The device model.
@@ -122,7 +139,6 @@ If not provided, the most commonly used device model from your other profiles wi
 
 
 
----
 #### **DeviceUUID**
 
 The device UUID.
@@ -139,7 +155,6 @@ If not provided, the most commonly used device uuid from your other profiles wil
 
 
 
----
 #### **Version**
 
 The version of the profile.  By default, 1.0
@@ -155,7 +170,6 @@ The version of the profile.  By default, 1.0
 
 
 
----
 #### **ProfileUUID**
 
 The profile UUID.  If not provided, a GUID will be generated.
@@ -171,7 +185,6 @@ The profile UUID.  If not provided, a GUID will be generated.
 
 
 
----
 #### **ProfileRoot**
 
 If provided, will create the profile beneath this directory.
@@ -190,7 +203,6 @@ On MacOS, this is  : "~/Library/Application Support/elgato/StreamDeck/ProfilesV2
 
 
 
----
 #### **IsChildProfile**
 
 If set, the stream deck profile created will be a child profile, and will not immediately be saved.
@@ -207,7 +219,6 @@ Child profiles will automatically have an action linking to the parent profile i
 
 
 
----
 #### **IsNextPage**
 
 If set, the stream deck profile created will be an additional page, and will not immediately be saved.
@@ -218,22 +229,29 @@ NextPages will automatically have an action linking to the previous page in the 
 
 
 
-|Type      |Required|Position|PipelineInput|
-|----------|--------|--------|-------------|
-|`[Switch]`|false   |named   |false        |
+|Type      |Required|Position|PipelineInput|Aliases          |
+|----------|--------|--------|-------------|-----------------|
+|`[Switch]`|false   |named   |false        |IsNextPageProfile|
+
+
 
 
 
 ---
+
+
 ### Outputs
 * StreamDeck.Profile
 
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 New-StreamDeckProfile [-Name] <String> [-Action] <IDictionary> [[-AppIdentifier] <String>] [[-DeviceModel] <String>] [[-DeviceUUID] <String>] [[-Version] <String>] [[-ProfileUUID] <String>] [[-ProfileRoot] <String>] [-IsChildProfile] [-IsNextPage] [<CommonParameters>]
 ```
----
