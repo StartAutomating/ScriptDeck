@@ -1,14 +1,26 @@
 New-StreamDeckPlugin
 --------------------
+
+
+
+
 ### Synopsis
 Creates a StreamDeck Plugin
 
+
+
 ---
+
+
 ### Description
 
 Creates a new StreamDeck Plugin.
 
+
+
 ---
+
+
 ### Related Links
 * [https://developer.elgato.com/documentation/stream-deck/sdk/manifest/](https://developer.elgato.com/documentation/stream-deck/sdk/manifest/)
 
@@ -18,7 +30,11 @@ Creates a new StreamDeck Plugin.
 
 
 
+
+
 ---
+
+
 ### Parameters
 #### **Name**
 
@@ -35,7 +51,6 @@ The name of the plugin. This string is displayed to the user in the Stream Deck 
 
 
 
----
 #### **Author**
 
 The author of the plugin. This string is displayed to the user in the Stream Deck store.
@@ -51,7 +66,6 @@ The author of the plugin. This string is displayed to the user in the Stream Dec
 
 
 
----
 #### **Action**
 
 Specifies an array of actions. A plugin can indeed have one or multiple actions.
@@ -61,13 +75,12 @@ Specifies an array of actions. A plugin can indeed have one or multiple actions.
 
 
 
-|Type          |Required|Position|PipelineInput        |
-|--------------|--------|--------|---------------------|
-|`[PSObject[]]`|false   |3       |true (ByPropertyName)|
+|Type          |Required|Position|PipelineInput        |Aliases|
+|--------------|--------|--------|---------------------|-------|
+|`[PSObject[]]`|false   |3       |true (ByPropertyName)|Actions|
 
 
 
----
 #### **Description**
 
 Provides a general description of what the plugin does.
@@ -84,7 +97,6 @@ This is displayed to the user in the Stream Deck store.
 
 
 
----
 #### **Version**
 
 The version of the plugin which can only contain digits and periods. This is used for the software update mechanism.
@@ -100,7 +112,6 @@ The version of the plugin which can only contain digits and periods. This is use
 
 
 
----
 #### **Icon**
 
 The relative path to a PNG image without the .png extension. 
@@ -120,7 +131,6 @@ The Stream Deck application takes care of loading the appropriate version of the
 
 
 
----
 #### **Category**
 
 The name of the custom category in which the actions should be listed.
@@ -138,7 +148,6 @@ If you don't provide a category, the actions will appear inside a "Custom" categ
 
 
 
----
 #### **CategoryIcon**
 
 The relative path to a PNG image without the .png extension.
@@ -158,7 +167,6 @@ The Stream Deck application takes care of loading the appropriate version of the
 
 
 
----
 #### **CodePath**
 
 The relative path to the HTML/binary file containing the code of the plugin.
@@ -174,7 +182,6 @@ The relative path to the HTML/binary file containing the code of the plugin.
 
 
 
----
 #### **CodePathWin**
 
 Override CodePath for Windows.
@@ -190,7 +197,6 @@ Override CodePath for Windows.
 
 
 
----
 #### **CodePathMac**
 
 Override CodePath for macOS.
@@ -206,7 +212,6 @@ Override CodePath for macOS.
 
 
 
----
 #### **PropertyInspectorPath**
 
 The relative path to the Property Inspector html file if your plugin want to display some custom settings in the Property Inspector.
@@ -223,7 +228,6 @@ If missing, the plugin will have an empty Property Inspector.
 
 
 
----
 #### **DefaultWindowSize**
 
 Specify the default window size when a Javascript plugin or Property Inspector opens a window using window.open().
@@ -240,7 +244,6 @@ Default value is [500, 650].
 
 
 
----
 #### **OS**
 
 The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
@@ -256,7 +259,6 @@ The list of operating systems supported by the plugin as well as the minimum sup
 
 
 
----
 #### **Software**
 
 Indicates which version of the Stream Deck application is required to install the plugin.
@@ -272,7 +274,6 @@ Indicates which version of the Stream Deck application is required to install th
 
 
 
----
 #### **Url**
 
 A URL displayed to the user if he wants to get more info about the plugin.
@@ -288,7 +289,6 @@ A URL displayed to the user if he wants to get more info about the plugin.
 
 
 
----
 #### **ApplicationsToMonitor**
 
 List of application identifiers to monitor (applications launched or terminated).
@@ -305,7 +305,6 @@ See the applicationDidLaunch and applicationDidTerminate events.
 
 
 
----
 #### **Profiles**
 
 Specifies an array of profiles.
@@ -323,7 +322,6 @@ This lets you create fullscreen plugins.
 
 
 
----
 #### **OutputPath**
 
 The output path.  
@@ -341,7 +339,6 @@ This directory will be named $Name.sdPlugin.
 
 
 
----
 #### **Template**
 
 The name of a StreamDeck plugin template.
@@ -357,33 +354,34 @@ The name of a StreamDeck plugin template.
 
 
 
----
 #### **TemplateParameter**
 
 
 
 
-|Type           |Required|Position|PipelineInput        |
-|---------------|--------|--------|---------------------|
-|`[IDictionary]`|false   |21      |true (ByPropertyName)|
+|Type           |Required|Position|PipelineInput        |Aliases           |
+|---------------|--------|--------|---------------------|------------------|
+|`[IDictionary]`|false   |21      |true (ByPropertyName)|TemplateParameters|
 
 
 
----
 #### **TemplateArgumentList**
 
 
 
 
-|Type          |Required|Position|PipelineInput        |
-|--------------|--------|--------|---------------------|
-|`[PSObject[]]`|false   |22      |true (ByPropertyName)|
+|Type          |Required|Position|PipelineInput        |Aliases          |
+|--------------|--------|--------|---------------------|-----------------|
+|`[PSObject[]]`|false   |22      |true (ByPropertyName)|TemplateArguments|
+
+
 
 
 
 ---
+
+
 ### Syntax
 ```PowerShell
 New-StreamDeckPlugin [-Name] <String> [-Author] <String> [[-Action] <PSObject[]>] [-Description] <String> [[-Version] <Version>] [-Icon] <String> [[-Category] <String>] [[-CategoryIcon] <String>] [[-CodePath] <String>] [[-CodePathWin] <String>] [[-CodePathMac] <String>] [[-PropertyInspectorPath] <String>] [[-DefaultWindowSize] <String>] [[-OS] <PSObject[]>] [[-Software] <PSObject>] [[-Url] <Uri>] [[-ApplicationsToMonitor] <PSObject>] [[-Profiles] <PSObject[]>] [[-OutputPath] <String>] [[-Template] <String>] [[-TemplateParameter] <IDictionary>] [[-TemplateArgumentList] <PSObject[]>] [<CommonParameters>]
 ```
----
