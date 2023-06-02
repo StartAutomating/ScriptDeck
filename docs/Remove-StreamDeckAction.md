@@ -1,14 +1,26 @@
 Remove-StreamDeckAction
 -----------------------
+
+
+
+
 ### Synopsis
 Removes a StreamDeckAction
 
+
+
 ---
+
+
 ### Description
 
 Removes a StreamDeckAction from a plugin or a profile.
 
+
+
 ---
+
+
 ### Parameters
 #### **PluginPath**
 
@@ -25,7 +37,6 @@ The path to a StreamDeck plugin
 
 
 
----
 #### **Name**
 
 The name of the action being removed from the plugin.
@@ -41,9 +52,12 @@ The name of the action being removed from the plugin.
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Remove-StreamDeckAction -PluginPath <String> -Name <String> [<CommonParameters>]
 ```
----
