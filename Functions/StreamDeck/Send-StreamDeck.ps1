@@ -42,8 +42,7 @@
     [uri]
     $OpenURL,
 
-    # If set, will send an openURL event to the Stream Deck application.
-    # This will temporarily show an alert icon on the image displayed by an instance of an action.
+    # A message to log in the Stream Deck application.
     [Parameter(Mandatory,ParameterSetName='logMessage',ValueFromPipelineByPropertyName)]
     [string]
     $LogMessage,
@@ -66,12 +65,22 @@
     [int]
     $State = 0,
 
-    # The target of a title or image change.  Valid values are
+    # The target of a title or image change.  Valid values are: 'both', 'hardware', 'software'
     [Parameter(ParameterSetName='setTitle',ValueFromPipelineByPropertyName)]
     [Parameter(ParameterSetName='setImage',ValueFromPipelineByPropertyName)]
     [ValidateSet('both','hardware', 'software')]
     [string]
     $EventTarget = 'both',
+
+    # Will send a setFeedback event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+    [Parameter(ParameterSetName='setFeedback',ValueFromPipelineByPropertyName)]
+    [switch]
+    $SetFeedback,
+
+    # Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+    [Parameter(ParameterSetName='setFeedbackLayout',ValueFromPipelineByPropertyName)]
+    [string]
+    $SetFeedbackLayout,
 
     # The event context.  
     # If not provided, the global variable STREAMDECK_CONTEXT will be used
@@ -112,7 +121,7 @@
 
         # A number of different parameter sets are named to reflect the EventName StreamDeck expects.
         # If we find an argument that hints that this is true
-        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath -or $Title) {
+        if ($ShowOK -or $ShowAlert -or $OpenURL -or $LogMessage -or $ImagePath -or $Title -or $SetFeedback -or $SetFeedbackLayout) {
             $EventName = $PSCmdlet.ParameterSetName # set -EventName to the $psCmdlet.ParameterSetName.
         }
 
@@ -122,6 +131,10 @@
 
         if ($LogMessage) { # If we're going to -LogMessage
             $Payload = @{message=$LogMessage} # the payload is a single property, message.
+        }
+
+        if ($SetFeedbackLayout) { # If we're setting the feedback layout
+            $Payload = @{"layout"=$SetFeedbackLayout} # the paylout is the layout.
         }
         
         if ($ImagePath) { # If we're going to send an image,            
@@ -157,13 +170,13 @@
             }
         }
         
-        if ($Title) {
-            $Payload = [Ordered]@{ # Otherwise, it's base64 binary.
+        if ($Title) { # If we provided the title
+            $Payload = [Ordered]@{ 
                 title = $Title 
                 target = $eventTarget
                 state  = $State
             }
-        }
+        }        
 
         # If no one provided a -Context but $Global:STREAMDECK_CONTEXT is set,
         if ((-not $Context) -and $Global:STREAMDECK_CONTEXT) { 
