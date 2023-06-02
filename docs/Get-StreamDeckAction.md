@@ -1,14 +1,26 @@
 Get-StreamDeckAction
 --------------------
+
+
+
+
 ### Synopsis
 Gets Actions for StreamDeck
 
+
+
 ---
+
+
 ### Description
 
 Gets available actions for StreamDeck
 
+
+
 ---
+
+
 ### Related Links
 * [Get-StreamDeckPlugin](Get-StreamDeckPlugin.md)
 
@@ -18,14 +30,22 @@ Gets available actions for StreamDeck
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
 Get-StreamDeckAction
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **Name**
 
@@ -42,7 +62,6 @@ The name of the action
 
 
 
----
 #### **UUID**
 
 The action UUID
@@ -58,7 +77,6 @@ The action UUID
 
 
 
----
 #### **Force**
 
 If set, will rebuild the cache of streamdeck actions.
@@ -74,16 +92,23 @@ If set, will rebuild the cache of streamdeck actions.
 
 
 
+
+
 ---
+
+
 ### Outputs
 * StreamDeck.PluginAction
 
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Get-StreamDeckAction [[-Name] <String>] [[-UUID] <String>] [-Force] [<CommonParameters>]
 ```
----
