@@ -1,14 +1,26 @@
 Update-StreamDeckProfile
 ------------------------
+
+
+
+
 ### Synopsis
 Updates a StreamDeck profile
 
+
+
 ---
+
+
 ### Description
 
 Updates a StreamDeck profile
 
+
+
 ---
+
+
 ### Related Links
 * [Get-StreamDeckProfile](Get-StreamDeckProfile.md)
 
@@ -26,7 +38,11 @@ Updates a StreamDeck profile
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
@@ -100,7 +116,11 @@ Update-StreamDeckProfile -Name VSCode -Action @{
         
     "7,3" = $null
 }
+
+
 ---
+
+
 ### Parameters
 #### **Name**
 
@@ -117,7 +137,6 @@ The name of the profile
 
 
 
----
 #### **Action**
 
 A collection of actions.
@@ -133,7 +152,6 @@ A collection of actions.
 
 
 
----
 #### **ProfileUUID**
 
 The profile UUID.  If not provided, a GUID will be generated.
@@ -143,13 +161,12 @@ The profile UUID.  If not provided, a GUID will be generated.
 
 
 
-|Type      |Required|Position|PipelineInput        |
-|----------|--------|--------|---------------------|
-|`[String]`|false   |3       |true (ByPropertyName)|
+|Type      |Required|Position|PipelineInput        |Aliases|
+|----------|--------|--------|---------------------|-------|
+|`[String]`|false   |3       |true (ByPropertyName)|guid   |
 
 
 
----
 #### **DeviceType**
 
 
@@ -161,16 +178,23 @@ The profile UUID.  If not provided, a GUID will be generated.
 
 
 
+
+
 ---
+
+
 ### Outputs
 * StreamDeck.Profile
 
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Update-StreamDeckProfile [[-Name] <String>] [-Action] <IDictionary> [[-ProfileUUID] <String>] [[-DeviceType] <String>] [<CommonParameters>]
 ```
----
