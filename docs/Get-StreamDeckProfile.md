@@ -1,14 +1,26 @@
 Get-StreamDeckProfile
 ---------------------
+
+
+
+
 ### Synopsis
 Gets StreamDeck Profiles
 
+
+
 ---
+
+
 ### Description
 
 Gets profiles for the StreamDeck application.
 
+
+
 ---
+
+
 ### Related Links
 * [New-StreamDeckProfile](New-StreamDeckProfile.md)
 
@@ -18,14 +30,22 @@ Gets profiles for the StreamDeck application.
 
 
 
+
+
 ---
+
+
 ### Examples
 #### EXAMPLE 1
 ```PowerShell
 Get-StreamDeckProfile
 ```
 
+
+
 ---
+
+
 ### Parameters
 #### **Name**
 
@@ -42,7 +62,6 @@ The name of the profile
 
 
 
----
 #### **ProfileRoot**
 
 The profile root
@@ -58,7 +77,6 @@ The profile root
 
 
 
----
 #### **Recurse**
 
 If set, will get profiles recursively
@@ -74,16 +92,23 @@ If set, will get profiles recursively
 
 
 
+
+
 ---
+
+
 ### Outputs
 * StreamDeck.Profile
 
 
 
 
+
+
 ---
+
+
 ### Syntax
 ```PowerShell
 Get-StreamDeckProfile [[-Name] <String>] [[-ProfileRoot] <String>] [-Recurse] [<CommonParameters>]
 ```
----
