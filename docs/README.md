@@ -1,4 +1,3 @@
-
 <div align='center'>
 <img src='Assets/ScriptDeck.svg' />
 <h2>Supercharge your StreamDeck with PowerShell</h2>
@@ -86,4 +85,3 @@ New-StreamDeckProfile -Name NewProfile -Action @{
 ~~~
 
 Want the module to do something more?  Feel free to open an issue on GitHub.
-
