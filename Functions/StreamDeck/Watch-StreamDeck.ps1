@@ -97,7 +97,7 @@ function Watch-StreamDeck
                 $eventNames = 
                     'KeyDown', 'KeyUp', 
                     'TouchTap',
-                    'DialPress','DialRotate',
+                    'DialUp','DialDown','DialRotate',
                     'WillAppear', 'WillDisappear', 
                     'DeviceDidConnect', 'DeviceDidDisconnect',
                     'DidReceiveSettings', 'DidReceiveGlobalSettings',                
