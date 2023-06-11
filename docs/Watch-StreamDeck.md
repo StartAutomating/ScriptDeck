@@ -116,6 +116,55 @@ If no log path is provided, one will be created in the same directory as this sc
 
 
 
+#### **NoMessageOutput**
+
+If set, will not log individual StreamDeck messages to disk.
+These messages are normally outputted to disk so that ScriptDeck may externally watch for events.
+All events from a prior session will be removed on plugin launch.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
+
+
+
+#### **NoMessageInput**
+
+If set, will not allow message input from disk.
+These messages are normally monitored so that a StreamDeck action can be externally controlled.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
+
+
+
+#### **NoScriptInput**
+
+If set, will not allow script input from disk.
+Script input is normally allowed enable out-of-process manipulation of global state.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
+
+
+
 
 
 ---
@@ -123,5 +172,5 @@ If no log path is provided, one will be created in the same directory as this sc
 
 ### Syntax
 ```PowerShell
-Watch-StreamDeck [[-StreamDeckInfo] <PSObject>] [[-HandlerPath] <String>] [-AsJob] [[-LogPath] <String>] [<CommonParameters>]
+Watch-StreamDeck [[-StreamDeckInfo] <PSObject>] [[-HandlerPath] <String>] [-AsJob] [[-LogPath] <String>] [-NoMessageOutput] [-NoMessageInput] [-NoScriptInput] [<CommonParameters>]
 ```
