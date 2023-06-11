@@ -205,6 +205,23 @@ If set, will watch the streamdeck in a background job.
 
 
 
+#### **NoMessageOutput**
+
+If set, will not log individual StreamDeck messages to disk.
+These messages are normally outputted to disk so that ScriptDeck may externally watch for events.
+All events from a prior session will be removed on plugin launch.
+
+
+
+
+
+
+|Type      |Required|Position|PipelineInput|
+|----------|--------|--------|-------------|
+|`[Switch]`|false   |named   |false        |
+
+
+
 
 
 ---
@@ -212,5 +229,5 @@ If set, will watch the streamdeck in a background job.
 
 ### Syntax
 ```PowerShell
-Receive-StreamDeck [[-RegisterEvent] <String>] [[-PluginUUID] <String>] [[-Port] <Int32>] [[-Websocket] <ClientWebSocket>] [[-BufferSize] <Int32>] [[-WaitFor] <TimeSpan>] [[-WaitInterval] <TimeSpan>] [[-OutputType] <String>] [-AsJob] [<CommonParameters>]
+Receive-StreamDeck [[-RegisterEvent] <String>] [[-PluginUUID] <String>] [[-Port] <Int32>] [[-Websocket] <ClientWebSocket>] [[-BufferSize] <Int32>] [[-WaitFor] <TimeSpan>] [[-WaitInterval] <TimeSpan>] [[-OutputType] <String>] [-AsJob] [-NoMessageOutput] [<CommonParameters>]
 ```
