@@ -72,7 +72,13 @@
 
     # If set, will watch the streamdeck in a background job.
     [switch]
-    $AsJob
+    $AsJob,
+
+    # If set, will not log individual StreamDeck messages to disk.
+    # These messages are normally outputted to disk so that ScriptDeck may externally watch for events.
+    # All events from a prior session will be removed on plugin launch.
+    [switch]
+    $NoMessageOutput
     )
 
     begin {
@@ -230,6 +236,19 @@ $($MyInvocation.InvocationName) @params
                         New-Event -SourceIdentifier "$($streamDeckData.action).$($streamDeckData.event)" -MessageData $streamDeckData -Sender $Global:STREAMDECK_BUTTONS[$ctx]
                     }
                 )
+                if (-not $NoMessageOutput) {
+                    foreach ($evt in $streamDeckEvent) {
+                        $nameParts = @(
+                            @($evt.SourceIdentifier -split '\.')[-2..-1] -join '.'
+                            $evt.EventIdentifier
+                            if ($evt.MessageData.Context) {
+                                $evt.MessageData.Context
+                            }
+                        ) -notmatch '^\s+$' -join '.'
+                        $eventPath = "$nameParts.received.clixml" 
+                        $evt | Export-Clixml -Path (Join-Path $PSScriptRoot $eventPath)
+                    }
+                }
                 if ($OutputType -eq 'Event') { $streamDeckEvent}
                                                
                 $buffer.Clear()
