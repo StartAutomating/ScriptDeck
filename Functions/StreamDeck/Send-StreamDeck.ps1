@@ -73,14 +73,28 @@
     $EventTarget = 'both',
 
     # Will send a setFeedback event to the StreamDeck, updating the touchscreen on a StreamDeck+.
-    [Parameter(ParameterSetName='setFeedback',ValueFromPipelineByPropertyName)]
-    [switch]
-    $SetFeedback,
+    # SetFeedbackLayout must be called at least once before feedback can be sent.
+    [Parameter(Mandatory,ParameterSetName='setFeedback',ValueFromPipelineByPropertyName)]    
+    $Feedback,
 
-    # Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
-    [Parameter(ParameterSetName='setFeedbackLayout',ValueFromPipelineByPropertyName)]
+    <#
+    Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+    This can be a custom value, or it can be one of the built-in layouts.
+
+    |Layout Name |System Name|
+    |------------|-----------|
+    |Icon              | $X1 |
+    |Canvas            | $A0 |
+    |Value             | $A1 |
+    |Indicator         | $B1 |
+    |GradientIndicator | $B2 |
+    |DoubleIndicator   | $C1 |
+    #>
+    [Parameter(Mandatory,ParameterSetName='setFeedbackLayout',ValueFromPipelineByPropertyName)]
+    [Alias('LayoutTitle','LayoutPath')]
     [string]
     $SetFeedbackLayout,
+
 
     # The event context.  
     # If not provided, the global variable STREAMDECK_CONTEXT will be used
@@ -134,7 +148,18 @@
         }
 
         if ($SetFeedbackLayout) { # If we're setting the feedback layout
-            $Payload = @{"layout"=$SetFeedbackLayout} # the paylout is the layout.
+            $payload = @{
+                layout=
+                    switch ($SetFeedbackLayout) {
+                        "Icon" {'$X1'}
+                        "Canvas" { '$A0'}
+                        "Value" { '$A1' }
+                        "Indicator" { '$B1'}
+                        "GradientIndicator" { '$B2' }
+                        "DoubleIndicator" { '$C1' }
+                        default { $SetFeedbackLayout}
+                    }
+            }                    
         }
         
         if ($ImagePath) { # If we're going to send an image,            
@@ -144,7 +169,7 @@
             $resolvedItem = Get-Item -LiteralPath $resolvedPath 
             if (-not $resolvedItem) { return } 
             # and check that it actually is an image.
-            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp','.jpeg'
+            $imageExtensions = '.svg','.png','.jpg','.gif','.bmp','.jpeg', '.webp', '.apng'
             if ($resolvedItem.Extension -notin $imageExtensions) {
                 Write-Error "-ImagePath '$ImagePath' has an invalid extension. Valid extensions are: $imageExtensions"
                 return
@@ -176,11 +201,19 @@
                 target = $eventTarget
                 state  = $State
             }
-        }        
+        }
+        
+        if ($Feedback) {
+            $Payload = $Feedback
+        }
 
         # If no one provided a -Context but $Global:STREAMDECK_CONTEXT is set,
         if ((-not $Context) -and $Global:STREAMDECK_CONTEXT) { 
             $Context = $Global:STREAMDECK_CONTEXT # use that.
+        }
+
+        if (-not $EventName) {
+            $EventName = $psCmdlet.ParameterSetName
         }
         
         $WebSocketPayload = @{
