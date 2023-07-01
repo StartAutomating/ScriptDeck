@@ -199,9 +199,10 @@ Valid Values:
 
 
 
-#### **SetFeedback**
+#### **Feedback**
 
 Will send a setFeedback event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+SetFeedbackLayout must be called at least once before feedback can be sent.
 
 
 
@@ -210,22 +211,32 @@ Will send a setFeedback event to the StreamDeck, updating the touchscreen on a S
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
-|`[Switch]`|false   |named   |true (ByPropertyName)|
+|`[Object]`|true    |named   |true (ByPropertyName)|
 
 
 
 #### **SetFeedbackLayout**
 
 Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
+This can be a custom value, or it can be one of the built-in layouts.
+
+|Layout Name |System Name|
+|------------|-----------|
+|Icon              | $X1 |
+|Canvas            | $A0 |
+|Value             | $A1 |
+|Indicator         | $B1 |
+|GradientIndicator | $B2 |
+|DoubleIndicator   | $C1 |
 
 
 
 
 
 
-|Type      |Required|Position|PipelineInput        |
-|----------|--------|--------|---------------------|
-|`[String]`|false   |named   |true (ByPropertyName)|
+|Type      |Required|Position|PipelineInput        |Aliases                   |
+|----------|--------|--------|---------------------|--------------------------|
+|`[String]`|true    |named   |true (ByPropertyName)|LayoutTitle<br/>LayoutPath|
 
 
 
@@ -362,10 +373,10 @@ Send-StreamDeck -ImagePath <String> [-State <Int32>] [-EventTarget <String>] [[-
 Send-StreamDeck -Title <String> [-State <Int32>] [-EventTarget <String>] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 ```PowerShell
-Send-StreamDeck [-SetFeedback] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Send-StreamDeck -Feedback <Object> [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 ```PowerShell
-Send-StreamDeck [-SetFeedbackLayout <String>] [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Send-StreamDeck -SetFeedbackLayout <String> [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 ```PowerShell
 Send-StreamDeck [[-Context] <String>] [-WaitFor <TimeSpan>] [-WaitInterval <TimeSpan>] [[-Websocket] <ClientWebSocket>] [[-Port] <Int32>] -PluginUUID <String> [-WhatIf] [-Confirm] [<CommonParameters>]
