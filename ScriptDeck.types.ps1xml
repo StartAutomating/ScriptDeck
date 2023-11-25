@@ -223,6 +223,22 @@ if ($this.'.HistoryFileCount' -ne $foundFiles.Length) {
 $this.'.History'
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>LastTitleChange</Name>
+        <GetScriptBlock>
+                        &lt;#
+.SYNOPSIS
+    Gets the last title change
+.DESCRIPTION
+    Gets the last change to the title of a ScriptDeck action.
+#&gt;
+$this.History | 
+    Where-Object { $_.MessageData.event -eq 'titleParametersDidChange' } |
+    Select-Object -First 1 |
+    ForEach-Object { $_.MessageData.Payload }
+    
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
   <Type>
