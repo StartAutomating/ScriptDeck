@@ -51,6 +51,29 @@ foreach ($controlHolder in $placesWithControls) {
     </Members>
   </Type>
   <Type>
+    <Name>ScriptDeck.Action</Name>
+    <Members>
+      <ScriptMethod>
+        <Name>ShowOK</Name>
+        <Script>
+                        &lt;#
+.SYNOPSIS
+    Shows an OK
+.DESCRIPTION
+    Sends a 'ShowOK' message to StreamDeck, which will show a checkmark briefly atop of an action.
+#&gt;
+param()
+$exportPath = Join-Path ($this.Plugin.PluginPath | Split-Path) -ChildPath "$($this.Context).showAlert.Send-StreamDeck.clixml"
+Export-Clixml -InputObject @{
+    Context = $this.Context
+    ShowOK = $true
+} -Path $exportPath
+
+                    </Script>
+      </ScriptMethod>
+    </Members>
+  </Type>
+  <Type>
     <Name>StreamDeck.Device</Name>
     <Members>
       <ScriptProperty>
