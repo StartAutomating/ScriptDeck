@@ -1,55 +1,35 @@
 Update-StreamDeckProfile
 ------------------------
 
-
-
-
 ### Synopsis
 Updates a StreamDeck profile
 
-
-
 ---
-
 
 ### Description
 
 Updates a StreamDeck profile
 
-
-
 ---
-
 
 ### Related Links
 * [Get-StreamDeckProfile](Get-StreamDeckProfile.md)
 
-
-
 * [Remove-StreamDeckProfile](Remove-StreamDeckProfile.md)
-
-
 
 * [Save-StreamDeckProfile](Save-StreamDeckProfile.md)
 
-
-
 * [New-StreamDeckProfile](New-StreamDeckProfile.md)
-
-
-
-
 
 ---
 
-
 ### Examples
-#### EXAMPLE 1
+> EXAMPLE 1
+
 ```PowerShell
 $vsCodeProfile = Get-StreamDeckProfile -Name VSCode
 $defaultProfile = Get-streamDeckProfile -Name "Default Profile" |
     Where-Object DeviceName -eq StreamDeckXL
-```
 Update-StreamDeckProfile -Name VSCode -Action @{
     "0,0" =
         New-StreamDeckAction -ProfileName $defaultProfile.Guid -DeviceUUID $defaultProfile.DeviceUUID -Image C:\Users\JamesBrundage\Pictures\Gif\CountryHome.gif
@@ -80,7 +60,6 @@ Update-StreamDeckProfile -Name VSCode -Action @{
         New-StreamDeckAction -UUID com.nicollasr.streamdeckvsc.executecommand -Setting @{
             command = "workbench.action.closeAllEditors"
         } -name "Execute Command" -Title "Close All"
-
 
     "1,0" =
         New-StreamDeckAction -UUID com.nicollasr.streamdeckvsc.executecommand -Setting @{
@@ -116,83 +95,44 @@ Update-StreamDeckProfile -Name VSCode -Action @{
         
     "7,3" = $null
 }
-
+```
 
 ---
 
-
 ### Parameters
 #### **Name**
-
 The name of the profile
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|false   |1       |true (ByPropertyName)|
 
-
-
 #### **Action**
-
 A collection of actions.
-
-
-
-
-
 
 |Type           |Required|Position|PipelineInput        |
 |---------------|--------|--------|---------------------|
 |`[IDictionary]`|true    |2       |true (ByPropertyName)|
 
-
-
 #### **ProfileUUID**
-
 The profile UUID.  If not provided, a GUID will be generated.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |Aliases|
 |----------|--------|--------|---------------------|-------|
 |`[String]`|false   |3       |true (ByPropertyName)|guid   |
 
-
-
 #### **DeviceType**
-
-
-
 
 |Type      |Required|Position|PipelineInput|
 |----------|--------|--------|-------------|
 |`[String]`|false   |4       |false        |
 
-
-
-
-
 ---
-
 
 ### Outputs
 * StreamDeck.Profile
 
-
-
-
-
-
 ---
-
 
 ### Syntax
 ```PowerShell
