@@ -18,3 +18,5 @@
 * [get_HasStaticTitle](get_HasStaticTitle.md)
 * [get_History](get_History.md)
 * [get_LastTitleChange](get_LastTitleChange.md)
+* [get_Settings](get_Settings.md)
+* [set_Settings](set_Settings.md)
