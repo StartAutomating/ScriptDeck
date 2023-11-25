@@ -187,6 +187,19 @@ Export-Clixml -InputObject @{
                     </Script>
       </ScriptMethod>
       <ScriptProperty>
+        <Name>EventFile</Name>
+        <GetScriptBlock>
+                        &lt;#
+.SYNOPSIS
+    Get an action's event files  
+.DESCRIPTION
+    Get the event files related to an action.
+    These contain the StreamDeck messages sent to the action.
+#&gt;
+@(Get-ChildItem -Path (Split-Path $this.Plugin.PluginPath) -Filter "*.$($this.Context).received.clixml" | Sort-Object LastWriteTime -Descending) 
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>History</Name>
         <GetScriptBlock>
                         &lt;#
