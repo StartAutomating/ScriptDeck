@@ -1,16 +1,10 @@
 Send-StreamDeck
 ---------------
 
-
-
-
 ### Synopsis
 Sends messages to a StreamDeck
 
-
-
 ---
-
 
 ### Description
 
@@ -18,208 +12,105 @@ Sends messages to a StreamDeck.
 
 This function will often be used within StreamDeck plugins.
 
-
-
 ---
-
 
 ### Related Links
 * [Receive-StreamDeck](Receive-StreamDeck.md)
 
-
-
 * [https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/](https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/)
-
-
-
-
 
 ---
 
-
 ### Parameters
 #### **EventName**
-
 The name of the event
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |Aliases|
 |----------|--------|--------|---------------------|-------|
 |`[String]`|true    |1       |true (ByPropertyName)|Event  |
 
-
-
 #### **Payload**
-
 The event payload.
-
-
-
-
-
 
 |Type        |Required|Position|PipelineInput        |
 |------------|--------|--------|---------------------|
 |`[PSObject]`|false   |3       |true (ByPropertyName)|
 
-
-
 #### **ShowOK**
-
 If set, will send a showOk event to the Stream Deck application.
 This will temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 
-
-
-
-
-
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[Switch]`|true    |named   |true (ByPropertyName)|
 
-
-
 #### **ShowAlert**
-
 If set, will send a showAlert event to the Stream Deck application.
 This will temporarily show an alert icon on the image displayed by an instance of an action.
 
-
-
-
-
-
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[Switch]`|true    |named   |true (ByPropertyName)|
 
-
-
 #### **OpenURL**
-
 If set, will send an openURL event to the Stream Deck application.
 This will temporarily show an alert icon on the image displayed by an instance of an action.
-
-
-
-
-
 
 |Type   |Required|Position|PipelineInput        |
 |-------|--------|--------|---------------------|
 |`[Uri]`|true    |named   |true (ByPropertyName)|
 
-
-
 #### **LogMessage**
-
 A message to log in the Stream Deck application.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|true    |named   |true (ByPropertyName)|
 
-
-
 #### **ImagePath**
-
 If provided will send a showImage event to the Stream Deck application using the contents of the file in ImagePath
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |Aliases |
 |----------|--------|--------|---------------------|--------|
 |`[String]`|true    |named   |true (ByPropertyName)|Fullname|
 
-
-
 #### **Title**
-
 The title
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |Aliases   |
 |----------|--------|--------|---------------------|----------|
 |`[String]`|true    |named   |true (ByPropertyName)|ButtonText|
 
-
-
 #### **State**
-
 The state index of an image or title.  Defaults to zero.
-
-
-
-
-
 
 |Type     |Required|Position|PipelineInput        |
 |---------|--------|--------|---------------------|
 |`[Int32]`|false   |named   |true (ByPropertyName)|
 
-
-
 #### **EventTarget**
-
 The target of a title or image change.  Valid values are: 'both', 'hardware', 'software'
-
-
-
 Valid Values:
 
 * both
 * hardware
 * software
 
-
-
-
-
-
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|false   |named   |true (ByPropertyName)|
 
-
-
 #### **Feedback**
-
 Will send a setFeedback event to the StreamDeck, updating the touchscreen on a StreamDeck+.
 SetFeedbackLayout must be called at least once before feedback can be sent.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[Object]`|true    |named   |true (ByPropertyName)|
 
-
-
 #### **SetFeedbackLayout**
-
 Will send a setFeedbackLayout event to the StreamDeck, updating the touchscreen on a StreamDeck+.
 This can be a custom value, or it can be one of the built-in layouts.
-
 |Layout Name |System Name|
 |------------|-----------|
 |Icon              | $X1 |
@@ -229,109 +120,54 @@ This can be a custom value, or it can be one of the built-in layouts.
 |GradientIndicator | $B2 |
 |DoubleIndicator   | $C1 |
 
-
-
-
-
-
 |Type      |Required|Position|PipelineInput        |Aliases                   |
 |----------|--------|--------|---------------------|--------------------------|
 |`[String]`|true    |named   |true (ByPropertyName)|LayoutTitle<br/>LayoutPath|
 
-
-
 #### **Context**
-
 The event context.  
 If not provided, the global variable STREAMDECK_CONTEXT will be used
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|false   |4       |true (ByPropertyName)|
 
-
-
 #### **WaitFor**
-
 The maximum amount of time to wait for a WebSocket to open.  By default, 30 seconds.
-
-
-
-
-
 
 |Type        |Required|Position|PipelineInput        |
 |------------|--------|--------|---------------------|
 |`[TimeSpan]`|false   |named   |true (ByPropertyName)|
 
-
-
 #### **WaitInterval**
-
 The interval to wait while receiving a message.  By default, 11 milliseconds.
-
-
-
-
-
 
 |Type        |Required|Position|PipelineInput|
 |------------|--------|--------|-------------|
 |`[TimeSpan]`|false   |named   |false        |
 
-
-
 #### **Websocket**
-
 The web socket.
 If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
-
-
-
-
-
 
 |Type               |Required|Position|PipelineInput        |
 |-------------------|--------|--------|---------------------|
 |`[ClientWebSocket]`|false   |5       |true (ByPropertyName)|
 
-
-
 #### **Port**
-
 The web socket.
 If not provided, the global variable STREAMDECK_WEBSOCKET will be used.
-
-
-
-
-
 
 |Type     |Required|Position|PipelineInput        |
 |---------|--------|--------|---------------------|
 |`[Int32]`|false   |5       |true (ByPropertyName)|
 
-
-
 #### **PluginUUID**
-
 The plugin UUID.  This is used in plugin registration.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|true    |named   |true (ByPropertyName)|
-
-
 
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
@@ -342,13 +178,9 @@ The plugin UUID.  This is used in plugin registration.
 
 If you pass ```-Confirm:$false``` you will not be prompted.
 
-
 If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$confirmImpactPreference```, you will not be prompted unless -Confirm is passed.
 
-
-
 ---
-
 
 ### Syntax
 ```PowerShell
