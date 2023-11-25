@@ -1,16 +1,10 @@
 Uninstall-StreamDeckPlugin
 --------------------------
 
-
-
-
 ### Synopsis
 Uninstalls StreamDeck Plugins
 
-
-
 ---
-
 
 ### Description
 
@@ -18,101 +12,57 @@ Uninstalls StreamDeck Plugins.
 
 StreamDeck must not be running when this command is run.
 
-
-
 ---
-
 
 ### Related Links
 * [Stop-StreamDeck](Stop-StreamDeck.md)
 
-
-
 * [Install-StreamDeckPlugin](Install-StreamDeckPlugin.md)
-
-
-
-
 
 ---
 
-
 ### Examples
-#### EXAMPLE 1
+> EXAMPLE 1
+
 ```PowerShell
 Uninstall-StreamDeckPlugin ScriptDeck
 ```
+> EXAMPLE 2
 
-#### EXAMPLE 2
 ```PowerShell
 Uninstall-StreamDeckPlugin WindowsScriptDeck
 ```
 
-
-
 ---
-
 
 ### Parameters
 #### **Name**
-
 The name of the plugin
 
-
-
-
-
-
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|false   |named   |true (ByPropertyName)|
-
-
 
 #### **UUID**
-
 The Plugin UUID
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[String]`|false   |named   |true (ByPropertyName)|
 
-
-
 #### **Force**
-
 If set, will rebuild the cache of streamdeck plugins.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |
 |----------|--------|--------|---------------------|
 |`[Switch]`|false   |named   |true (ByPropertyName)|
 
-
-
 #### **PluginPath**
-
 The path to a plugin or a directory containing plugins.
-
-
-
-
-
 
 |Type      |Required|Position|PipelineInput        |Aliases |
 |----------|--------|--------|---------------------|--------|
 |`[String]`|false   |named   |true (ByPropertyName)|Fullname|
-
-
 
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
@@ -123,13 +73,9 @@ The path to a plugin or a directory containing plugins.
 
 If you pass ```-Confirm:$false``` you will not be prompted.
 
-
 If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$confirmImpactPreference```, you will not be prompted unless -Confirm is passed.
 
-
-
 ---
-
 
 ### Syntax
 ```PowerShell
