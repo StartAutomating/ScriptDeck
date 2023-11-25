@@ -80,6 +80,24 @@ Export-Clixml -InputObject @{
                     </Script>
       </ScriptMethod>
       <ScriptMethod>
+        <Name>ClearSettings</Name>
+        <Script>
+                        &lt;#
+.SYNOPSIS
+    Clears action settings
+.DESCRIPTION
+    Clears all settings related to this ScriptDeck action
+#&gt;
+$mySettings = $this.Settings
+$toSet  = [Ordered]@{}
+foreach ($settingsProperty in @($mySettings.psobject.properties)) {
+    $toSet[$settingsProperty.Name] = $null
+}
+$this.Settings = $toSet
+
+                    </Script>
+      </ScriptMethod>
+      <ScriptMethod>
         <Name>SetTitle</Name>
         <Script>
                         &lt;#
