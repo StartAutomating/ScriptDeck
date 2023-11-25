@@ -150,6 +150,37 @@ Export-Clixml -InputObject @{
                     </Script>
       </ScriptMethod>
       <ScriptMethod>
+        <Name>SetSVG</Name>
+        <Script>
+                        &lt;#
+.SYNOPSIS
+    Sets an Action's Image to SVG
+.DESCRIPTION
+    Sets an Action's Image to inline SVG.
+.NOTES
+    StreamDeck does not currently support advanced SVG features.
+#&gt;
+param(
+$SvgContent
+)
+
+
+if ($svgContent -is [xml] -or $SvgContent -is [xml.xmlelement]) {
+    $SvgContent = $SvgContent.OuterXml
+}
+
+$exportPath = Join-Path ($this.Plugin.PluginPath | Split-Path) -ChildPath "$($this.Context).setImage.Send-StreamDeck.clixml"
+Export-Clixml -InputObject @{
+    EventName = 'setImage'
+    Context = $this.Context
+    Payload = @{
+        "image" = "data:image/svg+xml;charset=utf8,$SvgContent"
+    }
+} -Path $exportPath
+
+                    </Script>
+      </ScriptMethod>
+      <ScriptMethod>
         <Name>SetTitle</Name>
         <Script>
                         &lt;#
