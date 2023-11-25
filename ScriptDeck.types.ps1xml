@@ -270,6 +270,18 @@ $this.'.DeviceInfo'.Name
                     </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
+        <Name>HasStaticTitle</Name>
+        <GetScriptBlock>
+                        &lt;#
+.SYNOPSIS
+    Determines if a title has been set
+.DESCRIPTION
+    Determines if the title for a StreamDeck action has changed.
+#&gt;
+'' -ne $this.LastTitleChange.title
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>History</Name>
         <GetScriptBlock>
                         &lt;#
