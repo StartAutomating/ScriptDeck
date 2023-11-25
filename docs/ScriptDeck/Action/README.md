@@ -6,6 +6,7 @@
 
 * [ClearImage](ClearImage.md)
 * [ClearSettings](ClearSettings.md)
+* [SetImage](SetImage.md)
 * [SetTitle](SetTitle.md)
 * [ShowAlert](ShowAlert.md)
 * [ShowOK](ShowOK.md)
