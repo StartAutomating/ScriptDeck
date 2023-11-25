@@ -15,5 +15,6 @@
 * [get_Controller](get_Controller.md)
 * [get_DeviceName](get_DeviceName.md)
 * [get_EventFile](get_EventFile.md)
+* [get_HasStaticTitle](get_HasStaticTitle.md)
 * [get_History](get_History.md)
 * [get_LastTitleChange](get_LastTitleChange.md)
