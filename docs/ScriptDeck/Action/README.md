@@ -8,6 +8,7 @@
 * [ClearSettings](ClearSettings.md)
 * [ClearTitle](ClearTitle.md)
 * [SetImage](SetImage.md)
+* [SetSVG](SetSVG.md)
 * [SetTitle](SetTitle.md)
 * [ShowAlert](ShowAlert.md)
 * [ShowOK](ShowOK.md)
