@@ -11,3 +11,4 @@
 * [ShowAlert](ShowAlert.md)
 * [ShowOK](ShowOK.md)
 * [get_History](get_History.md)
+* [get_LastTitleChange](get_LastTitleChange.md)
