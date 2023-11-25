@@ -199,6 +199,18 @@ Export-Clixml -InputObject @{
                     </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
+        <Name>Controller</Name>
+        <GetScriptBlock>
+                        &lt;#
+.SYNOPSIS
+    Gets an action's controller
+.DESCRIPTION
+    Gets the associated controller for an action.
+#&gt;
+$this.payload.Controller
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>EventFile</Name>
         <GetScriptBlock>
                         &lt;#
