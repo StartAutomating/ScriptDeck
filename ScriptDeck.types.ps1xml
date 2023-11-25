@@ -187,6 +187,18 @@ Export-Clixml -InputObject @{
                     </Script>
       </ScriptMethod>
       <ScriptProperty>
+        <Name>ActionID</Name>
+        <GetScriptBlock>
+                        &lt;#
+.SYNOPSIS
+    Gets the ActionID
+.DESCRIPTION
+    Gets the Action Identifier for a StreamDeck action.
+#&gt;
+@($this.Action -split '\.')[-1]
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>EventFile</Name>
         <GetScriptBlock>
                         &lt;#
